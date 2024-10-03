@@ -32,21 +32,19 @@ public class main {
         } while (!valido);
             
         do{
-        if (mdp.equals("") == false){
-            switch (mdp) {
-                case "test1234":
-                    System.out.println("Hello user : ");
-                    valide = true;
-                    break;
-                case "admin":
-                    System.out.println("Hello admin : ");
-                    valide = true;
-                    break;
-                default:
-                    System.out.print("nope ya pas ce password chef, reessaye : ");
-                    mdp = scanner.nextLine();
-                    break;
-            }
+        switch (mdp) {
+            case "test1234":
+                System.out.println("Hello user : ");
+                valide = true;
+                break;
+            case "admin":
+                System.out.println("Hello admin : ");
+                valide = true;
+                break;
+            default:
+                System.out.print("nope ya pas ce password chef, reessaye : ");
+                mdp = scanner.nextLine();
+                break;
         }
         } while(!valide);
         
