@@ -1,17 +1,26 @@
 import java.util.Scanner;  
 public class main {
     public static void main(String[] args){
-        System.out.println("Enter username");
-        Scanner myObj = new Scanner(System.in);  // Create a Scanner object
-        String userName = myObj.nextLine();  // Read user input
+        System.out.println("Bienvenue sur X !");
+        System.out.println("1) Cas  numéro 1");
+        System.out.println("2) Cas  numéro 2");
+        System.out.println("3) Cas  numéro 3");
+        System.out.println("Veuillez choisir un des cas : ");
+        Scanner scanner = new Scanner(System.in);  // Create a Scanner object
+        String cas = scanner.nextLine();  // Read user input
         
-        switch (userName) {
-            case "2":
-                System.out.println("lol");
+        switch (cas) {
+            case "1":
+                System.out.println("cas choisi = " + cas);
                 break;
-        
+            case "2":
+                System.out.println("cas choisi = " + cas);
+                break;
+            case "3":
+                System.out.println("cas choisi = " + cas);
+                break;
             default:
-                System.out.println("hello " + userName);
+                System.out.println("nope ya pas chef");
                 break;
         }
     }
