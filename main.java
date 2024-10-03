@@ -7,6 +7,7 @@ public class main {
         Scanner scanner = new Scanner(System.in);
         String username = scanner.nextLine();
         String mdp = "";
+        Boolean valide = false;
         switch (username) {
             case "hamid":
                 System.out.println("Mot de passe user : ");
@@ -19,14 +20,17 @@ public class main {
             default:
                 System.out.println("nope ya pas ce username chef");
                 break;
+                
         }
-        if (mdp.equals("")){
-            switch (username) {
+        if (mdp.equals("") == false){
+            switch (mdp) {
                 case "test1234":
                     System.out.println("Hello user : ");
+                    valide = true;
                     break;
                 case "admin":
                     System.out.println("Hello admin : ");
+                    valide = true;
                     break;
                 default:
                     System.out.println("nope ya pas ce password chef");
@@ -34,27 +38,32 @@ public class main {
             }
         }
         
-
-
-        System.out.println("1) Cas  numéro 1");
-        System.out.println("2) Cas  numéro 2");
-        System.out.println("3) Cas  numéro 3");
-        System.out.println("Veuillez choisir un des cas : ");
-        String cas = scanner.nextLine();  
         
-        switch (cas) {
-            case "1":
-                System.out.println("cas choisi = " + cas);
-                break;
-            case "2":
-                System.out.println("cas choisi = " + cas);
-                break;
-            case "3":
-                System.out.println("cas choisi = " + cas);
-                break;
-            default:
-                System.out.println("nope ya pas chef");
-                break;
+
+        if (valide){
+            System.out.println("1) Cas  numéro 1");
+            System.out.println("2) Cas  numéro 2");
+            System.out.println("3) Cas  numéro 3");
+            System.out.println("Veuillez choisir un des cas : ");
+            String cas = scanner.nextLine();  
+            
+            switch (cas) {
+                case "1":
+                    System.out.println("cas choisi = " + cas);
+                    break;
+                case "2":
+                    System.out.println("cas choisi = " + cas);
+                    break;
+                case "3":
+                    System.out.println("cas choisi = " + cas);
+                    break;
+                default:
+                    System.out.println("nope ya pas chef");
+                    break;
+            }
+
         }
+        
+        
     }
 }
