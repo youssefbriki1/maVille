@@ -3,7 +3,7 @@ public class main {
     public static void main(String[] args){
         System.out.println("Bienvenue sur X !");
         System.out.println("Veuillez vous connecter!");
-        System.out.println("Username :");
+        System.out.print("Username : ");
         Scanner scanner = new Scanner(System.in);
         String username = scanner.nextLine();
         String mdp = "";
@@ -12,19 +12,19 @@ public class main {
         do {
         switch (username) {
             case "hamid":
-                System.out.println("Mot de passe user : ");
+                System.out.print("Mot de passe de " +"\'" + username +  "\' : ");
                 valido = true;
                 mdp = scanner.nextLine();
                 
                 break;
             case "admin":
-                System.out.println("Mot de passe admin : ");
+                System.out.print("Mot de passe de " +"\'" + username +  "\' : ");
                 valido = true;
                 mdp = scanner.nextLine();
                 
                 break;
             default:
-                System.out.print("nope ya pas ce username chef, reessaye : ");
+                System.out.print("Nom d'utilisateur incorrect. Veuillez réessayer : ");
                 username = scanner.nextLine();
                 break;
                 
@@ -34,15 +34,15 @@ public class main {
         do{
         switch (mdp) {
             case "test1234":
-                System.out.println("Hello user : ");
+                System.out.println("Bienvenue "+ username +  "!" );
                 valide = true;
                 break;
             case "admin":
-                System.out.println("Hello admin : ");
+                System.out.println("Bienvenue "+ username +  "!");
                 valide = true;
                 break;
             default:
-                System.out.print("nope ya pas ce password chef, reessaye : ");
+                System.out.print("Mot de passe incorrect. Veuillez réessayer : ");
                 mdp = scanner.nextLine();
                 break;
         }
@@ -52,7 +52,7 @@ public class main {
         System.out.println("1) Cas  numéro 1");
         System.out.println("2) Cas  numéro 2");
         System.out.println("3) Cas  numéro 3");
-        System.out.println("Veuillez choisir un des cas : ");
+        System.out.print("Veuillez selectionner parmis un des cas : ");
         String cas = scanner.nextLine();  
         
         Boolean casv = false; 
@@ -71,7 +71,7 @@ public class main {
                 casv = true;
                 break;
             default:
-                System.out.print("nope ya pas chef, reessaye : ");
+                System.out.print("Cas inexistant. Veuillez réessayer : ");
                 cas = scanner.nextLine();
                 break;
         }
