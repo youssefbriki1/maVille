@@ -1,7 +1,28 @@
 import java.util.Scanner;  
 public class main {
     public static void main(String[] args){
-        System.out.println("Bienvenue sur X !");
+        String textArt = """
+             ______  _______          ____    ____      ____  ____  ____         ____             ______   
+            |      \\/       \\    ____|\\   \\  |    |    |    ||    ||    |       |    |        ___|\\     \\  
+           /          /\\     \\  /    /\\    \\ |    |    |    ||    ||    |       |    |       |     \\     \\ 
+          /     /\\   / /\\     ||    |  |    ||    |    |    ||    ||    |       |    |       |     ,_____/|
+         /     /\\ \\_/ / /    /||    |__|    ||    |    |    ||    ||    |  ____ |    |  ____ |     \\--'\\_|/
+        |     |  \\|_|/ /    / ||    .--.    ||    |    |    ||    ||    | |    ||    | |    ||     /___/|  
+        |     |       |    |  ||    |  |    ||\\    \\  /    /||    ||    | |    ||    | |    ||     \\____|\\ 
+        |\\____\\       |____|  /|____|  |____|| \\ ___\\/___ / ||____||____|/____/||____|/____/||____ '     /|
+        | |    |      |    | / |    |  |    | \\ |   ||   | / |    ||    |     |||    |     |||    /_____/ |
+         \\|____|      |____|/  |____|  |____|  \\|___||___|/  |____||____|_____|/|____|_____|/|____|     | /
+            \\(          )/       \\(      )/      \\(    )/      \\(    \\(    )/     \\(    )/     \\( |_____|/ 
+             '          '         '      '        '    '        '     '    '       '    '       '    )/    
+                                                                                                     '      
+        """;
+
+        // Display the text art
+        System.out.print(textArt);
+        String hashLine = "#".repeat(100);
+        System.out.println(hashLine);
+        System.out.println();
+        System.out.println("Bienvenue sur MaVille !");
         System.out.println("Veuillez vous connecter!");
         System.out.print("Username : ");
         Scanner scanner = new Scanner(System.in);
@@ -49,9 +70,9 @@ public class main {
         } while(!valide);
         
     
-        System.out.println("1) Cas  numéro 1");
-        System.out.println("2) Cas  numéro 2");
-        System.out.println("3) Cas  numéro 3");
+        System.out.println("[1] Cas  numéro 1");
+        System.out.println("[2] Cas  numéro 2");
+        System.out.println("[3] Cas  numéro 3");
         System.out.print("Veuillez selectionner parmis un des cas : ");
         String cas = scanner.nextLine();  
         
