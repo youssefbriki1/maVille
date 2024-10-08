@@ -23,6 +23,7 @@ public class main {
         System.out.println(hashLine);
         System.out.println();
         System.out.println("Bienvenue sur MaVille !");
+        System.out.println();
         System.out.println("Veuillez vous connecter!");
         System.out.print("Username : ");
         Scanner scanner = new Scanner(System.in);
@@ -30,6 +31,7 @@ public class main {
         String mdp = "";
         Boolean valide = false;
         Boolean valido = false;
+        Boolean type = false;
         do {
         switch (username) {
             case "hamid":
@@ -50,17 +52,18 @@ public class main {
                 break;
                 
         } 
-        } while (!valido);
-            
+        } while (!valido);  
         do{
         switch (mdp) {
             case "test1234":
                 System.out.println("Bienvenue "+ username +  "!" );
                 valide = true;
+                type = true;
                 break;
             case "admin":
                 System.out.println("Bienvenue "+ username +  "!");
                 valide = true;
+                type = false;
                 break;
             default:
                 System.out.print("Mot de passe incorrect. Veuillez réessayer : ");
@@ -68,39 +71,143 @@ public class main {
                 break;
         }
         } while(!valide);
-        
+        System.out.println();
     
-        System.out.println("[1] Cas  numéro 1");
-        System.out.println("[2] Cas  numéro 2");
-        System.out.println("[3] Cas  numéro 3");
-        System.out.print("Veuillez selectionner parmis un des cas : ");
-        String cas = scanner.nextLine();  
+        
         
         Boolean casv = false; 
-        do{
-        switch (cas) {
-            case "1":
-                System.out.println("cas choisi = " + cas);
-                casv = true;
-                break;
-            case "2":
-                System.out.println("cas choisi = " + cas);
-                casv = true;
-                break;
-            case "3":
-                System.out.println("cas choisi = " + cas);
-                casv = true;
-                break;
-            default:
-                System.out.print("Cas inexistant. Veuillez réessayer : ");
-                cas = scanner.nextLine();
-                break;
+        if (type){
+            PrintUpR();
+            String cas = scanner.nextLine();  
+            do{
+                switch (cas) {
+                    case "1":
+                        System.out.println("cas choisi = " + cas);
+                        casv = true;
+                        break;
+                    case "2":
+                        System.out.println("cas choisi = " + cas);
+                        casv = true;
+                        break;
+                    case "3":
+                        System.out.println("cas choisi = " + cas);
+                        casv = true;
+                        break;
+                    default:
+                        System.out.print("Cas inexistant. Veuillez réessayer : ");
+                        cas = scanner.nextLine();
+                        break;
+                }
+                } while(!casv);
+            }
+        else{
+            PrintUpI(scanner); 
+            
         }
-        } while(!casv);
+        
+        
+        
 
         
         scanner.close();
         
+    
+    }
+    public static void infoCompte(String a, Scanner scanner){
+        Boolean nice = false;
+        System.out.println();
+        System.out.println("[1] Afficher vos informations");
+        System.out.println("[2] Modifier vos informations");
+        System.out.println("[3] Retourner au menu princpal");
+        System.out.print("Veuillez selectionner parmis un des cas : ");
+        a = scanner.nextLine();
+        do{
+            switch (a) {
+                case "1":
+                    System.out.println();
+                    System.out.println("Nom complet : Admin Admin");
+                    System.out.println("Adresse courriel : admin@admin.com");
+                    System.out.println("Type de compte : Intervenant");
+                    System.out.println("Indentifiant de la ville : XXXXXXXX ");
+                    System.out.print("Entrez '1' pour revenir au menu princpal : ");
+                    Boolean varia = false;
+                    a = scanner.nextLine();
+                    do{
+                        switch (a) {
+                            case "1":
+                                varia = true;
+                                System.out.println();
+                                PrintUpI(scanner);
+                                break;
+                        
+                            default:
+                                System.out.print("Veuillez réessayer : ");
+                                a = scanner.nextLine();
+                                break;
+                        }
+                    }while (!varia);
+                    
+                    
+                    nice = true;
+                    break;
+                case "2":
+                    System.out.println("cas choisi = " + a);
+                    nice = true;
+                    break;
+                case "3":
+                    System.out.println();
+                    PrintUpI(scanner);
+                    nice = true;
+                    break;
+                    
+                default:
+                    System.out.print("Cas inexistant.. Veuillez réessayer : ");
+                    a = scanner.nextLine();
+                    break;
+            }
+        } while(!nice);
+
+    }
+    public static void PrintUpR(){
+        System.out.println("Choix résident :");
+        System.out.println("[1] Informations sur votre profile");
+        System.out.println("[2] Cas  numéro 2");
+        System.out.println("[3] Cas  numéro 3");
         
+        System.out.print("Veuillez selectionner parmis un des cas : ");
+
+    }
+    public static void PrintUpI(Scanner scanner){
+        Boolean casv = false; 
+        System.out.println("Choix intervenant :");
+        System.out.println("[1] Informations sur votre profile");
+        System.out.println("[2] Cas  numéro 2");
+        System.out.println("[3] Cas  numéro 3");
+        System.out.print("Veuillez selectionner parmis un des cas : ");
+        String cas = scanner.nextLine(); 
+            
+            do{
+                switch (cas) {
+                    case "1":
+                        infoCompte(cas, scanner);
+                        
+                        // System.out.println("cas choisi = " + cas);
+                        casv = true;
+                        break;
+                    case "2":
+                        System.out.println("cas choisi = " + cas);
+                        casv = true;
+                        break;
+                    case "3":
+                        System.out.println("cas choisi = " + cas);
+                        casv = true;
+                        break;
+                    default:
+                        System.out.print("Cas inexistant... Veuillez réessayer : ");
+                        cas = scanner.nextLine();
+                        break;
+                }
+            } while(!casv);
+
     }
 }
