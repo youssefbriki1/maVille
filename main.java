@@ -24,9 +24,35 @@ public class main {
         System.out.println();
         System.out.println("Bienvenue sur MaVille !");
         System.out.println();
-        System.out.println("Veuillez vous connecter!");
-        System.out.print("Username : ");
+        Boolean choix = false;
         Scanner scanner = new Scanner(System.in);
+        System.out.println("[1] Se connecter");
+        System.out.println("[2] Créer un compte");
+        System.out.print("Selectionnez une des deux options : ");
+        String choisi = scanner.nextLine();
+        do{
+            switch (choisi) {
+                case "1":
+                    System.out.println("Veuillez vous connecter!");
+                    System.out.print("Adresse mail : ");
+                    choix = true;
+                    break;
+                case "2":
+                    System.out.println("Veuillez contacter l'administrateur.");
+                    choix = true;
+                    System. exit(0);
+                    break;
+                default:
+                    System.out.print("Cas inexistant. Veuillez réessayer : ");
+                    choisi = scanner.nextLine();
+                    break;
+                    
+            }
+        }while (!choix);
+
+
+        
+        
         String username = scanner.nextLine();
         String mdp = "";
         Boolean valide = false;
@@ -34,20 +60,20 @@ public class main {
         Boolean type = false;
         do {
         switch (username) {
-            case "hamid":
+            case "resident1@gmail.com":
                 System.out.print("Mot de passe de " +"\'" + username +  "\' : ");
                 valido = true;
                 mdp = scanner.nextLine();
                 
                 break;
-            case "admin":
+            case "intervenant1@gmail.com":
                 System.out.print("Mot de passe de " +"\'" + username +  "\' : ");
                 valido = true;
                 mdp = scanner.nextLine();
                 
                 break;
             default:
-                System.out.print("Nom d'utilisateur incorrect. Veuillez réessayer : ");
+                System.out.print("Adresse mail incorrecte. Veuillez réessayer : ");
                 username = scanner.nextLine();
                 break;
                 
@@ -55,13 +81,13 @@ public class main {
         } while (!valido);  
         do{
         switch (mdp) {
-            case "test1234":
-                System.out.println("Bienvenue "+ username +  "!" );
+            case "maville2024":
+                System.out.println("Bienvenue  Isabelle!" );
                 valide = true;
                 type = true;
                 break;
-            case "admin":
-                System.out.println("Bienvenue "+ username +  "!");
+            case "ameliore2024@":
+                System.out.println("Bienvenue Marcel!");
                 valide = true;
                 type = false;
                 break;
@@ -77,28 +103,7 @@ public class main {
         
         Boolean casv = false; 
         if (type){
-            PrintUpR();
-            String cas = scanner.nextLine();  
-            do{
-                switch (cas) {
-                    case "1":
-                        System.out.println("cas choisi = " + cas);
-                        casv = true;
-                        break;
-                    case "2":
-                        System.out.println("cas choisi = " + cas);
-                        casv = true;
-                        break;
-                    case "3":
-                        System.out.println("cas choisi = " + cas);
-                        casv = true;
-                        break;
-                    default:
-                        System.out.print("Cas inexistant. Veuillez réessayer : ");
-                        cas = scanner.nextLine();
-                        break;
-                }
-                } while(!casv);
+            PrintUpR(scanner);
             }
         else{
             PrintUpI(scanner); 
@@ -113,7 +118,7 @@ public class main {
         
     
     }
-    public static void infoCompte(String a, Scanner scanner){
+    public static void infoCompteI(String a, Scanner scanner){
         Boolean nice = false;
         System.out.println();
         System.out.println("[1] Afficher vos informations");
@@ -125,10 +130,10 @@ public class main {
             switch (a) {
                 case "1":
                     System.out.println();
-                    System.out.println("Nom complet : Admin Admin");
-                    System.out.println("Adresse courriel : admin@admin.com");
-                    System.out.println("Type de compte : Intervenant");
-                    System.out.println("Indentifiant de la ville : XXXXXXXX ");
+                    System.out.println("Nom complet : Marcel Nasraoui");
+                    System.out.println("Adresse courriel : intervenant1@gmail.com");
+                    System.out.println("Type de compte : Entreprise public");
+                    System.out.println("Indentifiant de la ville : 40202494 ");
                     System.out.print("Entrez '1' pour revenir au menu princpal : ");
                     Boolean varia = false;
                     a = scanner.nextLine();
@@ -168,9 +173,66 @@ public class main {
         } while(!nice);
 
     }
-    public static void PrintUpR(){
+    public static void infoCompteR(String a, Scanner scanner){
+        Boolean nice = false;
+        System.out.println();
+        System.out.println("[1] Afficher vos informations");
+        System.out.println("[2] Modifier vos informations");
+        System.out.println("[3] Retourner au menu princpal");
+        System.out.print("Veuillez selectionner parmis un des cas : ");
+        a = scanner.nextLine();
+        do{
+            switch (a) {
+                case "1":
+                    System.out.println();
+                    System.out.println("Nom complet : Isabelle Belanger");
+                    System.out.println("Date de naissance : 15/03/1994 ");
+                    System.out.println("Adresse courriel : resident1@gmail.com");
+                    System.out.println("Numéro de téléphone : +1 (514) 693 3204 ");
+                    System.out.println("Adresse : 4117 St Laurent Blvd, Montreal, Quebec H2W 1Y7, Canada ");
+                    System.out.print("Entrez '1' pour revenir au menu princpal : ");
+                    Boolean varia = false;
+                    a = scanner.nextLine();
+                    do{
+                        switch (a) {
+                            case "1":
+                                varia = true;
+                                System.out.println();
+                                PrintUpI(scanner);
+                                break;
+                        
+                            default:
+                                System.out.print("Veuillez réessayer : ");
+                                a = scanner.nextLine();
+                                break;
+                        }
+                    }while (!varia);
+                    
+                    
+                    nice = true;
+                    break;
+                case "2":
+                    System.out.println("cas choisi = " + a);
+                    nice = true;
+                    break;
+                case "3":
+                    System.out.println();
+                    PrintUpI(scanner);
+                    nice = true;
+                    break;
+                    
+                default:
+                    System.out.print("Cas inexistant.. Veuillez réessayer : ");
+                    a = scanner.nextLine();
+                    break;
+            }
+        } while(!nice);
+
+    }
+
+    public static void PrintUpRR(){
         System.out.println("Choix résident :");
-        System.out.println("[1] Informations sur votre profile");
+        System.out.println("[1] Informations sur votre profil");
         System.out.println("[2] Cas  numéro 2");
         System.out.println("[3] Cas  numéro 3");
         
@@ -180,7 +242,7 @@ public class main {
     public static void PrintUpI(Scanner scanner){
         Boolean casv = false; 
         System.out.println("Choix intervenant :");
-        System.out.println("[1] Informations sur votre profile");
+        System.out.println("[1] Informations sur votre profil");
         System.out.println("[2] Cas  numéro 2");
         System.out.println("[3] Cas  numéro 3");
         System.out.print("Veuillez selectionner parmis un des cas : ");
@@ -189,7 +251,40 @@ public class main {
             do{
                 switch (cas) {
                     case "1":
-                        infoCompte(cas, scanner);
+                        infoCompteI(cas, scanner);
+                        
+                        // System.out.println("cas choisi = " + cas);
+                        casv = true;
+                        break;
+                    case "2":
+                        System.out.println("cas choisi = " + cas);
+                        casv = true;
+                        break;
+                    case "3":
+                        System.out.println("cas choisi = " + cas);
+                        casv = true;
+                        break;
+                    default:
+                        System.out.print("Cas inexistant... Veuillez réessayer : ");
+                        cas = scanner.nextLine();
+                        break;
+                }
+            } while(!casv);
+
+    }
+    public static void PrintUpR(Scanner scanner){
+        Boolean casv = false; 
+        System.out.println("Choix résident :");
+        System.out.println("[1] Informations sur votre profil");
+        System.out.println("[2] Cas  numéro 2");
+        System.out.println("[3] Cas  numéro 3");
+        System.out.print("Veuillez selectionner parmis un des cas : ");
+        String cas = scanner.nextLine(); 
+            
+            do{
+                switch (cas) {
+                    case "1":
+                        infoCompteR(cas, scanner);
                         
                         // System.out.println("cas choisi = " + cas);
                         casv = true;
