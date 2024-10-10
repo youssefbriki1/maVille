@@ -59,17 +59,20 @@ public class main {
         Boolean valide = false;
         Boolean valido = false;
         Boolean type = false;
+        Boolean prive = false;
         do {
         switch (username) {
             case "resident1@gmail.com":
                 System.out.print("Mot de passe de " +"\'" + username +  "\' : ");
                 valido = true;
+                prive = false;
                 mdp = scanner.nextLine();
                 
                 break;
             case "intervenant1@gmail.com":
                 System.out.print("Mot de passe de " +"\'" + username +  "\' : ");
                 valido = true;
+                prive = true;
                 mdp = scanner.nextLine();
                 
                 break;
@@ -89,15 +92,41 @@ public class main {
         do{
         switch (mdp) {
             case "maville2024":
-                System.out.println("Bienvenue  Isabelle!" );
-                valide = true;
-                type = true;
-                break;
+                if (!prive){
+                    System.out.println("Bienvenue  Isabelle!" );
+                    valide = true;
+                    type = true;
+                    break;
+                }
+                else{
+                    x = x+1;
+                    System.out.print("Mot de passe incorrect. Tentatives restantes : "+ (3-x) +". Veuillez réessayer : ");
+                    mdp = scanner.nextLine();
+                    if (x==2){
+                        System.out.println("Nombre de tentatives dépassé.");
+                        System.exit(0);
+                    }
+                    break;
+                }
+                
             case "ameliore2024@":
-                System.out.println("Bienvenue Marcel!");
-                valide = true;
-                type = false;
-                break;
+                if (prive){
+                    System.out.println("Bienvenue Marcel!");
+                    valide = true;
+                    type = false;
+                    break;
+                }
+                else{
+                    x = x+1;
+                    System.out.print("Mot de passe incorrect. Tentatives restantes : "+ (3-x) +". Veuillez réessayer : ");
+                    mdp = scanner.nextLine();
+                    if (x==2){
+                        System.out.println("Nombre de tentatives dépassé.");
+                        System.exit(0);
+                    }
+                    break;
+                }
+                
             default:
                 x = x+1;
                 System.out.print("Mot de passe incorrect. Tentatives restantes : "+ (3-x) +". Veuillez réessayer : ");
@@ -168,7 +197,7 @@ public class main {
                     nice = true;
                     break;
                 case "2":
-                    System.out.println("cas choisi = " + a);
+                    System.out.println("À implémenter :P");
                     nice = true;
                     break;
                 case "3":
@@ -224,7 +253,7 @@ public class main {
                     nice = true;
                     break;
                 case "2":
-                    System.out.println("cas choisi = " + a);
+                    System.out.println("À implémenter :P");
                     nice = true;
                     break;
                 case "3":
@@ -253,7 +282,7 @@ public class main {
         do{
             switch (a) {
                 case "1":
-                    System.out.println("cas choisi = " + a);
+                    System.out.println("À implémenter :P");
                     nice = true;
                     break;
                 case "2":
@@ -268,15 +297,15 @@ public class main {
                     do{
                         switch (a) {
                             case "1":
-                                System.out.println("cas choisi = " + a);
+                                System.out.println("À implémenter :P");
                                 varia = true;
                                 break;
                             case "2":
-                                System.out.println("cas choisi = " + a);
+                                System.out.println("À implémenter :P");
                                 varia = true;
                                 break;
                             case "3":
-                                System.out.println("cas choisi = " + a);
+                                System.out.println("À implémenter :P");
                                 varia = true;
                                 break;
                             case "4":
@@ -296,7 +325,7 @@ public class main {
                     nice = true;
                     break;
                 case "3":
-                    System.out.println("cas choisi = " + a);
+                    System.out.println("À implémenter :P");
                     nice = true;
                     break;
                 case "4":
@@ -450,11 +479,61 @@ public class main {
                         casv = true;
                         break;
                     case "3":
-                        System.out.println("cas choisi = " + cas);
+                        System.out.print("Titre du travail à réaliser : ");
+                        String a = scanner.nextLine();
+                        System.out.print("Description détaillée : ");
+                        a = scanner.nextLine();
+                        System.out.print("Type : ");
+                        a = scanner.nextLine();
+                        System.out.print("Date de début espéré : ");
+                        a = scanner.nextLine();
+                        System.out.print("Projet soumis ! Selectionnez 1 pour retourner au menu princpal : ");
+                        Boolean varia = false;
+                        a = scanner.nextLine();
+                        do{
+                            switch (a) {
+                                case "1":
+                                    varia = true;
+                                    System.out.println();
+                                    PrintUpR(scanner);
+                                    break;
+                            
+                                default:
+                                    System.out.print("Veuillez réessayer : ");
+                                    a = scanner.nextLine();
+                                    break;
+                            }
+                        }while (!varia);
                         casv = true;
                         break;
                     case "4":
-                        System.out.println("cas choisi = " + cas);
+                        System.out.println("[1] Préférences d'horraires");
+                        System.out.println("[2] Avis sur les travaux");
+                        System.out.println("[3] Revenir au menu principal");
+                        Boolean varialo = false;
+                        a = scanner.nextLine();
+                        do{
+                            switch (a) {
+                                case "1":
+                                    System.out.println("À implémenter :P");
+                                    varialo = true;
+                                    break;
+                                case "2":
+                                    System.out.println("À implémenter :P");
+                                    varialo = true;
+                                    break;
+                                case "3":
+                                    varialo = true;
+                                    System.out.println();
+                                    PrintUpR(scanner);
+                                    break;
+                            
+                                default:
+                                    System.out.print("Veuillez réessayer : ");
+                                    a = scanner.nextLine();
+                                    break;
+                            }
+                        }while (!varialo);
                         casv = true;
                         break;
                     default:
