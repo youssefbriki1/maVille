@@ -34,3 +34,14 @@ ou
 cd prototypes && java -jar main.jar
 
 ```
+
+## Troubleshooting
+
+1. Pour complier: 
+
+```
+javac main.java
+jar cmvf META-INF/MANIFEST.MF main.jar main.class
+java -jar main.jar
+
+```
