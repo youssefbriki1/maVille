@@ -479,21 +479,68 @@ public class main {
                         casv = true;
                         break;
                     case "3":
-                        System.out.print("Titre du travail à réaliser : ");
+                        System.out.println();
+                        System.out.println("[1] Soumetrre une requête de projet");
+                        System.out.println("[2] Signaler un problème à la ville");
+                        System.out.println("[3] Retourner au menu principal");
+                        System.out.print("Veuillez selectionner parmis un des cas : ");
+                        Boolean varialol = false;
                         String a = scanner.nextLine();
-                        System.out.print("Description détaillée : ");
-                        a = scanner.nextLine();
-                        System.out.print("Type : ");
-                        a = scanner.nextLine();
-                        System.out.print("Date de début espéré : ");
-                        a = scanner.nextLine();
-                        System.out.print("Projet soumis ! Selectionnez 1 pour retourner au menu princpal : ");
-                        Boolean varia = false;
-                        a = scanner.nextLine();
+                        System.out.println();
                         do{
                             switch (a) {
                                 case "1":
-                                    varia = true;
+                                    System.out.print("Titre du travail à réaliser : ");
+                                    a = scanner.nextLine();
+                                    System.out.print("Description détaillée : ");
+                                    a = scanner.nextLine();
+                                    System.out.print("Type : ");
+                                    a = scanner.nextLine();
+                                    System.out.print("Date de début espéré : ");
+                                    a = scanner.nextLine();
+                                    System.out.print("Projet soumis ! Selectionnez 1 pour retourner au menu princpal : ");
+                                    Boolean varia = false;
+                                    a = scanner.nextLine();
+                                    do{
+                                        switch (a) {
+                                            case "1":
+                                                varia = true;
+                                                System.out.println();
+                                                PrintUpR(scanner);
+                                                break;
+                                        
+                                            default:
+                                                System.out.print("Veuillez réessayer : ");
+                                                a = scanner.nextLine();
+                                                break;
+                                        }
+                                    }while (!varia);
+                                    varialol = true;
+                                    break;
+                                case "2":
+                                    System.out.print("Veuillez décrire votre problème : ");
+                                    a = scanner.nextLine();
+                                    System.out.print("Problème signalé ! Selectionnez 1 pour retourner au menu princpal : ");
+                                    Boolean variaa = false;
+                                    a = scanner.nextLine();
+                                    do{
+                                        switch (a) {
+                                            case "1":
+                                                varia = true;
+                                                System.out.println();
+                                                PrintUpR(scanner);
+                                                break;
+                                        
+                                            default:
+                                                System.out.print("Veuillez réessayer : ");
+                                                a = scanner.nextLine();
+                                                break;
+                                        }
+                                    }while (!variaa);
+                                    varialol = true;
+                                    break;
+                                case "3":
+                                    varialol = true;
                                     System.out.println();
                                     PrintUpR(scanner);
                                     break;
@@ -503,27 +550,30 @@ public class main {
                                     a = scanner.nextLine();
                                     break;
                             }
-                        }while (!varia);
+                        }while (!varialol);
                         casv = true;
                         break;
+
                     case "4":
+                        System.out.println();
                         System.out.println("[1] Préférences d'horraires");
                         System.out.println("[2] Avis sur les travaux");
                         System.out.println("[3] Revenir au menu principal");
-                        Boolean varialo = false;
+                        System.out.print("Veuillez selectionner parmis un des cas : ");
+                        Boolean varialogo = false;
                         a = scanner.nextLine();
                         do{
                             switch (a) {
                                 case "1":
                                     System.out.println("À implémenter :P");
-                                    varialo = true;
+                                    varialogo = true;
                                     break;
                                 case "2":
                                     System.out.println("À implémenter :P");
-                                    varialo = true;
+                                    varialogo = true;
                                     break;
                                 case "3":
-                                    varialo = true;
+                                    varialogo = true;
                                     System.out.println();
                                     PrintUpR(scanner);
                                     break;
@@ -533,7 +583,7 @@ public class main {
                                     a = scanner.nextLine();
                                     break;
                             }
-                        }while (!varialo);
+                        }while (!varialogo);
                         casv = true;
                         break;
                     default:
