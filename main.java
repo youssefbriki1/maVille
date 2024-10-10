@@ -19,6 +19,7 @@ public class main {
 
         // Display the text art
         System.out.print(textArt);
+        int x = 0;
         String hashLine = "#".repeat(100);
         System.out.println(hashLine);
         System.out.println();
@@ -73,12 +74,18 @@ public class main {
                 
                 break;
             default:
-                System.out.print("Adresse mail incorrecte. Veuillez réessayer : ");
+                x = x+1;
+                System.out.print("Adresse mail incorrecte. Tentatives restantes : "+ (3-x) +". Veuillez réessayer : ");
                 username = scanner.nextLine();
+                if (x==2){
+                    System.out.println("Nombre de tentatives dépassé.");
+                    System.exit(0);
+                }
                 break;
                 
         } 
-        } while (!valido);  
+        } while (!valido);
+        x = 0;  
         do{
         switch (mdp) {
             case "maville2024":
@@ -92,8 +99,13 @@ public class main {
                 type = false;
                 break;
             default:
-                System.out.print("Mot de passe incorrect. Veuillez réessayer : ");
+                x = x+1;
+                System.out.print("Mot de passe incorrect. Tentatives restantes : "+ (3-x) +". Veuillez réessayer : ");
                 mdp = scanner.nextLine();
+                if (x==2){
+                    System.out.println("Nombre de tentatives dépassé.");
+                    System.exit(0);
+                }
                 break;
         }
         } while(!valide);
@@ -101,7 +113,7 @@ public class main {
     
         
         
-        Boolean casv = false; 
+        
         if (type){
             PrintUpR(scanner);
             }
@@ -198,7 +210,7 @@ public class main {
                             case "1":
                                 varia = true;
                                 System.out.println();
-                                PrintUpI(scanner);
+                                PrintUpR(scanner);
                                 break;
                         
                             default:
@@ -217,6 +229,157 @@ public class main {
                     break;
                 case "3":
                     System.out.println();
+                    PrintUpR(scanner);
+                    nice = true;
+                    break;
+                    
+                default:
+                    System.out.print("Cas inexistant.. Veuillez réessayer : ");
+                    a = scanner.nextLine();
+                    break;
+            }
+        } while(!nice);
+
+    }
+    public static void ConsulterI(String a, Scanner scanner){
+        Boolean nice = false;
+        System.out.println();
+        System.out.println("[1] Afficher la liste des requêtes de travaux");
+        System.out.println("[2] Filtrer les requêtes");
+        System.out.println("[3] Soumettre votre candidature et les dates pour un projet");
+        System.out.println("[4] Retourner au menu princpal");
+        System.out.print("Veuillez selectionner parmis un des cas : ");
+        a = scanner.nextLine();
+        do{
+            switch (a) {
+                case "1":
+                    System.out.println("cas choisi = " + a);
+                    nice = true;
+                    break;
+                case "2":
+                    System.out.println();
+                    System.out.println("[1] Filtrer par type");
+                    System.out.println("[2] Filtrer par quartier");
+                    System.out.println("[3] Filtrer par date de début");
+                    System.out.println("[4] Revenir au menu princpal");
+                    System.out.print("Veuillez selectionner parmis un des cas : ");
+                    Boolean varia = false;
+                    a = scanner.nextLine();
+                    do{
+                        switch (a) {
+                            case "1":
+                                System.out.println("cas choisi = " + a);
+                                varia = true;
+                                break;
+                            case "2":
+                                System.out.println("cas choisi = " + a);
+                                varia = true;
+                                break;
+                            case "3":
+                                System.out.println("cas choisi = " + a);
+                                varia = true;
+                                break;
+                            case "4":
+                                varia = true;
+                                System.out.println();
+                                PrintUpI(scanner);
+                                break;
+                        
+                            default:
+                                System.out.print("Veuillez réessayer : ");
+                                a = scanner.nextLine();
+                                break;
+                        }
+                    }while (!varia);
+                    
+                    
+                    nice = true;
+                    break;
+                case "3":
+                    System.out.println("cas choisi = " + a);
+                    nice = true;
+                    break;
+                case "4":
+                    System.out.println();
+                    PrintUpI(scanner);
+                    nice = true;
+                    break;
+                    
+                default:
+                    System.out.print("Cas inexistant.. Veuillez réessayer : ");
+                    a = scanner.nextLine();
+                    break;
+            }
+        } while(!nice);
+
+    }
+    public static void SoumettreI(String a, Scanner scanner){
+        Boolean nice = false;
+        System.out.println();
+        System.out.println("[1] Soumettre un nouveau projet de travaux");
+        System.out.println("[2] Consulter les préférences des résidents");
+        System.out.println("[3] Mettre à jour les informations d'un chantier");
+        System.out.println("[4] Retourner au menu princpal");
+        System.out.print("Veuillez selectionner parmis un des cas : ");
+        a = scanner.nextLine();
+        do{
+            switch (a) {
+                case "1":
+                    System.out.println();
+                    System.out.print("Titre du projet : ");
+                    a = scanner.nextLine();
+                    System.out.print("Description du projet : ");
+                    a = scanner.nextLine();
+                    System.out.print("Type de travaux : ");
+                    a = scanner.nextLine();
+                    System.out.println("Quartiers affectés");
+                    System.out.println("[1] Côtes des neiges");
+                    System.out.println("[2] Downtown");
+                    System.out.println("[3] Montréal-Nord");
+                    System.out.println("[4] Autre (Précisez)");
+                    System.out.print("Veuillez selectionner parmis un ou plusieurs quartier : ");
+                    a = scanner.nextLine();
+                    System.out.print("Rues affectées : ");
+                    a = scanner.nextLine();
+                    System.out.print("Date de début : ");
+                    a = scanner.nextLine();
+                    System.out.print("Date de fin : ");
+                    a = scanner.nextLine();
+                    System.out.print("Horaire des travaux : ");
+                    a = scanner.nextLine();
+                    System.out.print("Projet soumis ! Selectionnez 1 pour retourner au menu princpal : ");
+                    Boolean varia = false;
+                    a = scanner.nextLine();
+                    do{
+                        switch (a) {
+                            case "1":
+                                varia = true;
+                                System.out.println();
+                                PrintUpI(scanner);
+                                break;
+                        
+                            default:
+                                System.out.print("Veuillez réessayer : ");
+                                a = scanner.nextLine();
+                                break;
+                        }
+                    }while (!varia);
+                    
+                    
+                    nice = true;
+                    break;
+                case "2":
+                    System.out.println("Jean : Pas de travaux le soir");
+                    System.out.println("Michelle : Pas de travaux entre 18h et 23h");
+                    nice = true;
+                    break;
+                case "3":
+                    System.out.print("Selectionnez le projet à modifier : ");
+                    nice = true;
+                    break;
+
+                case "4":
+                    System.out.println();
                     PrintUpI(scanner);
                     nice = true;
                     break;
@@ -230,21 +393,12 @@ public class main {
 
     }
 
-    public static void PrintUpRR(){
-        System.out.println("Choix résident :");
-        System.out.println("[1] Informations sur votre profil");
-        System.out.println("[2] Cas  numéro 2");
-        System.out.println("[3] Cas  numéro 3");
-        
-        System.out.print("Veuillez selectionner parmis un des cas : ");
-
-    }
     public static void PrintUpI(Scanner scanner){
         Boolean casv = false; 
         System.out.println("Choix intervenant :");
         System.out.println("[1] Informations sur votre profil");
-        System.out.println("[2] Cas  numéro 2");
-        System.out.println("[3] Cas  numéro 3");
+        System.out.println("[2] Consulter la liste des requêtes de travaux");
+        System.out.println("[3] Projets de travaux");
         System.out.print("Veuillez selectionner parmis un des cas : ");
         String cas = scanner.nextLine(); 
             
@@ -257,13 +411,14 @@ public class main {
                         casv = true;
                         break;
                     case "2":
-                        System.out.println("cas choisi = " + cas);
+                        ConsulterI(cas, scanner);
                         casv = true;
                         break;
                     case "3":
-                        System.out.println("cas choisi = " + cas);
+                        SoumettreI(cas, scanner);
                         casv = true;
                         break;
+                   
                     default:
                         System.out.print("Cas inexistant... Veuillez réessayer : ");
                         cas = scanner.nextLine();
@@ -276,8 +431,9 @@ public class main {
         Boolean casv = false; 
         System.out.println("Choix résident :");
         System.out.println("[1] Informations sur votre profil");
-        System.out.println("[2] Cas  numéro 2");
-        System.out.println("[3] Cas  numéro 3");
+        System.out.println("[2] Services travaux");
+        System.out.println("[3] Soumettre une requête de travail");
+        System.out.println("[4] Préférences et Avis");
         System.out.print("Veuillez selectionner parmis un des cas : ");
         String cas = scanner.nextLine(); 
             
@@ -290,10 +446,14 @@ public class main {
                         casv = true;
                         break;
                     case "2":
-                        System.out.println("cas choisi = " + cas);
+                        ServicesR(scanner);
                         casv = true;
                         break;
                     case "3":
+                        System.out.println("cas choisi = " + cas);
+                        casv = true;
+                        break;
+                    case "4":
                         System.out.println("cas choisi = " + cas);
                         casv = true;
                         break;
@@ -303,6 +463,125 @@ public class main {
                         break;
                 }
             } while(!casv);
+
+    }
+    public static void ServicesR(Scanner scanner){
+        Boolean nice = false;
+        System.out.println();
+        System.out.println("[1] Rechercher un projet");
+        System.out.println("[2] Consulter les travaux en cours/à venir");
+        System.out.println("[3] S'abonner aux notifications d'un projet");
+        System.out.println("[4] Retourner au menu princpal");
+        System.out.print("Veuillez selectionner parmis un des cas : ");
+        String a = scanner.nextLine();
+        do{
+            switch (a) {
+                case "1":
+                    FiltrerR(scanner);
+                    
+                    
+                    nice = true;
+                    break;
+                case "2":
+                    FiltrerR(scanner);
+                    nice = true;
+                    break;
+                case "3":
+                    FiltrerR(scanner);
+                    nice = true;
+                    break;
+                case "4":
+                    System.out.println();
+                    PrintUpR(scanner);
+                    nice = true;
+                    break;
+                    
+                default:
+                    System.out.print("Cas inexistant.. Veuillez réessayer : ");
+                    a = scanner.nextLine();
+                    break;
+            }
+        } while(!nice);
+
+    }
+    public static void FiltrerR(Scanner scanner){
+        System.out.println();
+        System.out.println("[1] Entrer le nom d'un projet");
+        System.out.println("[2] Filtrer les travaux");
+        System.out.println("[3] Revenir au menu principal");
+        System.out.print("Selectionnez une des options : ");
+        Boolean nice = false;
+        String a = scanner.nextLine();
+        do{
+            switch (a) {
+                case "1":
+                    System.out.println();
+                    System.out.print("Veuillez écrire le nom du projet : ");
+                    Boolean varia = false;
+                    a = scanner.nextLine();
+                    do{
+                        switch (a) {
+                            default:
+                                System.out.println("Projet introuvable. Veuillez contacter l'administrateur.");
+                                varia = true;
+
+                                break;
+                        }
+                    }while (!varia);
+                    
+                    nice = true;
+                    break;
+                case "2":
+                    System.out.println();
+                    System.out.println("[1] Filtrer par Quartier");
+                    System.out.println("[2] Filtrer par type de travaux ");
+                    System.out.println("[3] Filtrer par rue");
+                    System.out.println("[4] Revenir au menu princpal");
+                    System.out.print("Selectionnez une des options : ");
+                    Boolean varial = false;
+                    a = scanner.nextLine();
+                    do{
+                        switch (a) {
+                            case "1":
+                                System.out.println("À Implémenter :P");
+                                varial = true;
+                                break;
+                            case "2":
+                                System.out.println("À Implémenter :P");
+                                varial = true;
+                                break;
+                            case "3":
+                                System.out.println("À Implémenter :P");
+                                varial = true;
+                                break;
+                            case "4":
+                                varial = true;
+                                System.out.println();
+                                PrintUpR(scanner);
+                                break;
+                        
+                            default:
+                                System.out.print("Veuillez réessayer : ");
+                                a = scanner.nextLine();
+                                break;
+                        }
+                    }while (!varial);
+                    
+                    
+                    nice = true;
+                    break;
+                case "3":
+                    System.out.println();
+                    PrintUpR(scanner);
+                    nice = true;
+                    break;
+                    
+                default:
+                    System.out.print("Cas inexistant.. Veuillez réessayer : ");
+                    a = scanner.nextLine();
+                    break;
+            }
+        } while(!nice);
 
     }
 }
