@@ -26,7 +26,7 @@ ou
 
 ```bash
    git clone git@github.com:youssefbriki1/ift2255-devoir1-groupe2.git
-````
+```
 
 ```bash
 cd prototypes && java -jar main.jar
