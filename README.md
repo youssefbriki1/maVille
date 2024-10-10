@@ -29,6 +29,6 @@ ou
 ```
 
 ```bash
-cd prototypes && java -jar main.jar
+cd ift2255-devoir1-groupe2/prototypes/ && java -jar main.jar
 
 ```
