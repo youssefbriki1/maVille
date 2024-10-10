@@ -29,6 +29,8 @@ ou
 ````
 
 ```
+
+```bash
 cd prototypes && java -jar main.jar
 
 ```
