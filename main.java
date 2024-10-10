@@ -599,7 +599,7 @@ public class main {
         System.out.println();
         System.out.println("[1] Rechercher un projet");
         System.out.println("[2] Consulter les travaux en cours/à venir");
-        System.out.println("[3] S'abonner aux notifications d'un projet");
+        System.out.println("[3] Définir ses préférences de notifications");
         System.out.println("[4] Retourner au menu princpal");
         System.out.print("Veuillez selectionner parmis un des cas : ");
         String a = scanner.nextLine();
