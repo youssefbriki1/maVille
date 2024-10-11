@@ -712,13 +712,22 @@
                     <dt class="glossary-term">Requête de travail</dt>
                     <dd class="glossary-def">Demande soumise par un résident pour réaliser des travaux dans un secteur ou sur une rue. Cette requête est visible par les intervenants qui peuvent y répondre.</dd>
                 
+                    <dt class="glossary-term">Projet de travaux</dt>
+                    <dd class="glossary-def">Proposition de travaux soumise par un intervenant, incluant les détails (type, lieu, date de début/fin, ...).</dd>
+                
                     <dt class="glossary-term">Type de travaux</dt>
                     <dd class="glossary-def">Catégorie de travaux comme les travaux routiers, les travaux souterrains, ou l'entretien des réseaux de télécommunication.</dd>
                 
                     <dt class="glossary-term">Notifications personnalisées</dt>
                     <dd class="glossary-def">Fonctionnalité permettant à un résident de recevoir des alertes sur certains types de travaux affectant son quartier, selon ses préférences.</dd>
-                </dl>                                <!-- <h3 class="subsection-title">Persona (optionnel)</h3>
-
+                
+                    <dt class="glossary-term">Statut d'un projet</dt>
+                    <dd class="glossary-def">Indication concernant l’évolution d’un projet de travail. Il peut être : "Prévu", "En cours", "Suspendu" ou "Terminé".</dd>
+                
+                    <dt class="glossary-term">Candidature</dt>
+                    <dd class="glossary-def">Proposition faite par un intervenant pour réaliser un travail demandé par un résident. Le résident a la possibilité d'accepter ou de refuser cette candidature.</dd>
+                </dl>
+                
                 <ul class="bare-list personas">
                     <li class="persona">
                         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
@@ -1964,28 +1973,33 @@
             </div>
         
                 
-                <div>
-                    <h3 class="subsection-title">Besoins matériels</h3>
-                    <p>
-                        <em>Description et justification des ressourcs nécessaires pour le projet...</em>
-                    </p>
-                </div>
-
-                <div>
-                    <h3 class="subsection-title">Solution de stockage</h3>
-                    <p>
-                        <em>Description de votre solution de stockage...</em>
-                    </p>
-                </div>
-
-                <div>
-                    <h3 class="subsection-title">Solution d'intégration</h3>
-
-                    <p>
-                        <em>Description de votre solution d'intégration...</em>
-                    </p>
-                </div>
-            </section>
+            <div> 
+                <h3 class="subsection-title">Besoins matériels</h3>
+                <p>
+                    <em>Ordinateur ou serveur pour héberger l'application.</em><br>
+                    <em>Connexion stable pour que l'application puisse être accessible en tout temps par les résidents et les intervenants sans perturbation.</em><br>
+                    <em>Espace de stockage suffisant pour stocker les données des utilisateurs et des projets de travaux. Le stockage peut être ajusté en fonction du volume de données (via un système évolutif comme le cloud).</em><br>
+                    <em>Smartphones pour les utilisateurs de l'application.</em>
+                </p>
+            </div>
+            
+            <div>
+                <h3 class="subsection-title">Solution de stockage</h3>
+                <p>
+                    <em>Une base de données relationnelle SQL peut être utilisée pour enregistrer les informations importantes (inscriptions des utilisateurs, détails des projets de travaux, ...) afin d'organiser les données de manière efficace et rapide.</em><br>
+                    <em>Une base de données NoSQL peut être utilisée pour gérer des données non structurées, telles que les préférences de notifications.</em><br>
+                    <em>Les bases de données doivent être facilement évolutives pour gérer un nombre croissant de données et d'utilisateurs au fur et à mesure de la croissance de l'application.</em><br>
+                    <em>Il est important d'automatiser les sauvegardes des données, par exemple, une fois par jour, pour éviter toute perte de données.</em>
+                </p>
+            </div>
+            
+            <div>
+                <h3 class="subsection-title">Solution d'intégration</h3>
+                <p>
+                    <em>Pour intégrer l’application au service Info Entraves et Travaux de la ville, l'utilisation d'une API permettrait à Maville de récupérer en temps réel les données sur les travaux planifiés et en cours. Cela faciliterait l'affichage d'informations précises et l'envoi de notifications aux résidents concernant les projets affectant leur quartier.</em>
+                </p>
+            </div>
+                        </section>
 
             <section class="main-section">
                 <h2 id="prototype" class="section-title">Prototype</h2>
