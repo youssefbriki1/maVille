@@ -21,12 +21,12 @@ Pour exécuter le prototype, suivez les étapes ci-dessous :
    git clone https://github.com/youssefbriki1/ift2255-devoir1-groupe2.git
    ```
 
-````
+```
 ou
 
 ```
    git clone git@github.com:youssefbriki1/ift2255-devoir1-groupe2.git
-````
+```
 
 ```
 
@@ -34,6 +34,11 @@ ou
 cd prototypes && java -jar main.jar
 
 ```
+
+
+Les données du résident sont : email: resident1@gmail.com password : maville2024 
+Les données de l'intervenant sont : email : intervenant1@gmail.com password : ameliore2024@
+
 
 ## Troubleshooting
 
