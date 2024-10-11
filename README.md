@@ -18,19 +18,7 @@ Pour exécuter le prototype, suivez les étapes ci-dessous :
 1. Clonez le dépôt GitHub en utilisant l'une des commandes suivantes :
 
    ```bash
-   git clone https://github.com/youssefbriki1/ift2255-devoir1-groupe2.git
-   ```
-
-```
-ou
-
-```
    git clone git@github.com:youssefbriki1/ift2255-devoir1-groupe2.git
-```
-
-```
-
-```bash
 cd prototypes && java -jar main.jar
 
 ```
