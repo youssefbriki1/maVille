@@ -1,14 +1,17 @@
 package ca.umontreal.ift2255.groupe2.maville_backend.utils;
 
-public abstract class Person {
+import java.util.List;
+
+public abstract class Personne {
     private String name;
     private String email;
     private String password;
 
-    public Person(String name, String email, String password) {
+    public Personne(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
+
     }
 
 
@@ -40,17 +43,12 @@ public abstract class Person {
     }
 
     // Validation
-    
-    public static boolean isValidEmail(String email) { //  TODO:  Add more email validation / if private or public 
-        return email.contains("@") && email.contains(".");
+
+    public static boolean isValid(String email, String password) {
+        return email != null && password != null && email.length() > 0 && password.length() > 0;
     }
 
-    private boolean isValidPassword(String password) {
-        return password.length() >= 8;
-    }
 
-    private static boolean isValid() throws Value
-        return isValidEmail(email) && !name.isEmpty() && isValidPassword(password);
-    }
+
 
 }
