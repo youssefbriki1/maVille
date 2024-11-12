@@ -4,15 +4,20 @@ import ca.umontreal.ift2255.groupe2.maville_backend.utils.Requete;
 import java.util.*;
 
 public class Resident extends Personne {
-    public final String type = "Resident";
+    private final String role = "Resident";
     private String phoneNumber;
     private String address;
     private String postalCode;
     private String birthDate;
     private List<Requete> requetes;
 
+
+    public Resident() {
+        super();
+    }
+
     public Resident(String name, String email, String password,
-     String phoneNumber, String address, String postalCode, String birthDate) {
+                    String phoneNumber, String address, String postalCode, String birthDate) {
         super(name, email, password);
         this.phoneNumber = phoneNumber;
         this.address = address;
@@ -68,6 +73,11 @@ public class Resident extends Personne {
         this.requetes.remove(requete);
     }
 
+    @Override
+    public String getRole() {
+        return role;
+    }
+
     public void deleteRequete(int id) {
         for (Requete requete : requetes) {
             if (requete.getId() == id) {
@@ -77,6 +87,7 @@ public class Resident extends Personne {
         }
     }
 
+    
     public void deleteAllRequetes() {
         this.requetes.clear();
     }

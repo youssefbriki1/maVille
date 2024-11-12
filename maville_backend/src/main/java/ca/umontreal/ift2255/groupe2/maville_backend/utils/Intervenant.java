@@ -1,16 +1,29 @@
 package ca.umontreal.ift2255.groupe2.maville_backend.utils;
+import java.util.ArrayList;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 
 public class Intervenant extends Personne{
+    private final String role = "Intervenant";
+
     private String phoneNumber;
     private String address;
     private String postalCode;
-    private String type;
+    //private String type;
     private int idCity;
+    private ArrayList<Requete> requetes;
 
-    public Intervenant(String name, String email, String password, String type, int idCity) {
+    public Intervenant() {
+        super();
+    }
+
+    public Intervenant(String name, String email, String password, int idCity) {
         super(name, email, password);
-        this.type = type;
+        //this.type = type;
         this.idCity = idCity;
+        this.requetes = new ArrayList<>();
     }
 
     public String getPhoneNumber() {
@@ -36,5 +49,30 @@ public class Intervenant extends Personne{
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
     }
+
+    public int getIdCity() {
+        return idCity;
+    }
+
+    public void setIdCity(int idCity) {
+        this.idCity = idCity;
+    }
+
+    public ArrayList<Requete> getRequetes() {
+        return requetes;
+    }
+
+    public void setRequetes(ArrayList<Requete> requetes) {
+        this.requetes = requetes;
+    }
+
+
+
+    @Override
+    public String getRole() {
+        return role;
+    }
+
+
     
 }

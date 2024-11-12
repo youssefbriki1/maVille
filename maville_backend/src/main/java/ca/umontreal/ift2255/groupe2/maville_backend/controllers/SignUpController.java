@@ -1,5 +1,7 @@
 package ca.umontreal.ift2255.groupe2.maville_backend.controllers;
 
+import ca.umontreal.ift2255.groupe2.maville_backend.utils.Intervenant;
+import ca.umontreal.ift2255.groupe2.maville_backend.utils.Personne;
 import ca.umontreal.ift2255.groupe2.maville_backend.utils.Resident;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
@@ -8,8 +10,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import java.io.File;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.slf4j.Logger;
@@ -34,9 +34,10 @@ public class SignUpController {
         String address = (String) personne.get("address");
         String postalCode = (String) personne.get("postalCode");
         String birthDate = (String) personne.get("birthDate");
+        String role = (String) personne.get("role");
+        Personne user;
 
         logger.info("Received signup request for email: {}", email);
-
 
         // Validate data
         if (!Resident.isValid(email, password)) {
@@ -44,8 +45,12 @@ public class SignUpController {
             return ResponseEntity.badRequest().body("Invalid data for Resident");
         }
 
-        // Create Resident object
-        Resident resident = new Resident(name, email, password, phoneNumber, address, postalCode, birthDate);
+        // Create either a Resident or Intervenant based on role
+        if (role.equals("Resident")) {
+            user = new Resident(name, email, password, phoneNumber, address, postalCode, birthDate);
+        } else {
+            user = new Intervenant(name, email, password, 0);
+        }
 
         // File operations
         synchronized (this) {
@@ -66,20 +71,20 @@ public class SignUpController {
                 ObjectMapper objectMapper = new ObjectMapper();
                 objectMapper.enable(SerializationFeature.INDENT_OUTPUT); // For pretty printing
 
-                List<Resident> residents = new ArrayList<>();
+                List<Personne> users = new ArrayList<>();
 
                 // Initialize the file if it doesn't exist or is empty
                 if (!file.exists() || file.length() == 0) {
                     logger.info("Initializing users.json file");
                     // Write an empty array to the file
-                    objectMapper.writeValue(file, residents);
+                    objectMapper.writeValue(file, users);
                 } else {
                     // Read existing data
                     try {
                         JsonNode jsonNode = objectMapper.readTree(file);
                         if (jsonNode.isArray()) {
-                            Resident[] existingResidents = objectMapper.treeToValue(jsonNode, Resident[].class);
-                            residents = new ArrayList<>(Arrays.asList(existingResidents));
+                            Personne[] existingUsers = objectMapper.treeToValue(jsonNode, Personne[].class);
+                            users = new ArrayList<>(Arrays.asList(existingUsers));
                         } else {
                             logger.error("users.json does not contain a JSON array");
                             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -92,11 +97,20 @@ public class SignUpController {
                     }
                 }
 
-                // Add new resident
-                residents.add(resident);
+                // Add new resident or intervenant
+                users.add(user);
+
+                // Print specific role by checking the subclass type
+                if (user instanceof Resident) {
+                    Resident residentUser = (Resident) user;
+                    System.out.println(residentUser.getRole());
+                } else if (user instanceof Intervenant) {
+                    Intervenant intervenantUser = (Intervenant) user;
+                    System.out.println(intervenantUser.getRole());
+                }
 
                 // Write updated data
-                objectMapper.writeValue(file, residents);
+                objectMapper.writeValue(file, users);
                 logger.info("Resident with email {} added to users.json", email);
                 return ResponseEntity.ok("Resident registered successfully");
 

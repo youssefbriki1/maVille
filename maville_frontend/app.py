@@ -1,17 +1,19 @@
+import pprint
 import streamlit as st
 import requests
 
 API_URL = "http://localhost:8080/api"
+loged_in = False
 
 def sign_up():
     # Sign-up form for Resident or Intervenant
     with st.form(key='signup_form'):
-        st.write('Enter your information below:')
+        st.write('Enter your information below: \n * Sont obligatoires pour residents')
         
         # Collect user information
-        first_name = st.text_input('First Name')
-        last_name = st.text_input('Last Name')
-        email = st.text_input('Email')
+        first_name = st.text_input('First Name*')
+        last_name = st.text_input('Last Name*')
+        email = st.text_input('Email*')
         phone = st.text_input('Phone Number')
         address = st.text_input('Address')  # Specific to Residents
         postal_code = st.text_input('Postal Code')  # Specific to Residents
@@ -40,6 +42,7 @@ def sign_up():
                     "role": role,
                     "password": password
                 }
+                pprint.pprint(data)
                 response = requests.post(f"{API_URL}/signup", json=data)
                 if response.status_code == 200:
                     print("success")
@@ -50,35 +53,55 @@ def sign_up():
         
         
 def log_in():
-    #response = requests.get(f"{API_URL}/login")
+    st.title("Login")
+    # Create a login form
     with st.form(key='signin_form'):
         st.write('Enter your information below:')
         email = st.text_input('Email')
         password = st.text_input('Password', type='password')
         role = st.radio('Role', ('Intervenant', 'Resident'))
-        data = {
-            "email": email,
-            "password": password,
-            "role": role
-        }
         submit_button = st.form_submit_button(label='Sign In')
-        if submit_button:
-            response = requests.post(f"{API_URL}/login", json=data)
-            if response.status_code == 200:
-                st.success('Sign-in successful!')
-        
+
+    if submit_button:
+        if not email or not password:
+            st.warning("Please enter both email and password.")
+        else:
+            data = {
+                "email": email,
+                "password": password,
+                "role": role
+            }
+            print(data)
+            try:
+                # Show a loading spinner while the request is being processed
+                with st.spinner('Authenticating...'):
+                    response = requests.post(f"{API_URL}/login", json=data)
+                # Handle the response
+                if response.status_code == 200:
+                    st.session_state['loged_in'] = True
+                    st.session_state['user_email'] = email
+                    st.session_state['user_role'] = role
+                    st.success('Sign-in successful!')
+                elif response.status_code == 401:
+                    st.error("Invalid email or password.")
+                else:
+                    st.error(f"Login failed: {response.text}")
+            except requests.exceptions.RequestException as e:
+                st.error(f"An error occurred: {e}")
         
 
 def main():
+    global loged_in
     st.set_page_config(page_title='Maville', page_icon='🏙️', layout='wide')
 
     # Header
-    st.title('Welcome to Maville')
+    st.title('Bienvenue a Maville')
+    connected_text = f"Connecte en tant " # To update later
     st.subheader('Explore Your City Like Never Before')
 
     # Sidebar Navigation
     st.sidebar.title('Navigation')
-    selection = st.sidebar.radio("Go to", ["Home", "About", "Contact", "Sign Up", "Sign In"])
+    selection = st.sidebar.radio("Go to", ["Home", "About", "Contact", "Creer un compte", f'{"Envoyer requete de travail" if st.session_state.get("loged_in") else "Connexion"}'])
 
     # Home Page
     if selection == "Home":
@@ -106,14 +129,15 @@ def main():
         """)
         
         
-    elif selection == "Sign Up":
+    elif selection == "Creer un compte":
         st.header("Sign Up")
         sign_up()
         
-    elif selection == "Sign In":
+    elif selection == "Connexion":
         st.header("Sign In")
         log_in()
         
+    print(st.session_state)   # Where stored everything     
 
 if __name__ == '__main__':
     main()

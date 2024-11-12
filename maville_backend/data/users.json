@@ -1,11 +1,11 @@
 [ {
-  "name" : "Youssefsdsd Briki",
-  "email" : "youssef@gmail.com",
-  "password" : "yaya",
-  "type" : "Resident",
+  "name" : "Youssef Briki",
+  "email" : "adad",
+  "password" : "hd",
+  "role" : "Intervenant",
   "phoneNumber" : null,
   "address" : null,
   "postalCode" : null,
-  "birthDate" : null,
+  "idCity" : 0,
   "requetes" : [ ]
 } ]
