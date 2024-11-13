@@ -1,25 +1,28 @@
 package ca.umontreal.ift2255.groupe2.maville_backend.utils;
-
-
 import ca.umontreal.ift2255.groupe2.maville_backend.utils.Personne;
 
 import java.util.*;
-public class Requete {
+public class TravailResident {
     private int id;
     private String title;
     private String description;
     private String status;
-    private String date;
-    private Personne sender;
+    private String dateDebut;
+    private String senderEmail;
+    private String typeTravaux;
 
+    public TravailResident() {
+    }
+    
 
-    public Requete(int id, String title, String description, String status, String date, Personne sender) {
+    public TravailResident(int id, String title, String description, String status, String dateDebut, String typeTravaux, String senderEmail) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.status = status;
-        this.date = date;
-        this.sender = sender;
+        this.dateDebut = dateDebut;
+        this.typeTravaux = typeTravaux;
+        this. = senderEmail;
     }
 
 
@@ -41,12 +44,16 @@ public class Requete {
         return status;
     }
 
-    public String getDate() {
-        return date;
+    public String getdateDebut() {
+        return dateDebut;
+    }
+    public String getTypeTravaux() {
+        return typeTravaux;
     }
 
-    public Personne getSender() {
-        return sender;
+
+    public String getsenderEmail() {
+        return senderEmail;
     }
 
     public void setId(int id) {
@@ -65,12 +72,18 @@ public class Requete {
         this.status = status;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+
+    public void setTypeTravaux(String typeTravaux) {
+        this.typeTravaux = typeTravaux;
     }
 
-    public void setSender(Personne sender) {
-        this.sender = sender;
+    public void setdateDebut(String dateDebut) {
+        this.dateDebut = dateDebut;
+    }
+
+
+    public void setsenderEmail(String sender) {
+        this.senderEmail = sender;
     }
 
     // Validation

@@ -1,9 +1,22 @@
-import pprint
 import streamlit as st
 import requests
+import logging
 
+
+logger = logging.getLogger(__name__)
 API_URL = "http://localhost:8080/api"
 loged_in = False
+TYPES_TRAVAIL = [    "Travaux routiers",
+    "Travaux de gaz ou électricité",
+    "Construction ou rénovation",
+    "Entretien paysager",
+    "Travaux liés aux transports en commun",
+    "Travaux de signalisation et éclairage",
+    "Travaux souterrains",
+    "Travaux résidentiels",
+    "Entretien urbain",
+    "Entretien des réseaux de télécommunication"
+]
 
 def sign_up():
     # Sign-up form for Resident or Intervenant
@@ -42,10 +55,10 @@ def sign_up():
                     "role": role,
                     "password": password
                 }
-                pprint.pprint(data)
+                logger.info(data)
                 response = requests.post(f"{API_URL}/signup", json=data)
                 if response.status_code == 200:
-                    print("success")
+                    logger.info("success")
                     st.success('Connexion reussie!')
                 # TODO: Process data (e.g., send to backend)
             else:
@@ -71,7 +84,7 @@ def log_in():
                 "password": password,
                 "role": role
             }
-            print(data)
+            logger.info(data)
             try:
                 # Show a loading spinner while the request is being processed
                 with st.spinner('Authenticating...'):
@@ -90,14 +103,70 @@ def log_in():
                 st.error(f"An error occurred: {e}")
         
 
+
+def consulter_travaux():
+    # Get all requests
+    response = requests.get(f"{API_URL}/consulter_travaux")
+    if response.status_code == 200:
+        requests_data = response.json()
+        for request in requests_data:
+            st.write(f" - Faite part ({request['senderEmail']})")
+            st.write(f"Titre: {request['title']}")
+            st.write(f"Description: {request['description']}")
+            st.write(f"Type de travail: {request['typeTravaux']}")
+            st.write(f"Date de debut: {request['dateDebut']}")
+            st.write(f"Status: {request['status']}")
+            st.write('---')
+
+        #st.write(requests_data)
+    else:
+        st.error("Failed to retrieve requests.")
+        
+def envoyer_requete_resident():
+    # Create a form to submit a request
+    with st.form(key='request_form'):
+        st.write('Enter your request below:')
+        title = st.text_input('Titre')
+        description = st.text_area('Description')
+        type_travail = st.selectbox('Type de travail', TYPES_TRAVAIL)
+        date_debut = st.date_input('Date de debut')
+        submit_button = st.form_submit_button(label='Submit Request')
+
+    if submit_button:
+        if not title or not description:
+            st.warning("Please enter both title and description.")
+        else:
+            data = {
+                "resident_email": st.session_state.get("user_email"),
+                "type_travail": type_travail,
+                "titre": title,
+                "description": description,
+                "date_debut": str(date_debut)
+            }
+            try:
+                # Show a loading spinner while the request is being processed
+                with st.spinner('Sending request...'):
+                    response = requests.post(f"{API_URL}/envoyer_requete_resident", json=data)
+                # Handle the response
+                if response.status_code == 200:
+                    st.success('Request submitted successfully!')
+                else:
+                    st.error(f"Failed to submit request: {response.text}")
+            except requests.exceptions.RequestException as e:
+                st.error(f"An error occurred: {e}")
+                
+        
+
 def main():
     global loged_in
     st.set_page_config(page_title='Maville', page_icon='🏙️', layout='wide')
 
     # Header
     st.title('Bienvenue a Maville')
-    connected_text = f"Connecte en tant " # To update later
-    st.subheader('Explore Your City Like Never Before')
+    if st.session_state.get("loged_in"):
+        connected_text = f'Connecte en tant {st.session_state.get("user_email")}, {st.session_state.get("user_role")}' 
+        st.write(connected_text)
+    st.subheader('Avec MaVille, fini les mauvaises surprises!') 
 
     # Sidebar Navigation
     st.sidebar.title('Navigation')
@@ -107,7 +176,7 @@ def main():
     if selection == "Home":
         st.header("Home")
         st.write("Discover the best places and events happening in your city.")
-        # Add more content here
+        consulter_travaux()
 
     # About Page
     elif selection == "About":
@@ -137,7 +206,11 @@ def main():
         st.header("Sign In")
         log_in()
         
-    print(st.session_state)   # Where stored everything     
+        
+    elif selection == "Envoyer requete de travail":
+        st.header("Envoyer requete de travail")
+        envoyer_requete_resident()
+        
+    logger.info(st.session_state)   # Where stored everything     
 
-if __name__ == '__main__':
-    main()
+main()

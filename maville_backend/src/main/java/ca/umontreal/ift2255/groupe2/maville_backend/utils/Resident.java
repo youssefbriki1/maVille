@@ -1,6 +1,6 @@
 package ca.umontreal.ift2255.groupe2.maville_backend.utils;
 
-import ca.umontreal.ift2255.groupe2.maville_backend.utils.Requete;
+import ca.umontreal.ift2255.groupe2.maville_backend.utils.TravailResident;
 import java.util.*;
 
 public class Resident extends Personne {
@@ -9,7 +9,7 @@ public class Resident extends Personne {
     private String address;
     private String postalCode;
     private String birthDate;
-    private List<Requete> requetes;
+    private List<TravailResident> requetes;
 
 
     public Resident() {
@@ -61,15 +61,15 @@ public class Resident extends Personne {
         this.birthDate = birthDate;
     }
 
-    public  List<Requete> getRequetes() {
+    public  List<TravailResident> getRequetes() {
         return requetes;
     }
 
-    public void setRequetes(List<Requete> requetes) {
+    public void setRequetes(List<TravailResident> requetes) {
         this.requetes = requetes;
     }
 
-    public void deleteRequete(Requete requete) {
+    public void deleteRequete(TravailResident requete) {
         this.requetes.remove(requete);
     }
 
@@ -79,7 +79,7 @@ public class Resident extends Personne {
     }
 
     public void deleteRequete(int id) {
-        for (Requete requete : requetes) {
+        for (TravailResident requete : requetes) {
             if (requete.getId() == id) {
                 this.requetes.remove(requete);
                 break;
@@ -92,20 +92,20 @@ public class Resident extends Personne {
         this.requetes.clear();
     }
 
-    public void updateRequete(Requete requete) {
-        for (Requete r : requetes) {
+    public void updateRequete(TravailResident requete) {
+        for (TravailResident r : requetes) {
             if (r.getId() == requete.getId()) {
                 r.setTitle(requete.getTitle());
                 r.setDescription(requete.getDescription());
                 r.setStatus(requete.getStatus());
-                r.setDate(requete.getDate());
-                r.setSender(requete.getSender());
+                r.setdateDebut(requete.getdateDebut());
+                r.setsenderEmail(requete.getsenderEmail());
                 break;
             }
         }
     }
 
-    public void addRequete(Requete requete) {
+    public void addRequete(TravailResident requete) {
         this.requetes.add(requete);
     }
 

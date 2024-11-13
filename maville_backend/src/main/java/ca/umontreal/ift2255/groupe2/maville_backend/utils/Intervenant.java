@@ -13,7 +13,7 @@ public class Intervenant extends Personne{
     private String postalCode;
     //private String type;
     private int idCity;
-    private ArrayList<Requete> requetes;
+    private ArrayList<TravailResident> requetes;
 
     public Intervenant() {
         super();
@@ -58,11 +58,11 @@ public class Intervenant extends Personne{
         this.idCity = idCity;
     }
 
-    public ArrayList<Requete> getRequetes() {
+    public ArrayList<TravailResident> getRequetes() {
         return requetes;
     }
 
-    public void setRequetes(ArrayList<Requete> requetes) {
+    public void setRequetes(ArrayList<TravailResident> requetes) {
         this.requetes = requetes;
     }
 
