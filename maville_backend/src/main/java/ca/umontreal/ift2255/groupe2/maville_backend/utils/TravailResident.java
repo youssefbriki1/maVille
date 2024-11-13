@@ -22,7 +22,7 @@ public class TravailResident {
         this.status = status;
         this.dateDebut = dateDebut;
         this.typeTravaux = typeTravaux;
-        this. = senderEmail;
+        this.senderEmail = senderEmail;
     }
 
 
