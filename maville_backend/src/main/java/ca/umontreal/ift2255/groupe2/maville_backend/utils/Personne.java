@@ -1,5 +1,9 @@
 package ca.umontreal.ift2255.groupe2.maville_backend.utils;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import java.util.regex.Pattern;
+
+import java.util.regex.Pattern;
+
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 
 @JsonTypeInfo(
@@ -60,7 +64,12 @@ public abstract class Personne {
     // Validation
 
     public static boolean isValid(String email, String password) {
-        return email != null && password != null && email.length() > 0 && password.length() > 0;
+        String emailRegex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        
+        return email != null && password != null 
+                && email.length() > 0 && password.length() > 0 
+                && pattern.matcher(email).matches();
     }
 
 

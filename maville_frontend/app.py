@@ -1,6 +1,9 @@
 import streamlit as st
 import requests
 import logging
+from textart import TEXTART
+
+
 
 
 logger = logging.getLogger(__name__)
@@ -177,6 +180,10 @@ def main():
         st.header("Home")
         st.write("Discover the best places and events happening in your city.")
         consulter_travaux()
+        st.write("Test API")
+        curr_data = {"choix": "entraves"}
+        response = requests.get(f"{API_URL}/fetch-data", params=curr_data)
+        st.write(response.json())
 
     # About Page
     elif selection == "About":
@@ -214,3 +221,4 @@ def main():
     logger.info(st.session_state)   # Where stored everything     
 
 main()
+
