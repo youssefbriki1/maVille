@@ -6,7 +6,7 @@ from pydantic import BaseModel
 import typing
 
 # To parse everything from the json response 
-def jsonParser(Basemodel):
+def formParser(Basemodel):
     pass
 
 

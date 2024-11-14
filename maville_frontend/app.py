@@ -107,9 +107,11 @@ def log_in():
         
 
 
-def consulter_travaux():
-    # Get all requests
-    response = requests.get(f"{API_URL}/consulter_travaux")
+def consulter_travaux(role):
+    # Send 'user' instead of 'role' in params
+    user = {"user": role}
+    response = requests.get(f"{API_URL}/consulter_infos", params=user)
+    
     if response.status_code == 200:
         requests_data = response.json()
         for request in requests_data:
@@ -120,8 +122,6 @@ def consulter_travaux():
             st.write(f"Date de debut: {request['dateDebut']}")
             st.write(f"Status: {request['status']}")
             st.write('---')
-
-        #st.write(requests_data)
     else:
         st.error("Failed to retrieve requests.")
         
@@ -159,7 +159,7 @@ def envoyer_requete_resident():
                 st.error(f"An error occurred: {e}")
                 
         
-
+    
 def main():
     global loged_in
     st.set_page_config(page_title='Maville', page_icon='🏙️', layout='wide')
@@ -179,14 +179,19 @@ def main():
     if selection == "Home":
         st.header("Home")
         st.write("Discover the best places and events happening in your city.")
-        consulter_travaux()
+        consulter_travaux("Resident")
         st.write("Test API")
-        curr_data = {"choix": "entraves"}
-        response = requests.get(f"{API_URL}/fetch-data", params=curr_data)
-        st.write(response.json())
+        submit_api = st.button("Submit API")
+        choix_user = st.radio("Choix", ["entraves", "travaux"])
+        if submit_api:
+            
+            curr_data = {"choix": choix_user}
+            response = requests.get(f"{API_URL}/fetch-data", params=curr_data)
+            st.write(response.json())
 
     # About Page
     elif selection == "About":
+        consulter_travaux("Intervenant")
         st.header("About Maville")
         st.write("""
         Maville is your ultimate guide to exploring the hidden gems of your city.
@@ -212,6 +217,7 @@ def main():
     elif selection == "Connexion":
         st.header("Sign In")
         log_in()
+        
         
         
     elif selection == "Envoyer requete de travail":

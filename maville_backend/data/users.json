@@ -8,4 +8,14 @@
   "postalCode" : null,
   "idCity" : 0,
   "requetes" : [ ]
+}, {
+  "name" : "Youssef Briki",
+  "email" : "youssef.briki05@gmail.com",
+  "password" : "yaya",
+  "role" : "Resident",
+  "phoneNumber" : null,
+  "address" : "log 101, 3540 boul. Édouard-Montpetit",
+  "postalCode" : null,
+  "birthDate" : null,
+  "requetes" : [ ]
 } ]

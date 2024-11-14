@@ -14,14 +14,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 
 @RestController
-@RequestMapping("/api/consulter_travaux")
+@RequestMapping("/api/consulter_infos")
 @CrossOrigin(origins = "http://localhost:8501")
 public class AfficherTravaux {
-    private static final Logger logger = LoggerFactory.getLogger(SignUpController.class);
+    private static final Logger logger = LoggerFactory.getLogger(AfficherTravaux.class);
 
 
     @GetMapping
-    public ResponseEntity<?> Afficher() throws IOException {
+    public ResponseEntity<?> Afficher(@RequestParam String user) throws IOException {
+        logger.info("Data recieved"+user);
         try {
             // Read users from users.json
             File directory = new File("data");
@@ -38,12 +39,16 @@ public class AfficherTravaux {
             List<TravailResident> travaux = Arrays.asList(travauxArray);
 
             List<TravailResident> responseList = new ArrayList<>();
-            // Search for the user
 
             for (TravailResident travail : travaux) {
-                if (!travail.getStatus().equals("En attente de confirmation")) {
+            
+                if (!travail.getStatus().equals("En attente de confirmation") && user.equals("Resident")) {
                     responseList.add(travail);
                 }
+                else if (travail.getStatus().equals("En attente de confirmation") && user.equals("Intervenant")) {
+                    responseList.add(travail);
+                }
+
             }
             return ResponseEntity.ok(responseList);
 
