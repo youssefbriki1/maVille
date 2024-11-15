@@ -1,13 +1,14 @@
 import streamlit as st
 import requests
 import logging
-from textart import TEXTART
-
+from util_text import *
+from menu import Menu
+from menu_resident import Menu_Resident
+from personne import Personne
 
 
 
 logger = logging.getLogger(__name__)
-API_URL = "http://localhost:8080/api"
 loged_in = False
 TYPES_TRAVAIL = [    "Travaux routiers",
     "Travaux de gaz ou électricité",
@@ -165,65 +166,21 @@ def main():
     st.set_page_config(page_title='Maville', page_icon='🏙️', layout='wide')
 
     # Header
-    st.title('Bienvenue a Maville')
     if st.session_state.get("loged_in"):
-        connected_text = f'Connecte en tant {st.session_state.get("user_email")}, {st.session_state.get("user_role")}' 
+        user = Personne(email=st.session_state.get("user_email"), role=st.session_state.get("user_role"))
+        connected_text = f'Connecte en tant {user.email}, {user.role}' 
         st.write(connected_text)
-    st.subheader('Avec MaVille, fini les mauvaises surprises!') 
+        if user.role == "Resident":
+            menu = Menu_Resident(user)
+            menu()
+        else:
+            pass
 
     # Sidebar Navigation
-    st.sidebar.title('Navigation')
-    selection = st.sidebar.radio("Go to", ["Home", "About", "Contact", "Creer un compte", f'{"Envoyer requete de travail" if st.session_state.get("loged_in") else "Connexion"}'])
-
-    # Home Page
-    if selection == "Home":
-        st.header("Home")
-        st.write("Discover the best places and events happening in your city.")
-        consulter_travaux("Resident")
-        st.write("Test API")
-        submit_api = st.button("Submit API")
-        choix_user = st.radio("Choix", ["entraves", "travaux"])
-        if submit_api:
+    else:
+        menu = Menu()
+        menu()
             
-            curr_data = {"choix": choix_user}
-            response = requests.get(f"{API_URL}/fetch-data", params=curr_data)
-            st.write(response.json())
-
-    # About Page
-    elif selection == "About":
-        consulter_travaux("Intervenant")
-        st.header("About Maville")
-        st.write("""
-        Maville is your ultimate guide to exploring the hidden gems of your city.
-        Our mission is to help you discover new experiences and connect with your community.
-        """)
-        # Add more content here
-
-    # Contact Page
-    elif selection == "Contact":
-        st.header("Contact Us")
-        st.write("We'd love to hear from you! Reach out to us through any of the channels below:")
-        st.markdown("""
-        - **Email:** contact@maville.com
-        - **Phone:** +1 234 567 890
-        - **Address:** 123 Main Street, Anytown, USA
-        """)
-        
-        
-    elif selection == "Creer un compte":
-        st.header("Sign Up")
-        sign_up()
-        
-    elif selection == "Connexion":
-        st.header("Sign In")
-        log_in()
-        
-        
-        
-    elif selection == "Envoyer requete de travail":
-        st.header("Envoyer requete de travail")
-        envoyer_requete_resident()
-        
     logger.info(st.session_state)   # Where stored everything     
 
 main()

@@ -14,3 +14,15 @@ TEXTART="""
              '          '         '      '        '    '        '     '    '       '    '       '    )/    
                                                                                                      '      
 """
+API_URL = "http://localhost:8080/api"
+TYPES_TRAVAIL = [    "Travaux routiers",
+    "Travaux de gaz ou électricité",
+    "Construction ou rénovation",
+    "Entretien paysager",
+    "Travaux liés aux transports en commun",
+    "Travaux de signalisation et éclairage",
+    "Travaux souterrains",
+    "Travaux résidentiels",
+    "Entretien urbain",
+    "Entretien des réseaux de télécommunication"
+]
