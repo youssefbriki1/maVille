@@ -1,0 +1,81 @@
+[ {
+  "name" : "Youssef Briki",
+  "email" : "adad",
+  "password" : "hd",
+  "role" : "Intervenant",
+  "phoneNumber" : null,
+  "address" : null,
+  "postalCode" : null,
+  "idCity" : 0,
+  "requetes" : [ ]
+}, {
+  "name" : "Youssef Briki",
+  "email" : "youssef.briki05@gmail.com",
+  "password" : "yaya",
+  "role" : "Resident",
+  "phoneNumber" : null,
+  "address" : "log 101, 3540 boul. Édouard-Montpetit",
+  "postalCode" : null,
+  "birthDate" : null,
+  "requetes" : [ ]
+}, {
+  "name" : "Youssef Briki",
+  "email" : "youssef.briki@gmail.com",
+  "password" : "ya",
+  "role" : "Resident",
+  "phoneNumber" : null,
+  "address" : "log 101, 3540 boul. Édouard-Montpetit",
+  "postalCode" : null,
+  "birthDate" : null,
+  "requetes" : [ ]
+}, {
+  "name" : "Youssef Briki",
+  "email" : "youssef.brikai@gmail.com",
+  "password" : "ya",
+  "role" : "Intervenant",
+  "phoneNumber" : null,
+  "address" : null,
+  "postalCode" : null,
+  "idCity" : 0,
+  "requetes" : [ ]
+}, {
+  "name" : "Youssef Briki",
+  "email" : "youssef.briki05@gmail.com",
+  "password" : "hh",
+  "role" : "Intervenant",
+  "phoneNumber" : null,
+  "address" : null,
+  "postalCode" : null,
+  "idCity" : 0,
+  "requetes" : [ ]
+}, {
+  "name" : "Youssef Briki",
+  "email" : "youssef.briki05@gmail.com",
+  "password" : "hh",
+  "role" : "Resident",
+  "phoneNumber" : null,
+  "address" : "2350 Boulevard Édouard-Montpetit, 103G",
+  "postalCode" : null,
+  "birthDate" : null,
+  "requetes" : [ ]
+}, {
+  "name" : "Youssef Briki",
+  "email" : "youssef.briki05@gmail.com",
+  "password" : "hh",
+  "role" : "Resident",
+  "phoneNumber" : "4389277057",
+  "address" : "2350 Boulevard Édouard-Montpetit, 103G",
+  "postalCode" : "H3T 1J4",
+  "birthDate" : "2024-11-14",
+  "requetes" : [ ]
+}, {
+  "name" : "Youssef Briki",
+  "email" : "youssef.briki05@gmail.com",
+  "password" : "hh",
+  "role" : "Intervenant",
+  "phoneNumber" : null,
+  "address" : null,
+  "postalCode" : null,
+  "idCity" : 0,
+  "requetes" : [ ]
+} ]
