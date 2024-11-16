@@ -30,14 +30,18 @@ public class SignUpController {
         String name = (String) personne.get("name");
         String email = (String) personne.get("email");
         String password = (String) personne.get("password");
-        String phoneNumber = (String) personne.get("phoneNumber");
+        String phoneNumber = (String) personne.get("phone");
         String address = (String) personne.get("address");
-        String postalCode = (String) personne.get("postalCode");
-        String birthDate = (String) personne.get("birthDate");
+        String postalCode = (String) personne.get("postal_code");
+        String birthDate = (String) personne.get("birth_date");
         String role = (String) personne.get("role");
         Personne user;
 
         logger.info("Received signup request for email: {}", email);
+        logger.info("Received signup request for role: {}", role);
+        logger.info(phoneNumber, address, postalCode, birthDate);
+        logger.info("Received signup request for name: {}", postalCode);
+        
 
         // Validate data
         if (!Resident.isValid(email, password)) {
@@ -47,9 +51,9 @@ public class SignUpController {
 
         // Create either a Resident or Intervenant based on role
         if (role.equals("Resident")) {
-            user = new Resident(name, email, password, phoneNumber, address, postalCode, birthDate);
+            user = (Resident) new Resident(name, email, password, phoneNumber, address, postalCode, birthDate);
         } else {
-            user = new Intervenant(name, email, password, 0);
+            user =(Intervenant) new Intervenant(name, email, password, 0);
         }
 
         // File operations
