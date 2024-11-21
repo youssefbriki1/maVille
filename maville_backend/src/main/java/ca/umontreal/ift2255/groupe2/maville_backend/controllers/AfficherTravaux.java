@@ -21,7 +21,7 @@ public class AfficherTravaux {
 
     @GetMapping
     public ResponseEntity<?> Afficher(@RequestParam HashMap<String,String> user) throws IOException {
-        logger.info("Data recieved"+user);
+        logger.info("Data recieved" + user.toString());
         try {
             // Read users from users.json
             File directory = new File("data");
