@@ -8,4 +8,24 @@
   "birthDate" : "2024-11-21",
   "requetes" : [ ],
   "role" : "Resident"
+}, {
+  "name" : "Youssef Briki",
+  "email" : "youssef@gmail.com",
+  "password" : "a",
+  "phoneNumber" : null,
+  "address" : null,
+  "postalCode" : null,
+  "idCity" : 0,
+  "requetes" : [ ],
+  "role" : "Intervenant"
+}, {
+  "name" : "Youssef Briki",
+  "email" : "youssef.briki05@gmail.com",
+  "password" : "q",
+  "phoneNumber" : "4389277057",
+  "address" : "2350 Boulevard Édouard-Montpetit, 103G",
+  "postalCode" : "H3T 1J4",
+  "birthDate" : "2024-11-21",
+  "requetes" : [ ],
+  "role" : "Resident"
 } ]

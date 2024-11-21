@@ -4,7 +4,7 @@ import requests
 from menu import Menu
 from personne import Personne
 from util_text import API_URL, TYPES_TRAVAIL
-
+from formParser import DataParser
 
 class Menu_Resident(Menu):
     def __init__(self,user:Personne) -> None:
@@ -15,9 +15,23 @@ class Menu_Resident(Menu):
         
         
     def __fetch_api_data(self, user_choice):
+        """
+        Fetch data from the API and writes it.
+
+        Args:
+            user_choice (_type_): _description_
+        """
         curr_data = {"choix": user_choice}
         response = requests.get(f"{API_URL}/fetch-data", params=curr_data)
-        st.write(response.json())
+        if response.status_code != 200:
+            st.error("Failed to retrieve data.")
+            self.logger.error(f"Failed to retrieve data: {response.text}")
+            return
+        else:
+            data_parser = DataParser()
+            response_data = data_parser.formParser(response.json())
+            data_parser.write(response_data)
+        
 
     def consulter_profile(self):
         st.title("Profile")
@@ -50,7 +64,6 @@ class Menu_Resident(Menu):
             st.error("Failed to retrieve requests.")
             
     def soumettre_requete_travail(self):
-        # Create a form to submit a request
         with st.form(key='request_form'):
             st.write('Enter your request below:')
             title = st.text_input('Titre')
@@ -71,10 +84,8 @@ class Menu_Resident(Menu):
                     "date_debut": str(date_debut)
                 }
                 try:
-                    # Show a loading spinner while the request is being processed
                     with st.spinner('Sending request...'):
                         response = requests.post(f"{API_URL}/envoyer_requete_resident", json=data)
-                    # Handle the response
                     if response.status_code == 200:
                         st.success('Request submitted successfully!')
                     else:
