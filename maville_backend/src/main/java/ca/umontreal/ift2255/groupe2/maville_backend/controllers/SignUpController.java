@@ -44,7 +44,7 @@ public class SignUpController {
         
 
         // Validate data
-        if (!Resident.isValid(email, password)) {
+        if (!Personne.isValid(email, password)) {
             logger.warn("Invalid data for Resident with email: {}", email);
             return ResponseEntity.badRequest().body("Invalid data for Resident");
         }

@@ -11,3 +11,5 @@ def Menu_Intervenant(Menu):
         super().__init__()
         self.options = ["Acceuil","Consulter travaux", "Consulter Profile", "Se deconnecter"]    
         self.user = user
+    
+    

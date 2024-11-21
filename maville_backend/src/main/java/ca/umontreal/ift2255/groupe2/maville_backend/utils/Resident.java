@@ -4,7 +4,7 @@ import ca.umontreal.ift2255.groupe2.maville_backend.utils.TravailResident;
 import java.util.*;
 
 public class Resident extends Personne {
-    private final String role = "Resident";
+    private static final String role = "Resident";
     private String phoneNumber;
     private String address;
     private String postalCode;
@@ -114,9 +114,4 @@ public class Resident extends Personne {
 
 
     // TODOs: Add more validation rules
-    public static boolean isValid(String email, String password) {
-        return email != null && password != null && email.length() > 0 && password.length() > 0;
-    }
-
-
 }

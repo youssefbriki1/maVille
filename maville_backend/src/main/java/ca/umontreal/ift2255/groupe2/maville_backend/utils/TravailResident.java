@@ -90,10 +90,5 @@ public class TravailResident {
 
     public static boolean isValid(String title, String description) {
         return title != null && description != null && title.length() > 0 && description.length() > 0;
-    }
-
-
-
-
-    
+    } 
 }

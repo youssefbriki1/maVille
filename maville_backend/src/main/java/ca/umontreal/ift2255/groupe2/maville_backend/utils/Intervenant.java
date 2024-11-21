@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 
 public class Intervenant extends Personne{
-    private final String role = "Intervenant";
+    private static final String role = "Intervenant";
 
     private String phoneNumber;
     private String address;
@@ -73,6 +73,4 @@ public class Intervenant extends Personne{
         return role;
     }
 
-
-    
 }

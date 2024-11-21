@@ -1,9 +1,6 @@
 package ca.umontreal.ift2255.groupe2.maville_backend.utils;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.util.regex.Pattern;
-
-import java.util.regex.Pattern;
-
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 
 @JsonTypeInfo(
@@ -71,8 +68,5 @@ public abstract class Personne {
                 && email.length() > 0 && password.length() > 0 
                 && pattern.matcher(email).matches();
     }
-
-
-
 
 }
