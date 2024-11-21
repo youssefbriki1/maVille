@@ -1,0 +1,11 @@
+[ {
+  "name" : "Youssef Briki",
+  "email" : "youssef.briki05@gmail.com",
+  "password" : "yaya",
+  "phoneNumber" : "4389277057",
+  "address" : "2350 Boulevard Édouard-Montpetit, 103G",
+  "postalCode" : "H3T 1J4",
+  "birthDate" : "2024-11-21",
+  "requetes" : [ ],
+  "role" : "Resident"
+} ]
