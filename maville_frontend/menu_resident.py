@@ -33,12 +33,11 @@ class Menu_Resident(Menu):
         self.__fetch_api_data("travaux")    
         
     def consulter_travaux_residentiels(self):
-        user = {"user": self.user.role}
-        response = requests.get(f"{API_URL}/consulter_infos", params=user)
+        response = requests.get(f"{API_URL}/consulter_infos", params=self.user.to_dict())
         
         if response.status_code == 200:
             requests_data = response.json()
-            # To parse here:
+            # To parse here - add parser class:
             for request in requests_data:
                 st.write(f" - Faite part ({request['senderEmail']})")
                 st.write(f"Titre: {request['title']}")

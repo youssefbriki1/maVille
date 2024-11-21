@@ -109,11 +109,6 @@ public class EnvoyerRequete {
             }
         }
 
-
-
-
-
-
     }
     
 }

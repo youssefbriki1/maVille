@@ -1,6 +1,5 @@
 package ca.umontreal.ift2255.groupe2.maville_backend.controllers;
 
-import ca.umontreal.ift2255.groupe2.maville_backend.utils.Personne;
 import ca.umontreal.ift2255.groupe2.maville_backend.utils.TravailResident;
 
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +20,7 @@ public class AfficherTravaux {
 
 
     @GetMapping
-    public ResponseEntity<?> Afficher(@RequestParam String user) throws IOException {
+    public ResponseEntity<?> Afficher(@RequestParam HashMap<String,String> user) throws IOException {
         logger.info("Data recieved"+user);
         try {
             // Read users from users.json
@@ -34,7 +33,6 @@ public class AfficherTravaux {
                 throw new IOException("No users registered.");
             }
     
-            // Read all users as Personne[]
             TravailResident[] travauxArray = objectMapper.readValue(file, TravailResident[].class);
             List<TravailResident> travaux = Arrays.asList(travauxArray);
 
@@ -42,10 +40,10 @@ public class AfficherTravaux {
 
             for (TravailResident travail : travaux) {
             
-                if (!travail.getStatus().equals("En attente de confirmation") && user.equals("Resident")) {
+                if (user.get("role").equals("Resident") && user.get("email").equals(travail.getsenderEmail())) {
                     responseList.add(travail);
                 }
-                else if (travail.getStatus().equals("En attente de confirmation") && user.equals("Intervenant")) {
+                else if (user.get("role").equals("Intervenant")) {
                     responseList.add(travail);
                 }
 
