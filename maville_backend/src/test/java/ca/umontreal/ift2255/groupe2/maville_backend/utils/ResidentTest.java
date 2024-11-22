@@ -73,48 +73,48 @@ public class ResidentTest {
     // Test unitaires fait par Royann Lee
     @Test
     public void testDeleteRequeteById() {
-    // Ajouter deux requêtes au résident
-    resident.addRequete(requete1);
-    resident.addRequete(requete2);
+        // Ajouter deux requêtes au résident
+        resident.addRequete(requete1);
+        resident.addRequete(requete2);
 
-    // Supprimer la requête avec l'ID 1
-    resident.deleteRequete(1);
+        // Supprimer la requête avec l'ID 1
+        resident.deleteRequete(1);
 
-    // Vérifier que la taille de la liste des requêtes est mise à jour correctement
-    assertEquals(1, resident.getRequetes().size());
+        // Vérifier que la taille de la liste des requêtes est mise à jour correctement
+        assertEquals(1, resident.getRequetes().size());
 
-    // Vérifier que la requête avec l'ID 1 a bien été supprimée
-    assertFalse(resident.getRequetes().stream().anyMatch(r -> r.getId() == 1));
+        // Vérifier que la requête avec l'ID 1 a bien été supprimée
+        assertFalse(resident.getRequetes().stream().anyMatch(r -> r.getId() == 1));
     }
 
     @Test
     public void testDeleteAllRequetes() {
-    // Ajouter deux requêtes au résident
-    resident.addRequete(requete1);
-    resident.addRequete(requete2);
+        // Ajouter deux requêtes au résident
+        resident.addRequete(requete1);
+        resident.addRequete(requete2);
 
-    // Supprimer toutes les requêtes du résident
-    resident.deleteAllRequetes();
+        // Supprimer toutes les requêtes du résident
+        resident.deleteAllRequetes();
 
-    // Vérifier que la liste des requêtes est vide
-    assertTrue(resident.getRequetes().isEmpty());
+        // Vérifier que la liste des requêtes est vide
+        assertTrue(resident.getRequetes().isEmpty());
     }
 
     @Test
     void testDeleteSharedRequeteDoesNotAffectOthers() {
-    // Créer un autre résident
-    Resident anotherResident = new Resident("Jane Doe", "jane@example.com", "password456",
-            "514-555-5678", "456 Avenue", "H2B3C4", "1992-02-02");
+        // Créer un autre résident
+        Resident anotherResident = new Resident("Jane Doe", "jane@example.com", "password456",
+                "514-555-5678", "456 Avenue", "H2B3C4", "1992-02-02");
 
-    // Ajouter une requête partagée entre les deux résidents
-    resident.addRequete(requete1);
-    anotherResident.addRequete(requete1);
+        // Ajouter une requête partagée entre les deux résidents
+        resident.addRequete(requete1);
+        anotherResident.addRequete(requete1);
 
-    // Supprimer la requête pour le premier résident
-    resident.deleteRequete(requete1);
+        // Supprimer la requête pour le premier résident
+        resident.deleteRequete(requete1);
 
-    // Vérifier que la requête partagée est toujours présente pour le second résident
-    assertEquals(1, anotherResident.getRequetes().size());
+        // Vérifier que la requête partagée est toujours présente pour le second résident
+        assertEquals(1, anotherResident.getRequetes().size());
     }
     
     
