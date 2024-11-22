@@ -42,6 +42,14 @@ public class Resident extends Personne {
     public String getBirthDate() {
         return birthDate;
     }
+    public static String getNameByEmail(List<Resident> residents, String email) {
+        for (Resident resident : residents) {
+            if (resident.getEmail().equals(email)) {
+                return resident.getName(); 
+            }
+        }
+        return null;
+    }
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;

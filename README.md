@@ -40,7 +40,7 @@ java -jar main.jar
 
 # Devoir 2
 
-## Prereauis
+## Prerequis
 - Assurez-vous d'avoir installé Java 17 ou une version ultérieure sur votre machine. 
 ```bash
 java --version
@@ -56,6 +56,16 @@ sinon, vous pouvez installer Maven sur UNIX en utilisant la commande suivante:
 sudo apt install maven
 ```
 
+ou sur macOS
+
+```bash
+brew install maven
+```
+Installez aussi streamlit et pydantic en faisant
+
+```bash
+pip3 install -r requirements.txt
+```
 - Assurez-vous d'avoir Python avec une version >= 3 sur votre machine.
 ```bash
 python3 --version
@@ -66,16 +76,21 @@ python3 --version
 1. Clonez le dépôt GitHub en utilisant l'une des commandes suivantes :
 
 ```bash
-   git clone
+git clone
 ```
 
-2. Creez un python virtual environmen
+2. Creez un python virtual environment
    
 ```bash
-   python3 -m venv venv
+python3 -m venv venv
+```
+3. Autoriser le script à s'executer
+
+```bash
+chmod +x quickrun.sh
 ```
 
-3. Executez le script de lancement
+4. Executez le script de lancement
 
 ```bash
 source quickstart.sh
