@@ -104,7 +104,7 @@ class Menu_Resident(Menu):
     def __call__(self):
         self.sidebar()
         if self.selection == "Acceuil":
-            st.title("Bienvenue "+self.user.email)
+            self.page_acceuil()
         elif self.selection == "Consulter Entraves":
             self.consulter_entraves()
         elif self.selection == "Consulter Travaux":

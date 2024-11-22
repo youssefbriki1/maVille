@@ -43,7 +43,7 @@ class Menu_Intervenant(Menu):
     def __call__(self):
         self.sidebar()
         if self.selection == "Acceuil":
-            st.title("Bienvenue "+self.user.email)
+            self.page_acceuil()
         elif self.selection == "Consulter Travaux":
             self.consulter_travaux()
         elif self.selection == "Consulter Profile":

@@ -26,7 +26,6 @@ public class SignUpController {
 
     @PostMapping
     public ResponseEntity<?> signup(@RequestBody HashMap<String, Object> personne) {
-        // Extract data
         String name = (String) personne.get("name");
         String email = (String) personne.get("email");
         String password = (String) personne.get("password");
@@ -43,20 +42,17 @@ public class SignUpController {
         logger.info("Received signup request for name: {}", postalCode);
         
 
-        // Validate data
         if (!Personne.isValid(email, password)) {
             logger.warn("Invalid data for Resident with email: {}", email);
             return ResponseEntity.badRequest().body("Invalid data for Resident");
         }
 
-        // Create either a Resident or Intervenant based on role
         if (role.equals("Resident")) {
             user = (Resident) new Resident(name, email, password, phoneNumber, address, postalCode, birthDate);
         } else {
             user =(Intervenant) new Intervenant(name, email, password, 0);
         }
 
-        // File operations
         synchronized (this) {
             try {
                 // Ensure data directory exists
@@ -70,20 +66,16 @@ public class SignUpController {
                     }
                 }
 
-                // Define JSON file
                 File file = new File(directory, USERS_FILE);
                 ObjectMapper objectMapper = new ObjectMapper();
-                objectMapper.enable(SerializationFeature.INDENT_OUTPUT); // For pretty printing
+                objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 
                 List<Personne> users = new ArrayList<>();
 
-                // Initialize the file if it doesn't exist or is empty
                 if (!file.exists() || file.length() == 0) {
                     logger.info("Initializing users.json file");
-                    // Write an empty array to the file
                     objectMapper.writeValue(file, users);
                 } else {
-                    // Read existing data
                     try {
                         JsonNode jsonNode = objectMapper.readTree(file);
                         if (jsonNode.isArray()) {
@@ -101,10 +93,8 @@ public class SignUpController {
                     }
                 }
 
-                // Add new resident or intervenant
                 users.add(user);
 
-                // Print specific role by checking the subclass type
                 if (user instanceof Resident) {
                     Resident residentUser = (Resident) user;
                     System.out.println(residentUser.getRole());
@@ -113,7 +103,6 @@ public class SignUpController {
                     System.out.println(intervenantUser.getRole());
                 }
 
-                // Write updated data
                 objectMapper.writeValue(file, users);
                 logger.info("Resident with email {} added to users.json", email);
                 return ResponseEntity.ok("Resident registered successfully");

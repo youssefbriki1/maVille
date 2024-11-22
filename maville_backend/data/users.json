@@ -1,17 +1,37 @@
 [ {
-  "name" : "Youssef Briki",
-  "email" : "youssef.briki05@gmail.com",
-  "password" : "yaya",
-  "phoneNumber" : "4389277057",
-  "address" : "2350 Boulevard Édouard-Montpetit, 103G",
-  "postalCode" : "H3T 1J4",
-  "birthDate" : "2024-11-21",
+  "name" : "Resident1 Res",
+  "email" : "Resident1@email.com",
+  "password" : "a",
+  "phoneNumber" : "1234567890",
+  "address" : "Adresse, Montreal",
+  "postalCode" : "H3T",
+  "birthDate" : "2024-11-22",
   "requetes" : [ ],
   "role" : "Resident"
 }, {
-  "name" : "Youssef Briki",
-  "email" : "youssef@gmail.com",
-  "password" : "a",
+  "name" : "Resident2 Res",
+  "email" : "Resident2@email.com",
+  "password" : "az",
+  "phoneNumber" : "123456789022",
+  "address" : "Adresse2, Montreal",
+  "postalCode" : "H3T",
+  "birthDate" : "2024-11-22",
+  "requetes" : [ ],
+  "role" : "Resident"
+}, {
+  "name" : "Resident3 Res",
+  "email" : "Resident3@email.com",
+  "password" : "az",
+  "phoneNumber" : "123456789022",
+  "address" : "Adresse2, Montreal",
+  "postalCode" : "H3T",
+  "birthDate" : "2024-11-22",
+  "requetes" : [ ],
+  "role" : "Resident"
+}, {
+  "name" : "Intervenant1 Int",
+  "email" : "Intervenant1@email.com",
+  "password" : "az",
   "phoneNumber" : null,
   "address" : null,
   "postalCode" : null,
@@ -19,23 +39,23 @@
   "requetes" : [ ],
   "role" : "Intervenant"
 }, {
-  "name" : "Youssef Briki",
-  "email" : "youssef.briki05@gmail.com",
-  "password" : "q",
-  "phoneNumber" : "4389277057",
-  "address" : "2350 Boulevard Édouard-Montpetit, 103G",
-  "postalCode" : "H3T 1J4",
-  "birthDate" : "2024-11-21",
+  "name" : "Intervenant2 Int",
+  "email" : "Intervenant2@email.com",
+  "password" : "az",
+  "phoneNumber" : null,
+  "address" : null,
+  "postalCode" : null,
+  "idCity" : 0,
   "requetes" : [ ],
-  "role" : "Resident"
+  "role" : "Intervenant"
 }, {
-  "name" : "Youssef Briki",
-  "email" : "youssef.briki05@gmail.com",
-  "password" : "q",
-  "phoneNumber" : "4389277057",
-  "address" : "log 101, 3540 boul. Édouard-Montpetit",
-  "postalCode" : "H3T 1K8",
-  "birthDate" : "2024-11-21",
+  "name" : "Intervenant3 Int",
+  "email" : "Intervenant3@email.com",
+  "password" : "az",
+  "phoneNumber" : null,
+  "address" : null,
+  "postalCode" : null,
+  "idCity" : 0,
   "requetes" : [ ],
-  "role" : "Resident"
+  "role" : "Intervenant"
 } ]
