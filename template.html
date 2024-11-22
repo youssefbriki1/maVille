@@ -532,7 +532,9 @@
         .glossary {
             font-size: 1.4em;
         }
-
+        img{
+            max-width: 100%;
+        }
         .preview-img {
             display: block;
             width: 600px;
@@ -555,6 +557,12 @@
             min-width: 600px;
             height: 100%;
             width: auto;
+            background-color: #d5d5d5;
+        }
+        .architecture-pic {
+            display: block;
+            height: 50%;
+            width: 80%;
             background-color: #d5d5d5;
         }
 
@@ -604,7 +612,7 @@
                     </div> 
                     <span>Discord: @youssef3344444</span>
                     <a href="mailto:prenom.nom@umontreal.ca">youssef.briki@umontreal.ca</a>
-                    <span class="member-role">Chargé du diagramme d'activite, GitHub et rapport</span>
+                    <span class="member-role">Chargé de l'implémentation et du GitHub</span>
                 </li>
                 <li class="member">
                     <div class="member-identification">
@@ -614,7 +622,7 @@
                     <span>Discord: @royann_
                     </span>
                     <a href="mailto:prenom.nom@umontreal.ca">royann.lee.brady.heriniina@umontreal.ca</a>
-                    <span class="member-role">Chargé de glossaire, scenarios et analyse</span>
+                    <span class="member-role">Chargé du diagramme de classes et révision des diagrammes d'activités</span>
                 </li>
                 <li class="member">
                     <div class="member-identification">
@@ -623,7 +631,7 @@
                     </div> 
                     <span>Discord: @jxlxl</span>
                     <a href="mailto:prenom.nom@umontreal.ca">mohamed.jalal.fatouaki@umontreal.ca</a>
-                    <span class="member-role">Chargé de cas d’utilisation et le prototype</span>
+                    <span class="member-role">Chargé des diagrammes de séquence, de la révision des cas d’utilisation, de l'architecture et du rapport</span>
                 </li>
             </ul>
         </div>
@@ -657,6 +665,15 @@
                             <li class="dash">Besoins matériels</li>
                             <li class="dash">Stockage</li>
                             <li class="dash">Intégration</li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <h3 class="nav-item-title"><a class="nav-item-title__link" href="#conception">Conception</a> </h3>
+                        <ul class="bare-list nav-item-details">
+                            <li class="dash">Architecture</li>
+                            <li class="dash">Diagramme de classes</li>
+                            <li class="dash">Diagrammes de séquence</li>
+                            <li class="dash">Choix du design</li>
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -798,13 +815,13 @@
                 </ul>
                 <h3 class="subsection-title">Cas d'utilisation</h3>
                 <div class="use-case">
-                    <img class="use-case-diagram" src="Diagrammes/Use_Case_Diagram1.svg" alt="Diagramme de cas d'utilisation">
+                    <img class="use-case-diagram" src="Diagrammes/MaVille CU UPDATED.svg" alt="Diagramme de cas d'utilisation">
                     <p class="use-case-notes">
                         <em>
                             Notes à propos du diagramme <br>
-                            - Résident (Principal) : Le résident peut consulter les travaux en cours, soumettre des requêtes de travaux, définir ses préférences de notifications et d'horaires, ainsi que signaler des problèmes. <br>
-                            - Intervenant (Principal) : L'intervenant soumet des projets, modifie les informations de ceux-ci, et peut proposer des candidatures pour les requêtes de travaux. <br>
-                            - Administrateur (Secondaire) : L'administrateur vérifie la légitimité des intervenants et traite les problèmes signalés par les résidents. 
+                            - Résident : Le résident peut consulter les travaux en cours ou à venir, ainsi que les entraves, soumettre des requêtes de travaux, définir ses préférences de notifications et d'horaires, partager son avis et s'abonner à un projet en cours. <br>
+                            - Intervenant : L'intervenant soumet des projets, modifie les informations de ceux-ci, et peut proposer des candidatures pour les requêtes de travaux après les avoir consulté. <br>
+                            - Ville : La ville vérifie la légitimité des intervenants 
                         </em>
                     </p>
                                     </div>
@@ -2026,26 +2043,42 @@
                 </p>
             </div>
                         </section>
-
+            <section class="main-section">
+                <h2 id="conception" class="section-title">Conception</h2>
+                <h3 class="subsection-title">Architecture</h3>
+                <div class="architecture">
+                    <h4>TBD</h4>
+                    <img class="architecture-pic" src="Diagrammes/2255.png" alt="Architecture de MaVille">
+                </div>
+                <h3 class="subsection-title">Diagramme de Classes</h3>
+                <div class="classes">
+                    <h4>TBD</h4>
+                    <img class="classes-pics" src="Diagrammes/Class Diagram1.svg" alt="Diagramme de classes de MaVille">
+                </div>
+                <h3 class="subsection-title">Diagrammes de séquences</h3>
+                <div class="architecture">
+                    <h4>Consulter les entraves</h4>
+                    <img class="sequences-pics" src="Diagrammes/Entraves.svg" alt="Diagramme de séquence pour consulter les entraves">
+                </div>
+                <div class="architecture">
+                    <h4>Soumettre une requête de travail</h4>
+                    <img class="sequences-pics" src="Diagrammes/Soumettre.svg" alt="Diagramme de séquence pour soumettre une requête de travail">
+                </div>
+                <div class="architecture">
+                    <h4>Consulter la liste des requêtes de travail</h4>
+                    <img class="sequences-pics" src="Diagrammes/Consulter.svg" alt="Diagramme de séquence pour consulter les entraves">
+                </div>
+                <h3 class="subsection-title">Choix de design</h3>
+                <p>TBD</p>
+            </section>
             <section class="main-section">
                 <h2 id="prototype" class="section-title">Prototype</h2>
                 <p>
-                    Les données du résident sont : email: resident1@gmail.com password : maville2024 
-<br>Les données de l'intervenant sont : email : intervenant1@gmail.com password : ameliore2024@<br>
-
+                    À UPDATE !!!!
                     <em>
-                        Pour exécuter le prototype, vous devez l'avoir préalablement cloné localement sur votre machine. 
-                        Si ce n'est pas le cas, vous pouvez cloner le dépôt GitHub en utilisant l'une des deux commandes suivantes :<br><br>
+                        update
+                        <code>update</code><br>
                         
-                        <code>git clone https://github.com/youssefbriki1/ift2255-devoir1-groupe2.git</code><br>
-                        ou<br>
-                        <code>git clone git@github.com:youssefbriki1/ift2255-devoir1-groupe2.git</code><br><br>
-                        
-                        Ensuite, naviguez jusqu'au répertoire où le code est stocké :<br>
-                        <code>cd prototypes</code><br><br>
-                        
-                        Pour exécuter le projet, utilisez la commande suivante :<br>
-                        <code>java -jar main.jar</code>
                     </em>
                 </p>
                 
@@ -2054,7 +2087,7 @@
     </main>
     <footer class="report-footer">
         <p>
-            Devoir 1 &ndash; Analyse des exigences<br>
+            Devoir 2 &ndash; Conception de la solution<br>
             IFT2255 (Génie logiciel) <br>
             Automne 2024
         </p>
