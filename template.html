@@ -2047,7 +2047,6 @@
                 <h2 id="conception" class="section-title">Conception</h2>
                 <h3 class="subsection-title">Architecture</h3>
                 <div class="architecture">
-                    <h4>TBD</h4>
                     <img class="architecture-pic" src="Diagrammes/2255.png" alt="Architecture de MaVille">
                 </div>
                 <h3 class="subsection-title">Diagramme de Classes</h3>
@@ -2069,7 +2068,49 @@
                     <img class="sequences-pics" src="Diagrammes/Consulter.svg" alt="Diagramme de séquence pour consulter les entraves">
                 </div>
                 <h3 class="subsection-title">Choix de design</h3>
-                <p>TBD</p>
+                <ol>
+                    <li>
+                      <strong>Abstraction :</strong>
+                      <ul>
+                        <li>Les classes comme <code>LoginController</code>, <code>SignUpController</code> et <code>EnvoyerRequete</code> encapsulent des fonctionnalités spécifiques.</li>
+                        <li>Réduction des dépendances directes et meilleure modularité.</li>
+                      </ul>
+                    </li>
+                    <li>
+                      <strong>Cohésion :</strong>
+                      <ul>
+                        <li>Chaque classe se concentre sur une seule responsabilité.</li>
+                        <li>Exemples : <code>RepertoireResident</code> gère les résidents, <code>RepertoireTravaux</code> se concentre sur les travaux.</li>
+                      </ul>
+                    </li>
+                    <li>
+                      <strong>Encapsulation :</strong>
+                      <ul>
+                        <li>Les attributs sensibles sont protégés et accessibles uniquement via des méthodes.</li>
+                        <li>Améliore la sécurité et prévient les modifications non autorisées.</li>
+                      </ul>
+                    </li>
+                    <li>
+                      <strong>Couplage faible :</strong>
+                      <ul>
+                        <li>Les dépendances entre classes sont réduites grâce à des relations bien définies.</li>
+                        <li>Utilisation d’interfaces comme <code>Filtre</code> pour faciliter l'ajout de nouvelles fonctionnalités.</li>
+                      </ul>
+                    </li>
+                    <li>
+                      <strong>Modularité et flexibilité :</strong>
+                      <ul>
+                        <li>Les classes peuvent évoluer indépendamment (ex. : ajout de types de travaux ou gestion de notifications).</li>
+                      </ul>
+                    </li>
+                    <li>
+                      <strong>Interopérabilité :</strong>
+                      <ul>
+                        <li>Des éléments comme <code>API_URL</code> et les méthodes de fetch dans <code>DonnéesTravaux</code> permettent l'intégration avec des services externes.</li>
+                      </ul>
+                    </li>
+                  </ol>
+                  
             </section>
             <section class="main-section">
                 <h2 id="prototype" class="section-title">Prototype</h2>
