@@ -79,13 +79,18 @@ python3 --version
    git clone
 ```
 
-2. Creez un python virtual environmen
+2. Creez un python virtual environment
    
 ```bash
    python3 -m venv venv
 ```
+3. Autoriser le script à s'executer
 
-3. Executez le script de lancement
+```bash
+   chmod +x quickrun.sh
+```
+
+4. Executez le script de lancement
 
 ```bash
 source quickstart.sh
