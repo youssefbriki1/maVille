@@ -23,44 +23,33 @@ public class LoginController {
         String password = credentials.get("password");
         String role = credentials.get("role");
 
-        // Validate input
         if (email == null || password == null) {
             return ResponseEntity.badRequest().body("Email and password are required.");
         }
 
-        // Authenticate user
         if (authenticateUser(email, password, role)) {
-            // Authentication successful
-            // You might want to generate a session token or similar
             return ResponseEntity.ok("Login successful.");
         } else {
-            // Authentication failed
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password.");
         }
     }
 
     private boolean authenticateUser(String email, String password, String role) {
         try {
-            // Read users from users.json
             File directory = new File("data");
             File file = new File(directory, "users.json");
             ObjectMapper objectMapper = new ObjectMapper();
     
             if (!file.exists() || file.length() == 0) {
-                // No users registered
                 throw new IOException("No users registered.");
             }
     
-            // Read all users as Personne[]
             Personne[] usersArray = objectMapper.readValue(file, Personne[].class);
             List<Personne> users = Arrays.asList(usersArray);
     
-            // Search for the user
             for (Personne user : users) {
                 if (user.getEmail().equals(email)) {
-                    // Check password
                     if (user.getPassword().equals(password)) {
-                        // Password matches
                         if (role.equals(user.getRole())) {
                             System.out.println("Role parameter: " + role);
                             System.out.println("User's role: " + user.getRole());

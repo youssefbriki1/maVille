@@ -53,7 +53,6 @@ public class EnvoyerRequete {
 
         synchronized (this) {
             try {
-                // Ensure data directory exists
                 File directory = new File(DATA_DIRECTORY);
                 if (!directory.exists()) {
                     boolean dirCreated = directory.mkdir();
@@ -64,20 +63,15 @@ public class EnvoyerRequete {
                     }
                 }
 
-                // Define JSON file
                 File file = new File(directory, USERS_FILE);
                 ObjectMapper objectMapper = new ObjectMapper();
-                objectMapper.enable(SerializationFeature.INDENT_OUTPUT); // For pretty printing
-
+                objectMapper.enable(SerializationFeature.INDENT_OUTPUT); 
                 List<TravailResident> travaux = new ArrayList<>();
 
-                // Initialize the file if it doesn't exist or is empty
                 if (!file.exists() || file.length() == 0) {
                     logger.info("Initializing users.json file");
-                    // Write an empty array to the file
                     objectMapper.writeValue(file, travaux);
                 } else {
-                    // Read existing data
                     try {
                         JsonNode jsonNode = objectMapper.readTree(file);
                         if (jsonNode.isArray()) {
@@ -95,11 +89,9 @@ public class EnvoyerRequete {
                     }
                 }
 
-                // Add new resident or intervenant
                 travaux.add(travail);
 
 
-                // Write updated data
                 objectMapper.writeValue(file, travaux);
                 return ResponseEntity.ok("Travail ajoute avec succes");
 

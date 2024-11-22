@@ -23,13 +23,11 @@ public class AfficherTravaux {
     public ResponseEntity<?> Afficher(@RequestParam HashMap<String,String> user) throws IOException {
         logger.info("Data recieved" + user.toString());
         try {
-            // Read users from users.json
             File directory = new File("data");
             File file = new File(directory, "requetes.json");
             ObjectMapper objectMapper = new ObjectMapper();
     
             if (!file.exists() || file.length() == 0) {
-                // No users registered
                 throw new IOException("No users registered.");
             }
     

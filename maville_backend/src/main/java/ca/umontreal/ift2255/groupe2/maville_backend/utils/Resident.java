@@ -1,6 +1,5 @@
 package ca.umontreal.ift2255.groupe2.maville_backend.utils;
 
-import ca.umontreal.ift2255.groupe2.maville_backend.utils.TravailResident;
 import java.util.*;
 
 public class Resident extends Personne {

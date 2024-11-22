@@ -65,7 +65,7 @@ public abstract class Personne {
         Pattern pattern = Pattern.compile(emailRegex);
         
         return email != null && password != null 
-                && email.length() > 0 && password.length() > 0 
+                && email.length() > 0 && password.trim().length() > 0 
                 && pattern.matcher(email).matches();
     }
 

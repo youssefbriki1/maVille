@@ -32,11 +32,8 @@ public class DonneesTravaux {
         else {
             return ResponseEntity.badRequest().body("Invalid data for Resident");
         }
-        // Use RestTemplate to make HTTP GET request
         RestTemplate restTemplate = new RestTemplate();
         String response = restTemplate.getForObject(API_URL, String.class);
-
-        // Parse the response using JSONObject and extract "records"
         JSONObject jsonResponse = new JSONObject(response);
         JSONArray records =  jsonResponse.getJSONObject("result").getJSONArray("records");
         return ResponseEntity.ok(records.toString());
