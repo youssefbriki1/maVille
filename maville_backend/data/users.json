@@ -28,4 +28,14 @@
   "birthDate" : "2024-11-21",
   "requetes" : [ ],
   "role" : "Resident"
+}, {
+  "name" : "Youssef Briki",
+  "email" : "youssef.briki05@gmail.com",
+  "password" : "q",
+  "phoneNumber" : "4389277057",
+  "address" : "log 101, 3540 boul. Édouard-Montpetit",
+  "postalCode" : "H3T 1K8",
+  "birthDate" : "2024-11-21",
+  "requetes" : [ ],
+  "role" : "Resident"
 } ]
