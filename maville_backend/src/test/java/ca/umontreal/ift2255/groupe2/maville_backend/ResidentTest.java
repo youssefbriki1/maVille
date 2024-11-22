@@ -1,62 +1,80 @@
 package ca.umontreal.ift2255.groupe2.maville_backend;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
-import java.util.List;
-import java.util.Arrays;
-
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ca.umontreal.ift2255.groupe2.maville_backend.utils.Resident;	
 
-// Tests de Jalal Fatouaki :
+import ca.umontreal.ift2255.groupe2.maville_backend.utils.Resident;
+import ca.umontreal.ift2255.groupe2.maville_backend.utils.TravailResident;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 public class ResidentTest {
 
-    Resident resident1 = new Resident("Jalal Fatouaki", "fatouaki.jalal@gmail.com", "password",
-                                         "1234567890", "Test", "123 456", "2005-10-31");
-    Resident resident2 = new Resident("Youssef Briki", "youssef.briki@gmail.com", "password456", 
-                                          "0987654321", "X", "456 789", "2005-07-09");
-    Resident resident3 = new Resident("Royann Lee", "royann.lee@gmail.com", "password789", 
-                                          "0987654321", "X", "987 654", "2003-01-01");
+    private Resident resident;
+    private TravailResident requete1;
+    private TravailResident requete2;
 
-    List<Resident> residents = Arrays.asList(resident1, resident2, resident3);
-
-    @Test
-    public void testGetPhone() {
-        assertEquals(resident1.getPhoneNumber(), "1234567890");
-
-        assertEquals(resident2.getPhoneNumber(), "0987654321");
-
-        assertNotEquals(resident3.getPhoneNumber(), "123456789");
+    @BeforeEach
+    // Pour faire en sorte de refresh avant chaque test (pour que les changements ne persistent pas)
+    public void setUp() {
+        resident = new Resident("Louis-Edouard Lafontant", "louis.edouard.lafontant@umontreal.ca", "password123",
+                "514-000-0000", "3200 Jean Brilliant", "H3A1B2", "1990-01-01");
+        requete1 = new TravailResident(1, "Requete 1", "Description 1", "Open", "2024-11-01","type1", "louis.edouard.lafontant@umontreal.ca");
+        requete2 = new TravailResident(2, "Requete 2", "Description 2", "Closed", "2024-11-02", "type2", "louis.edouard.lafontant@umontreal.ca");
     }
+
+    // Test unitaires fais par Jalal Fatouaki
     @Test
-    public void testGetNameByEmail() {
-        String name;
-        
-        name = Resident.getNameByEmail(residents, "fatouaki.jalal@gmail.com");
-        assertEquals("Jalal Fatouaki", name);
+    // Test pour voir si la methode addRequete marche
+    public void testAddRequete() {
+        resident.addRequete(requete1);
+        resident.addRequete(requete2);
 
-        name = Resident.getNameByEmail(residents, "youssef.briki@gmail.com");
-        assertEquals("Youssef Briki", name);
+        // Pour tester qu'on a add les 2 requêtes correctement
+        assertEquals(2, resident.getRequetes().size());
 
-        name = Resident.getNameByEmail(residents, "nonexistent.email@gmail.com");
-        assertNull(name);  
+        // Pour tester qu'il y a la premiere requete qu'on a add dans la liste des requêtes
+        assertTrue(resident.getRequetes().contains(requete1));
     }
+
     @Test
-    public void testGetPassword(){
-        String password;
-         
-        password = resident1.getPassword();
-        assertEquals("password", password);
+    // Test pour voir si on peut enlever une requete parmis la liste de requetes du resident
+    public void testDeleteRequeteByObject() {
+        resident.addRequete(requete1);
+        resident.addRequete(requete2);
 
-        password = resident2.getPassword();
-        assertNotEquals("password123", password);
+        // Retrait de la requete
+        resident.deleteRequete(requete1);
 
-        password = resident3.getPassword();
-        assertEquals("password789", password);
+        // Voir s'il reste que 1 requete (requete2)
+        assertEquals(1, resident.getRequetes().size());
+
+        //Voir si requete1 n'est plus dans la liste des requete du resident
+        assertFalse(resident.getRequetes().contains(requete1));
+    }
+    
+    // Test pour voir si on peut changer les requetes
+    @Test
+    public void testUpdateRequete() {
+        resident.addRequete(requete1);
+
+        // Nouvelle requete
+        TravailResident updatedRequete = new TravailResident(1, "Nouveau titre", "Nouvelle descrp", "Maintenance",
+                "2024-11-10","type", "louis.edouard.lafontant@umontreal.ca");
+
+        // Remplacement de la requete1 par la nouvelle (car leur id sont les memes)
+        resident.updateRequete(updatedRequete);
+
+        TravailResident result = resident.getRequetes().get(0);
+        assertEquals("Nouveau titre", result.getTitle());
+        assertEquals("Nouvelle descrp", result.getDescription());
+        assertEquals("Maintenance", result.getStatus());
+        assertEquals("2024-11-10", result.getdateDebut());
     }
     
     
-   
+    
+
+    
 }
