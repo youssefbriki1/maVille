@@ -37,3 +37,52 @@ jar cmvf META-INF/MANIFEST.MF main.jar main.class
 java -jar main.jar
 
 ```
+
+# Devoir 2
+
+## Prereauis
+- Assurez-vous d'avoir installé Java 17 ou une version ultérieure sur votre machine. 
+```bash
+java --version
+```
+- Assurez-vous d'avoir installé Maven sur votre machine.
+```bash
+mvn --version
+```
+
+sinon, vous pouvez installer Maven sur UNIX en utilisant la commande suivante:
+
+```bash
+sudo apt install maven
+```
+
+- Assurez-vous d'avoir Python avec une version >= 3 sur votre machine.
+```bash
+python3 --version
+```
+
+## Pour lancer le programme
+
+1. Clonez le dépôt GitHub en utilisant l'une des commandes suivantes :
+
+```bash
+   git clone
+```
+
+2. Creez un python virtual environmen
+   
+```bash
+   python3 -m venv venv
+```
+
+3. Executez le script de lancement
+
+```bash
+source quickstart.sh
+```
+
+
+## Troubleshooting
+
+- Verifiez le path de votre environnement virtuel python dans le fichier quickstart.sh
+- Verifiez que vous avez bien installé les prérequis
