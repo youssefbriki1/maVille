@@ -56,6 +56,16 @@ sinon, vous pouvez installer Maven sur UNIX en utilisant la commande suivante:
 sudo apt install maven
 ```
 
+ou sur macOS
+
+```bash
+brew install maven
+```
+Installez aussi streamlit et pydantic en faisant
+
+```bash
+pip3 install -r requirements.txt
+```
 - Assurez-vous d'avoir Python avec une version >= 3 sur votre machine.
 ```bash
 python3 --version
