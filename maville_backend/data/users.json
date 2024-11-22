@@ -57,4 +57,7 @@
   "postalCode" : null,
   "idCity" : 0,
   "requetes" : [ ],
+  "role" : "Intervenant"
+}
+]
   
