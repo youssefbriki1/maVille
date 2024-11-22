@@ -96,6 +96,25 @@ chmod +x quickrun.sh
 source quickstart.sh
 ```
 
+## Initialisation de la base de données
+
+- Voici un aperçu des données de test que vous pouvez utiliser pour initialiser la base de données.
+### Résidents
+
+| Nom            | Email                 | Mot de Passe | Numéro de Téléphone | Adresse             | Code Postal | Date de Naissance | Rôle      |
+|----------------|-----------------------|--------------|----------------------|---------------------|-------------|-------------------|-----------|
+| Resident1 Res  | Resident1@email.com   | a            | 1234567890          | Adresse, Montréal   | H3T         | 2024-11-22        | Résident  |
+| Resident2 Res  | Resident2@email.com   | az           | 123456789022        | Adresse2, Montréal  | H3T         | 2024-11-22        | Résident  |
+| Resident3 Res  | Resident3@email.com   | az           | 123456789022        | Adresse2, Montréal  | H3T         | 2024-11-22        | Résident  |
+
+### Intervenants
+
+
+| Nom               | Email                    | Mot de Passe | Numéro de Téléphone | Adresse | Code Postal | ID Ville | Rôle          |
+|-------------------|--------------------------|--------------|----------------------|---------|-------------|----------|---------------|
+| Intervenant1 Int  | Intervenant1@email.com   | az           | null                 | null    | null        | 0        | Intervenant   |
+| Intervenant2 Int  | Intervenant2@email.com   | az           | null                 | null    | null        | 0        | Intervenant   |
+| Intervenant3 Int  | Intervenant3@email.com   | az           | null                 | null    | null        | 0        | Intervenant   |
 
 ## Troubleshooting
 
