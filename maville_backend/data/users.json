@@ -38,4 +38,24 @@
   "birthDate" : "2024-11-21",
   "requetes" : [ ],
   "role" : "Resident"
+}, {
+  "name" : "Jalal Fatouaki",
+  "email" : "fatouaki.jalal@gmail.com",
+  "password" : "password",
+  "phoneNumber" : null,
+  "address" : null,
+  "postalCode" : null,
+  "idCity" : 0,
+  "requetes" : [ ],
+  "role" : "Intervenant"
+}, {
+  "name" : "Jalal Fatouaki",
+  "email" : "fatouaki.jalal@gmail.com",
+  "password" : "password",
+  "phoneNumber" : "123456789",
+  "address" : "rungaga",
+  "postalCode" : "123456",
+  "birthDate" : "2014-11-26",
+  "requetes" : [ ],
+  "role" : "Resident"
 } ]
