@@ -40,7 +40,7 @@ java -jar main.jar
 
 # Devoir 2
 
-## Prereauis
+## Prerequis
 - Assurez-vous d'avoir installé Java 17 ou une version ultérieure sur votre machine. 
 ```bash
 java --version
