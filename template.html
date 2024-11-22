@@ -2104,8 +2104,8 @@
                     <li>
                       <strong>Abstraction :</strong>
                       <ul>
-                        <li>Les classes comme <code>LoginController</code>, <code>SignUpController</code> et <code>EnvoyerRequete</code> encapsulent des fonctionnalités spécifiques.</li>
-                        <li>Réduction des dépendances directes et meilleure modularité.</li>
+                        <li>Il y a classe abstraite <code>Personne</code> et L'interface Filtrer. </li>
+                        <li>Permet de centraliser les attributs et comportements communs aux sous-classes et d'offre une abstraction supplémentaire en définissant des méthodes de filtrage.</li>
                       </ul>
                     </li>
                     <li>
@@ -2118,7 +2118,7 @@
                     <li>
                       <strong>Encapsulation :</strong>
                       <ul>
-                        <li>Les attributs sensibles sont protégés et accessibles uniquement via des méthodes.</li>
+                        <li>Les attributs des classes sont déclarés en privé ou protégés et sont accessibles uniquement via des méthodes.</li>
                         <li>Améliore la sécurité et prévient les modifications non autorisées.</li>
                       </ul>
                     </li>
@@ -2126,7 +2126,7 @@
                       <strong>Couplage faible :</strong>
                       <ul>
                         <li>Les dépendances entre classes sont réduites grâce à des relations bien définies.</li>
-                        <li>Utilisation d’interfaces comme <code>Filtre</code> pour faciliter l'ajout de nouvelles fonctionnalités.</li>
+                        <li>Les agrégations et compositions (par exemple, ListResident ou ListeTravaux) indiquent une dépendance logique sans imposer une forte interdépendance structurelle.</li>
                       </ul>
                     </li>
                     <li>
