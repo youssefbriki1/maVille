@@ -827,7 +827,7 @@
                                     </div>
 
                 <h3 class="subsection-title">Scénarios</h3>
-
+                <h4>PS : Que les descriptions des CUs ont été mises à jour, pas les scénarios.</h4>
                 <div class="scenario" id="cu-1">
                     <div class="scenario-meta">
                         <h4 class="cu-name">
@@ -891,7 +891,98 @@
                         </div>
                     </div>
                 </div>
+                <div class="scenario" id="cu-99">
+                    <div class="scenario-meta">
+                <h4 class="cu-name">
+                    <strong>CU:</strong> Répondre à une candidature
+                </h4>
+                <p class="cu-goal">
+                    <strong>Objectif:</strong> Un résident réponds à une candidature (Accepte ou Refuse)
+                </p>
                 
+                <hr>
+        
+                <div class="cu-part">
+                    <h5 class="cu-part-title">Acteurs</h5>
+                    <ul class="bare-list cu-actors">
+                        <li class="cu-actor">Résident (Principal)</li>
+                    </ul>
+                </div>
+                
+                <div class="cu-part">
+                    <h5 class="cu-part-title">Préconditions</h5>
+                    <ul class="bare-list cu-conditions">
+                        <li class="dash">Une candidature doit être affichée dans une requête soumise par le résident.</li>
+                    </ul>
+                </div>
+                
+                <div class="cu-part">
+                    <h5 class="cu-part-title">Postconditions</h5>
+                    <ul class="bare-list cu-conditions">
+                        <li class="dash">L'utilisateur a accepté/refusé la candidature.</li>
+                    </ul>
+                </div>
+                </div></div>
+                <div class="scenario" id="cu-4">
+                    <div class="scenario-meta">
+                        <h4 class="cu-name">
+                            <strong>CU:</strong> Soumettre une requête de travail
+                        </h4>
+                        <p class="cu-goal">
+                            <strong>Objectif:</strong> Un résident souhaite soumettre une requête de travail via l'application
+                        </p>
+                        
+                        <hr>
+                
+                        <div class="cu-part">
+                            <h5 class="cu-part-title">Acteurs</h5>
+                            <ul class="bare-list cu-actors">
+                                <li class="cu-actor">Résident (Principal)</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="cu-part">
+                            <h5 class="cu-part-title">Préconditions</h5>
+                            <ul class="bare-list cu-conditions">
+                                <li class="dash">Le résident est connecté et dispose d’une connexion.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="cu-part">
+                            <h5 class="cu-part-title">Postconditions</h5>
+                            <ul class="bare-list cu-conditions">
+                                <li class="dash">Les intervenants peuvent répondre à la requête.</li>
+                            </ul>
+                        </div>
+                        
+                    </div>
+                    <div class="scenario-main">
+                        <h5 class="scenario-main-title">Scénario principal</h5>
+                        <ol class="scenario-main-steps">
+                            <li class="scenario-main-step">Le résident ouvre l'application.</li>
+                            <li class="scenario-main-step">Le résident sélectionne l'option "Soumettre une requête de travail" depuis le menu principal.</li>
+                            <li class="scenario-main-step">Le résident renseigne les détails de la requête (titre, description, type de travaux, date de début souhaitée).</li>
+                            <li class="scenario-main-step">Le résident soumet la requête.</li>
+                            <li class="scenario-main-step">Le système vérifie que tous les champs d’information sont complétés.</li>
+                            <li class="scenario-main-step">Le système enregistre la requête et envoie une notification aux intervenants.</li>
+                            <li class="scenario-main-step">Le résident reçoit une confirmation que la requête a été soumise.</li>
+                        </ol>
+                
+                        <div class="scenario-alt">
+                            <h5 class="scenario-alt-title">Scénarios alternatifs</h5>
+                            <ol class="bare-list scenario-alt-steps">
+                                <li class="scenario-alt-step" value="5">
+                                    Le résident n'a pas rempli tous les champs obligatoires.
+                                    <ol class="bare-list">
+                                        <li value="5">Le système affiche un message d'erreur et demande de compléter les informations manquantes.</li>
+                                        <li value="5">Retour à l’étape 3 du scénario principal.</li>
+                                    </ol>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            
                 <div class="scenario" id="cu-2">
                     <div class="scenario-meta">
                         <h4 class="cu-name">
@@ -1009,65 +1100,7 @@
                     </div>
                 </div>
 
-                <div class="scenario" id="cu-4">
-                    <div class="scenario-meta">
-                        <h4 class="cu-name">
-                            <strong>CU:</strong> Soumettre une requête de travail
-                        </h4>
-                        <p class="cu-goal">
-                            <strong>Objectif:</strong> Un résident souhaite soumettre une requête de travail via l'application
-                        </p>
-                        
-                        <hr>
                 
-                        <div class="cu-part">
-                            <h5 class="cu-part-title">Acteurs</h5>
-                            <ul class="bare-list cu-actors">
-                                <li class="cu-actor">Résident (Principal)</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="cu-part">
-                            <h5 class="cu-part-title">Préconditions</h5>
-                            <ul class="bare-list cu-conditions">
-                                <li class="dash">Le résident est connecté et dispose d’une connexion.</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="cu-part">
-                            <h5 class="cu-part-title">Postconditions</h5>
-                            <ul class="bare-list cu-conditions">
-                                <li class="dash">Les intervenants peuvent répondre à la requête.</li>
-                            </ul>
-                        </div>
-                        
-                    </div>
-                    <div class="scenario-main">
-                        <h5 class="scenario-main-title">Scénario principal</h5>
-                        <ol class="scenario-main-steps">
-                            <li class="scenario-main-step">Le résident ouvre l'application.</li>
-                            <li class="scenario-main-step">Le résident sélectionne l'option "Soumettre une requête de travail" depuis le menu principal.</li>
-                            <li class="scenario-main-step">Le résident renseigne les détails de la requête (titre, description, type de travaux, date de début souhaitée).</li>
-                            <li class="scenario-main-step">Le résident soumet la requête.</li>
-                            <li class="scenario-main-step">Le système vérifie que tous les champs d’information sont complétés.</li>
-                            <li class="scenario-main-step">Le système enregistre la requête et envoie une notification aux intervenants.</li>
-                            <li class="scenario-main-step">Le résident reçoit une confirmation que la requête a été soumise.</li>
-                        </ol>
-                
-                        <div class="scenario-alt">
-                            <h5 class="scenario-alt-title">Scénarios alternatifs</h5>
-                            <ol class="bare-list scenario-alt-steps">
-                                <li class="scenario-alt-step" value="5">
-                                    Le résident n'a pas rempli tous les champs obligatoires.
-                                    <ol class="bare-list">
-                                        <li value="5">Le système affiche un message d'erreur et demande de compléter les informations manquantes.</li>
-                                        <li value="5">Retour à l’étape 3 du scénario principal.</li>
-                                    </ol>
-                                </li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
 
                 <div class="scenario" id="cu-5">
                     <div class="scenario-meta">
