@@ -76,18 +76,18 @@ python3 --version
 1. Clonez le dépôt GitHub en utilisant l'une des commandes suivantes :
 
 ```bash
-   git clone
+git clone
 ```
 
 2. Creez un python virtual environment
    
 ```bash
-   python3 -m venv venv
+python3 -m venv venv
 ```
 3. Autoriser le script à s'executer
 
 ```bash
-   chmod +x quickrun.sh
+chmod +x quickrun.sh
 ```
 
 4. Executez le script de lancement
