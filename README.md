@@ -66,7 +66,7 @@ chmod +x quickrun.sh
 4. Executez le script de lancement
 
 ```bash
-source quickstart.sh
+./quickrun.sh
 ```
 
 ## Initialisation de la base de données
