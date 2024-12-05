@@ -147,9 +147,6 @@ class Menu:
                         st.error(f"Login failed: {response.text}")
                 except requests.exceptions.RequestException as e:
                     st.error(f"An error occurred: {e}")
-
-
-
     def __call__(self):
         self.sidebar()
         if self.selection == "Acceuil":
