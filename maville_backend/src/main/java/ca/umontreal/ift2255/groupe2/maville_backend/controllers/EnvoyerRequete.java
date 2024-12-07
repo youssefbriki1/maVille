@@ -1,8 +1,5 @@
 package ca.umontreal.ift2255.groupe2.maville_backend.controllers;
 
-import ca.umontreal.ift2255.groupe2.maville_backend.utils.Intervenant;
-import ca.umontreal.ift2255.groupe2.maville_backend.utils.Personne;
-import ca.umontreal.ift2255.groupe2.maville_backend.utils.Resident;
 import ca.umontreal.ift2255.groupe2.maville_backend.utils.TravailResident;
 
 import org.springframework.web.bind.annotation.*;

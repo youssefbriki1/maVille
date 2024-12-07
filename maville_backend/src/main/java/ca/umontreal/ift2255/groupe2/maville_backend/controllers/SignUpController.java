@@ -95,13 +95,6 @@ public class SignUpController {
 
                 users.add(user);
 
-                if (user instanceof Resident) {
-                    Resident residentUser = (Resident) user;
-                    System.out.println(residentUser.getRole());
-                } else if (user instanceof Intervenant) {
-                    Intervenant intervenantUser = (Intervenant) user;
-                    System.out.println(intervenantUser.getRole());
-                }
 
                 objectMapper.writeValue(file, users);
                 logger.info("Resident with email {} added to users.json", email);

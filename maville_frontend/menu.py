@@ -141,8 +141,9 @@ class Menu:
                         st.session_state['loged_in'] = True
                         st.session_state['user_email'] = email
                         st.session_state['user_role'] = role
-                        st.success('Connextion reussie!')
-                        streamlit_js_eval(js_expressions="parent.window.location.reload()")
+                        st.success('Connexion reussie!')
+                        #streamlit_js_eval(js_expressions="parent.window.location.reload()")
+                        #self.page_acceuil()
 
                     elif response.status_code == 401:
                         st.error("Invalid email or password.")
