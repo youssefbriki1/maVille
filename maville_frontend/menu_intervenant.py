@@ -4,6 +4,8 @@ import requests
 import logging
 from util_text import API_URL,TYPES_TRAVAIL
 from personne import Personne
+from streamlit_js_eval import streamlit_js_eval
+
 
 
 class Menu_Intervenant(Menu):
@@ -109,9 +111,6 @@ class Menu_Intervenant(Menu):
     
 
     
-    def se_deconnecter(self):
-        self.user = None
-        st.write("Vous etes deconnecte")
         
     def __call__(self):
         self.sidebar()

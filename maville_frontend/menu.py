@@ -4,6 +4,7 @@ import logging
 from util_text import TEXTART, API_URL
 import typing
 from datetime import datetime
+from streamlit_js_eval import streamlit_js_eval
 
 
 class Menu:
@@ -140,13 +141,26 @@ class Menu:
                         st.session_state['loged_in'] = True
                         st.session_state['user_email'] = email
                         st.session_state['user_role'] = role
-                        st.success('Sign-in successful!')
+                        st.success('Connextion reussie!')
+                        streamlit_js_eval(js_expressions="parent.window.location.reload()")
+
                     elif response.status_code == 401:
                         st.error("Invalid email or password.")
                     else:
                         st.error(f"Login failed: {response.text}")
                 except requests.exceptions.RequestException as e:
                     st.error(f"An error occurred: {e}")
+                    
+             
+                        
+    
+    
+    def se_deconnecter(self):
+        #print(st.session_state)
+        st.session_state = {'user_role': '', 'user_email': '', 'loged_in': False}
+        st.write("Vous etes deconnecte")
+        streamlit_js_eval(js_expressions="parent.window.location.reload()")
+
     def __call__(self):
         self.sidebar()
         if self.selection == "Acceuil":
