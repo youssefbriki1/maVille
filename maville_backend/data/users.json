@@ -7,6 +7,7 @@
   "postalCode" : "H3T",
   "birthDate" : "2024-11-22",
   "requetes" : [ ],
+  "notifications" : null,
   "role" : "Resident"
 }, {
   "name" : "Resident2 Res",
@@ -17,6 +18,7 @@
   "postalCode" : "H3T",
   "birthDate" : "2024-11-22",
   "requetes" : [ ],
+  "notifications" : null,
   "role" : "Resident"
 }, {
   "name" : "Resident3 Res",
@@ -27,6 +29,7 @@
   "postalCode" : "H3T",
   "birthDate" : "2024-11-22",
   "requetes" : [ ],
+  "notifications" : null,
   "role" : "Resident"
 }, {
   "name" : "Intervenant1 Int",
@@ -58,6 +61,36 @@
   "idCity" : 0,
   "requetes" : [ ],
   "role" : "Intervenant"
-}
-]
-  
+}, {
+  "name" : "Youssef Briki",
+  "email" : "youssef.briki05@gmail.com",
+  "password" : "a",
+  "phoneNumber" : "4389277057",
+  "address" : "2350 Boulevard Édouard-Montpetit, 103G",
+  "postalCode" : "H3T 1J4",
+  "birthDate" : "2024-12-07",
+  "requetes" : [ ],
+  "notifications" : [ ],
+  "role" : "Resident"
+}, {
+  "name" : "Youssef Briki",
+  "email" : "youssef.briki05@gmail.com",
+  "password" : "a",
+  "phoneNumber" : null,
+  "address" : null,
+  "postalCode" : null,
+  "idCity" : 0,
+  "requetes" : [ ],
+  "role" : "Intervenant"
+}, {
+  "name" : "Youssef Briki",
+  "email" : "youssef.briki05@gmail.com",
+  "password" : "a",
+  "phoneNumber" : "4389277057",
+  "address" : "2350 Boulevard Édouard-Montpetit, 103G",
+  "postalCode" : "H3T 1J4r",
+  "birthDate" : "2024-12-07",
+  "requetes" : [ ],
+  "notifications" : [ ],
+  "role" : "Resident"
+} ]

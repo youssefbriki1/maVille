@@ -1,0 +1,23 @@
+version: '3.9'
+services:
+  backend:
+    build:
+      context: ./maville_backend
+      dockerfile: Dockerfile
+    image: maville-backend:latest
+    container_name: maville-backend
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build:
+      context: ./maville_frontend
+      dockerfile: Dockerfile
+    image: maville-frontend:latest
+    container_name: maville-frontend
+    environment:
+      - BACKEND_URL=http://backend:8080
+    ports:
+      - "8501:8501"
+    depends_on:
+      - backend

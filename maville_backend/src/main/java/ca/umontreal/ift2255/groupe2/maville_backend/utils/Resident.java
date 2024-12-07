@@ -9,6 +9,7 @@ public class Resident extends Personne {
     private String postalCode;
     private String birthDate;
     private List<TravailResident> requetes;
+    private List<Notification> notifications;
 
 
     public Resident() {
@@ -23,7 +24,9 @@ public class Resident extends Personne {
         this.postalCode = postalCode;
         this.birthDate = birthDate;
         this.requetes = new ArrayList<>();
+        this.notifications = new ArrayList<>();
     }
+    
 
 
     // Getters and Setters
@@ -51,6 +54,10 @@ public class Resident extends Personne {
         return null;
     }
 
+    public List<Notification> getNotifications(){
+        return this.notifications;
+    }
+
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
@@ -76,6 +83,10 @@ public class Resident extends Personne {
         this.requetes = requetes;
     }
 
+    public void setNotifications(List<Notification> notifications) {
+        this.notifications = notifications;
+    }
+
     public void deleteRequete(TravailResident requete) {
         this.requetes.remove(requete);
     }
@@ -97,6 +108,10 @@ public class Resident extends Personne {
     
     public void deleteAllRequetes() {
         this.requetes.clear();
+    }
+
+    public void addNotification(Notification notification) {
+        this.notifications.add(notification);
     }
 
     public void updateRequete(TravailResident requete) {

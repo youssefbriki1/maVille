@@ -92,6 +92,16 @@ class Menu_Resident(Menu):
                         st.error(f"Failed to submit request: {response.text}")
                 except requests.exceptions.RequestException as e:
                     st.error(f"An error occurred: {e}")
+                    
+                    
+    def voir_notifications(self):
+        response = requests.get(f"{API_URL}/consulter-notifications", params=self.user.to_dict())
+        if response.status_code == 200:
+            notifications = response.json()
+            for notification in notifications:
+                st.write(f"Notification: {notification['message']}")
+        else:
+            st.error("Failed to retrieve notifications.")
 
         
             

@@ -14,7 +14,12 @@ TEXTART="""
              '          '         '      '        '    '        '     '    '       '    '       '    )/    
                                                                                                      '      
 """
-API_URL = "http://localhost:8080/api"
+
+import os
+
+API_URL = os.environ.get("BACKEND_URL", "http://localhost:8080")
+
+
 TYPES_TRAVAIL = [    "Travaux routiers",
     "Travaux de gaz ou électricité",
     "Construction ou rénovation",

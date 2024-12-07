@@ -1,44 +1,51 @@
 package ca.umontreal.ift2255.groupe2.maville_backend.controllers;
 
-import ca.umontreal.ift2255.groupe2.maville_backend.utils.Intervenant;
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
 import ca.umontreal.ift2255.groupe2.maville_backend.utils.Personne;
 import ca.umontreal.ift2255.groupe2.maville_backend.utils.Resident;
 
-import org.springframework.web.bind.annotation.*;
-import java.util.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.File;
-import java.io.IOException;
-import org.springframework.http.ResponseEntity;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
-@RequestMapping("/api/login")
-@CrossOrigin(origins = "http://localhost:8501")
-public class LoginController {
+@RequestMapping("/api")
+public class ConsulterNotifications {
 
-    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+    // Copier afficher travaux
 
-    @PostMapping
-    public ResponseEntity<?> login(@RequestBody HashMap<String, String> credentials) throws IOException {
+    private static final Logger logger = LoggerFactory.getLogger(ConsulterNotifications.class);
+
+
+    @GetMapping("/consulter-notifications")
+    public ResponseEntity<?> fetchData(@RequestParam HashMap<String, String> credentials) { 
+
+
+
         String email = credentials.get("email");
         String password = credentials.get("password");
         String role = credentials.get("role");
 
-        if (email == null || password == null) {
-            return ResponseEntity.badRequest().body("Email and password are required.");
+        if (role.equals("Intervenant")) {
+            return ResponseEntity.badRequest().body("Invalid data for Resident");
         }
 
-        if (authenticateUser(email, password, role)) {
-            return ResponseEntity.ok("Login successful.");
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password.");
-        }
-    }
-
-    private boolean authenticateUser(String email, String password, String role) {
+        
         try {
             File directory = new File("data");
             File file = new File(directory, "users.json");
@@ -57,7 +64,7 @@ public class LoginController {
                         if (role.equals(user.getRole())) {
                             logger.info("Role parameter: " + role);
                             logger.info("User's role: " + user.getRole());
-                            return true;
+                            //return true;
                         } else {
                             logger.error("Role mismatch. Expected: " + role + ", Found: " + user.getRole());
                         }
@@ -67,8 +74,9 @@ public class LoginController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
     
-        return false;
-    }
-    
+        //return false;
+
+}
 }
