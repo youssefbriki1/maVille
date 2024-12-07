@@ -26,7 +26,7 @@ fi
 echo "Starting Streamlit frontend..."
 cd "../$STREAMLIT_FRONTEND_PATH"
 if [[ -f "app.py" ]]; then
-    streamlit run app.py &
+    streamlit run app.py --server.runOnSave true &
     STREAMLIT_PID=$!
     echo "Streamlit frontend started with PID $STREAMLIT_PID."
 else

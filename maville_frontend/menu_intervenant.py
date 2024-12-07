@@ -4,6 +4,8 @@ import requests
 import logging
 from util_text import API_URL,TYPES_TRAVAIL
 from personne import Personne
+from streamlit_js_eval import streamlit_js_eval
+
 
 
 class Menu_Intervenant(Menu):
@@ -35,10 +37,80 @@ class Menu_Intervenant(Menu):
         st.title("Profile")
         st.write("Email: "+self.user.email) 
         st.write("Role: "+self.user.role)
+        
+        
+    def soumettre_requete_travail(self):
+        with st.form(key='request_form'):
+            st.write('Enter your request below:')
+            id = st.text_input('Id de la requete')
+            description = st.text_area('Description')
+            date_debut = st.date_input('Date de debut')
+            submit_button = st.form_submit_button(label='Submit Request')
+
+
+        ############################## - To edit
+        if submit_button:
+            if not title or not description:
+                st.warning("Please enter both title and description.")
+            else:
+                data = {
+                    "resident_email": st.session_state.get("user_email"),
+                    "type_travail": type_travail,
+                    "titre": title,
+                    "description": description,
+                    "date_debut": str(date_debut)
+                }
+                try:
+                    with st.spinner('Sending request...'):
+                        response = requests.post(f"{API_URL}/envoyer_requete_resident", json=data)
+                    if response.status_code == 200:
+                        st.success('Request submitted successfully!')
+                    else:
+                        st.error(f"Failed to submit request: {response.text}")
+                except requests.exceptions.RequestException as e:
+                    st.error(f"An error occurred: {e}")
+        ##############################
+        
+        
+    def soustraire_requete_travail(self):
+        with st.form(key='request_form'):
+            st.write('Enter your request below:')
+            id = st.text_input('Id de la requete')
+            description = st.text_area('Description')
+            date_debut = st.date_input('Date de debut')
+            submit_button = st.form_submit_button(label='Submit Request')
+
+
+        ############################## - To edit
+        if submit_button:
+            if not title or not description:
+                st.warning("Please enter both title and description.")
+            else:
+                data = {
+                    "resident_email": st.session_state.get("user_email"),
+                    "type_travail": type_travail,
+                    "titre": title,
+                    "description": description,
+                    "date_debut": str(date_debut)
+                }
+                try:
+                    with st.spinner('Sending request...'):
+                        response = requests.post(f"{API_URL}/envoyer_requete_resident", json=data)
+                    if response.status_code == 200:
+                        st.success('Request submitted successfully!')
+                    else:
+                        st.error(f"Failed to submit request: {response.text}")
+                except requests.exceptions.RequestException as e:
+                    st.error(f"An error occurred: {e}")
+        ##############################
+
+
+
+    def modifier_status_projets(self):
+        pass
     
-    def se_deconnecter(self):
-        self.user = None
-        st.write("Vous etes deconnecte")
+
+    
         
     def __call__(self):
         self.sidebar()

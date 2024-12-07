@@ -95,10 +95,6 @@ class Menu_Resident(Menu):
 
         
             
-    def se_deconnecter(self):
-        self.user = None
-        st.write("Vous etes deconnecte")
-        #raise Exception("Deconnexion")
     
         
     def __call__(self):
