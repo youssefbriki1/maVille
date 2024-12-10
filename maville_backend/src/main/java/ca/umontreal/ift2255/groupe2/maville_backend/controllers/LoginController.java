@@ -1,9 +1,5 @@
 package ca.umontreal.ift2255.groupe2.maville_backend.controllers;
-
-import ca.umontreal.ift2255.groupe2.maville_backend.utils.Intervenant;
 import ca.umontreal.ift2255.groupe2.maville_backend.utils.Personne;
-import ca.umontreal.ift2255.groupe2.maville_backend.utils.Resident;
-
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,7 +12,6 @@ import org.springframework.http.HttpStatus;
 
 @RestController
 @RequestMapping("/api/login")
-@CrossOrigin(origins = "http://localhost:8501")
 public class LoginController {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);

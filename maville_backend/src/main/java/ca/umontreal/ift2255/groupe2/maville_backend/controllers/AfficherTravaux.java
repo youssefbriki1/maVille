@@ -14,7 +14,6 @@ import org.springframework.http.HttpStatus;
 
 @RestController
 @RequestMapping("/api/consulter_infos")
-@CrossOrigin(origins = "http://localhost:8501")
 public class AfficherTravaux {
     private static final Logger logger = LoggerFactory.getLogger(AfficherTravaux.class);
 
