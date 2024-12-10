@@ -11,33 +11,6 @@ Les principales fonctionnalités de l'application incluent :
 - Gestion des réponses par les intervenants (entreprises, services municipaux)
 - Suivi en temps réel de l'évolution des travaux
 
-## Installation et Exécution du Prototype
-
-Pour exécuter le prototype, suivez les étapes ci-dessous :
-
-1. Clonez le dépôt GitHub en utilisant l'une des commandes suivantes :
-
-```bash
-   git clone git@github.com:youssefbriki1/ift2255-devoir1-groupe2.git
-   cd prototypes && java -jar main.jar
-```
-
-
-Les données du résident sont : email: resident1@gmail.com password : maville2024 
-Les données de l'intervenant sont : email : intervenant1@gmail.com password : ameliore2024@
-
-
-## Troubleshooting
-
-1. Pour complier: 
-
-```bash
-javac main.java
-jar cmvf META-INF/MANIFEST.MF main.jar main.class
-java -jar main.jar
-
-```
-
 # Devoir 2
 
 ## Prerequis
@@ -93,7 +66,7 @@ chmod +x quickrun.sh
 4. Executez le script de lancement
 
 ```bash
-source quickstart.sh
+./quickrun.sh
 ```
 
 ## Initialisation de la base de données

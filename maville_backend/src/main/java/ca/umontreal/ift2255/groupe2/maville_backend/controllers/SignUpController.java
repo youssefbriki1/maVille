@@ -17,12 +17,21 @@ import org.slf4j.LoggerFactory;
 
 @RestController
 @RequestMapping("/api/signup")
-@CrossOrigin(origins = "http://localhost:8501")
 public class SignUpController {
 
     private static final Logger logger = LoggerFactory.getLogger(SignUpController.class);
     private static final String DATA_DIRECTORY = "data";
     private static final String USERS_FILE = "users.json";
+
+
+    private static boolean uniqueUser(Personne personne, List<Personne> users){
+        for (Personne user : users) {
+            if (user.getEmail().equals(personne.getEmail()) && personne.getRole().equals(user.getRole())) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     @PostMapping
     public ResponseEntity<?> signup(@RequestBody HashMap<String, Object> personne) {
@@ -68,6 +77,16 @@ public class SignUpController {
 
                 File file = new File(directory, USERS_FILE);
                 ObjectMapper objectMapper = new ObjectMapper();
+
+                // Verifier que Unique
+                Personne[] usersArray = objectMapper.readValue(file, Personne[].class);
+                List<Personne> usersRead = Arrays.asList(usersArray);
+                if (!uniqueUser(user, usersRead)) {
+                    logger.error("User with email {} already exists", email);
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User already exists");
+                }
+
+
                 objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 
                 List<Personne> users = new ArrayList<>();

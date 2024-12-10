@@ -16,7 +16,7 @@ services:
     image: maville-frontend:latest
     container_name: maville-frontend
     environment:
-      - BACKEND_URL=http://backend:8080
+      - BACKEND_URL=http://backend:8080/api
     ports:
       - "8501:8501"
     depends_on:

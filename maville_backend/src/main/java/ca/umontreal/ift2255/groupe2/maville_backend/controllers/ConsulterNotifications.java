@@ -1,82 +1,60 @@
 package ca.umontreal.ift2255.groupe2.maville_backend.controllers;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-
+import ca.umontreal.ift2255.groupe2.maville_backend.utils.Notification;
 import ca.umontreal.ift2255.groupe2.maville_backend.utils.Personne;
 import ca.umontreal.ift2255.groupe2.maville_backend.utils.Resident;
 
-
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.springframework.web.bind.annotation.*;
+import java.util.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.File;
+import java.io.IOException;
+import org.springframework.http.ResponseEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.http.HttpStatus;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/consulter-notifications")
 public class ConsulterNotifications {
-
-    // Copier afficher travaux
-
     private static final Logger logger = LoggerFactory.getLogger(ConsulterNotifications.class);
 
 
-    @GetMapping("/consulter-notifications")
-    public ResponseEntity<?> fetchData(@RequestParam HashMap<String, String> credentials) { 
+    @GetMapping
+    public ResponseEntity<?> Afficher(@RequestParam HashMap<String,String> user) throws IOException {
+        logger.info("Data received: {}", user);
 
-
-
-        String email = credentials.get("email");
-        String password = credentials.get("password");
-        String role = credentials.get("role");
-
-        if (role.equals("Intervenant")) {
-            return ResponseEntity.badRequest().body("Invalid data for Resident");
-        }
-
-        
         try {
             File directory = new File("data");
             File file = new File(directory, "users.json");
             ObjectMapper objectMapper = new ObjectMapper();
     
             if (!file.exists() || file.length() == 0) {
-                throw new IOException("No users registered.");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No users registered.");
             }
     
-            Personne[] usersArray = objectMapper.readValue(file, Personne[].class);
-            List<Personne> users = Arrays.asList(usersArray);
+            Personne[] personneArray = objectMapper.readValue(file, Personne[].class);
+            List<Personne> personnes = Arrays.asList(personneArray);
+            List<Notification> responseList = new ArrayList<>();
     
-            for (Personne user : users) {
-                if (user.getEmail().equals(email)) {
-                    if (user.getPassword().equals(password)) {
-                        if (role.equals(user.getRole())) {
-                            logger.info("Role parameter: " + role);
-                            logger.info("User's role: " + user.getRole());
-                            //return true;
-                        } else {
-                            logger.error("Role mismatch. Expected: " + role + ", Found: " + user.getRole());
-                        }
+            for (Personne personne : personnes) {
+                if ("Resident".equals(user.get("role")) && user.get("email").equals(personne.getEmail())) {
+                    if (personne instanceof Resident) {
+                        Resident resident = (Resident) personne;
+                        responseList = resident.getNotifications();
+                        return ResponseEntity.ok(responseList);
+                    } else {
+                        logger.error("Person with email {} is not a Resident.", user.get("email"));
+                        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User is not a Resident.");
                     }
                 }
             }
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Error reading users from file: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to read users data.");
         }
-        return null;
     
-        //return false;
-
 }
 }
