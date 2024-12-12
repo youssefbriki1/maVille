@@ -18,7 +18,6 @@ import org.springframework.http.HttpStatus;
 
 @RestController
 @RequestMapping("/api/envoyer_requete_resident")
-@CrossOrigin(origins = "http://localhost:8501")
 public class EnvoyerRequete {
 
     private static final Logger logger = LoggerFactory.getLogger(EnvoyerRequete.class);

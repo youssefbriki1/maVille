@@ -131,9 +131,12 @@ public class Resident extends Personne {
         this.requetes.add(requete);
     }
 
+    /* 
+    public void addNotification(Intervenant intervenant, TravailResident requete) {
+        Notification notification = new Notification(intervenant, requete);
+        this.notifications.add(notification);
+    }
+    */
 
-    // Validation
 
-
-    // TODOs: Add more validation rules
 }

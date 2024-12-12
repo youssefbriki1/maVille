@@ -17,7 +17,7 @@ TEXTART="""
 
 import os
 
-API_URL = os.environ.get("BACKEND_URL", "http://localhost:8080")
+API_URL = os.environ.get("BACKEND_URL", "http://localhost:8080/api")
 
 
 TYPES_TRAVAIL = [    "Travaux routiers",

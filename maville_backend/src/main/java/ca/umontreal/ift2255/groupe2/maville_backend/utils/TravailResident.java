@@ -2,7 +2,7 @@ package ca.umontreal.ift2255.groupe2.maville_backend.utils;
 import ca.umontreal.ift2255.groupe2.maville_backend.utils.Personne;
 
 import java.util.*;
-public class TravailResident {
+public class TravailResident{
     private int id;
     private String title;
     private String description;
