@@ -1,6 +1,10 @@
 package ca.umontreal.ift2255.groupe2.maville_backend.utils;
 
 import java.util.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.type.TypeReference;
+import java.io.File;
+import java.io.IOException;
 
 public class Resident extends Personne {
     private static final String role = "Resident";
@@ -10,6 +14,7 @@ public class Resident extends Personne {
     private String birthDate;
     private List<TravailResident> requetes;
     private List<Notification> notifications;
+    private HashMap<String, Object> horraires;
 
 
     public Resident() {
@@ -25,6 +30,7 @@ public class Resident extends Personne {
         this.birthDate = birthDate;
         this.requetes = new ArrayList<>();
         this.notifications = new ArrayList<>();
+        this.horraires = new HashMap<>();
     }
     
 
@@ -52,6 +58,36 @@ public class Resident extends Personne {
             }
         }
         return null;
+    }
+    public HashMap<String, Object> getHorraires() {
+        return horraires;
+    }
+    public void setHorraires(Map<String,Object> horraires) {
+        System.out.println(horraires);
+        this.horraires = (HashMap<String, Object>) horraires;
+        System.out.println(this.horraires);
+    }
+
+    public void updateResidentInJson() {
+        try {
+            File directory = new File("data");
+            File file = new File(directory, "users.json");
+
+            // Read the content of the file
+            ObjectMapper mapper = new ObjectMapper();
+            List<Map<String, Object>> users = mapper.readValue(file, new TypeReference<List<Map<String, Object>>>(){});
+
+            // Print only the dictionaries where role is Resident
+            for (Map<String, Object> user : users) {
+                if ("Resident".equals(user.get("role")) && this.getEmail().equals(user.get("email"))) {
+                    System.out.println(user);
+                    user.put("horraires", this.horraires);
+                    mapper.writeValue(file, users);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public List<Notification> getNotifications(){

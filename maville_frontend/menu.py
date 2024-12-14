@@ -100,7 +100,8 @@ class Menu:
                         "type": None if role == "Intervenant" else None,
                         "id_city": None if role == "Resident" else None,
                         "role": role,
-                        "password": password
+                        "password": password,
+                        'horraires': {}
                     }
                     # Log and Submit Data
                     self.logger.info(data)
