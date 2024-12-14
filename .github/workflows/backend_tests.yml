@@ -18,11 +18,10 @@ jobs:
       uses: actions/setup-java@v4
       with:
         java-version: '17'
-        distribution: 'temurin' 
+        distribution: 'temurin'
         cache: maven
-
 
     - name: Run tests
       run: |
-      cd maville_backend
-      mvn test
+        cd maville_backend
+        mvn test
