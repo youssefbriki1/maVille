@@ -23,4 +23,6 @@ jobs:
 
 
     - name: Run tests
-      run: mvn test
+      run: |
+      cd maville_backend
+      mvn test
