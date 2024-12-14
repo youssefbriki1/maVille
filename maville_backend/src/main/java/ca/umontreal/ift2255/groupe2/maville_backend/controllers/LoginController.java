@@ -1,5 +1,7 @@
 package ca.umontreal.ift2255.groupe2.maville_backend.controllers;
 import ca.umontreal.ift2255.groupe2.maville_backend.utils.Personne;
+import ca.umontreal.ift2255.groupe2.maville_backend.utils.Resident;
+
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -65,5 +67,35 @@ public class LoginController {
     
         return false;
     }
+
+
+    private int getNotificationsNumber(String email, String password){
+        try {
+            File directory = new File("data");
+            File file = new File(directory, "users.json");
+            ObjectMapper objectMapper = new ObjectMapper();
+    
+            if (!file.exists() || file.length() == 0) {
+                throw new IOException("No users registered.");
+            }
+    
+            Personne[] usersArray = objectMapper.readValue(file, Personne[].class);
+            List<Personne> users = Arrays.asList(usersArray);
+    
+            for (Personne user : users) {
+                if (user.getEmail().equals(email)) {
+                    if (user.getPassword().equals(password)) {
+                        if (user.getRole().equals("Resident")) {
+                            return ((Resident) user).getNotifications().size();
+                        }
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+    }
+    return -1;
+    }
     
 }
+

@@ -22,7 +22,7 @@ public class Resident extends Personne {
     }
 
     public Resident(String name, String email, String password,
-                    String phoneNumber, String address, String postalCode, String birthDate) {
+                    String phoneNumber, String address, String postalCode, String birthDate) { // Modifier constructeur
         super(name, email, password);
         this.phoneNumber = phoneNumber;
         this.address = address;
@@ -88,6 +88,10 @@ public class Resident extends Personne {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public int getNotificationsNumber() {
+        return this.notifications.size();
     }
 
     public List<Notification> getNotifications(){
