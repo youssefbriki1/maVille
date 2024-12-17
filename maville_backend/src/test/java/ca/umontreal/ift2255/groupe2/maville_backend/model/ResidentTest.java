@@ -1,7 +1,10 @@
-package ca.umontreal.ift2255.groupe2.maville_backend.utils;
+package ca.umontreal.ift2255.groupe2.maville_backend.model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import ca.umontreal.ift2255.groupe2.maville_backend.model.Resident;
+import ca.umontreal.ift2255.groupe2.maville_backend.model.TravailResident;
 
 import static org.junit.jupiter.api.Assertions.*;
 

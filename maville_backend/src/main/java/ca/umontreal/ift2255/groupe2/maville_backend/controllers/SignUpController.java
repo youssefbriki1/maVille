@@ -1,13 +1,15 @@
 package ca.umontreal.ift2255.groupe2.maville_backend.controllers;
 
-import ca.umontreal.ift2255.groupe2.maville_backend.utils.Intervenant;
-import ca.umontreal.ift2255.groupe2.maville_backend.utils.Personne;
-import ca.umontreal.ift2255.groupe2.maville_backend.utils.Resident;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.SerializationFeature;
+
+import ca.umontreal.ift2255.groupe2.maville_backend.model.Intervenant;
+import ca.umontreal.ift2255.groupe2.maville_backend.model.Personne;
+import ca.umontreal.ift2255.groupe2.maville_backend.model.Resident;
+
 import java.io.File;
 import java.io.IOException;
 import org.springframework.http.ResponseEntity;

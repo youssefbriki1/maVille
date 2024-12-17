@@ -1,13 +1,13 @@
 package ca.umontreal.ift2255.groupe2.maville_backend.controllers;
 
-import ca.umontreal.ift2255.groupe2.maville_backend.utils.TravailResident;
-
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+
+import ca.umontreal.ift2255.groupe2.maville_backend.model.TravailResident;
 
 import java.io.File;
 import java.io.IOException;

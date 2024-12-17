@@ -1,4 +1,4 @@
-package ca.umontreal.ift2255.groupe2.maville_backend.utils;
+package ca.umontreal.ift2255.groupe2.maville_backend.model;
 import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

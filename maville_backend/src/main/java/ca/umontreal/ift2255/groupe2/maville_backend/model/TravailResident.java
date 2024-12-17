@@ -1,7 +1,7 @@
-package ca.umontreal.ift2255.groupe2.maville_backend.utils;
-import ca.umontreal.ift2255.groupe2.maville_backend.utils.Personne;
-
+package ca.umontreal.ift2255.groupe2.maville_backend.model;
 import java.util.*;
+
+import ca.umontreal.ift2255.groupe2.maville_backend.model.Personne;
 public class TravailResident{
     private int id;
     private String title;

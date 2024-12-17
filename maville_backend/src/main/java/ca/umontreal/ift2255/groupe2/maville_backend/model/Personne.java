@@ -1,4 +1,4 @@
-package ca.umontreal.ift2255.groupe2.maville_backend.utils;
+package ca.umontreal.ift2255.groupe2.maville_backend.model;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.util.regex.Pattern;
 import com.fasterxml.jackson.annotation.JsonSubTypes;

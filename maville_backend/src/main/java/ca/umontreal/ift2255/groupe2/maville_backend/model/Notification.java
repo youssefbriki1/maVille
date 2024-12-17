@@ -1,4 +1,4 @@
-package ca.umontreal.ift2255.groupe2.maville_backend.utils;
+package ca.umontreal.ift2255.groupe2.maville_backend.model;
 
 public class Notification {
     private String title;
