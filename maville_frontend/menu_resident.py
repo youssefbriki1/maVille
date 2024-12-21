@@ -132,7 +132,7 @@ class Menu_Resident(Menu):
                     
                     
     def voir_notifications(self):
-        response = requests.get(f"{API_URL}/consulter-notifications", params=self.user.to_dict())
+        response = requests.get(f"{API_URL}/consulter_notifications", params=self.user.to_dict())
         if response.status_code == 200:
             notifications = response.json()
             for notification in notifications:
@@ -181,6 +181,8 @@ class Menu_Resident(Menu):
                         st.error(f"Failed to submit horraire: {response.text}")
                 except requests.exceptions.RequestException as e:
                     st.error(f"An error occurred: {e}")
+                    
+                    
     def __call__(self):
         self.sidebar()
         if self.selection == "Acceuil":
@@ -196,6 +198,8 @@ class Menu_Resident(Menu):
         elif self.selection == "Consulter Profile":
             self.consulter_profile()
         elif self.selection == "Définir ses horraires":
-            self.definir_horraires()
+            self.definir_horraires()   
+        elif self.selection == "Voir Notifications" if st.session_state.get("Notification_number") == 0 else f"Vous avez {st.session_state.get('Notification_number')} nouvelles notifications": 
+            self.voir_notifications()
         elif self.selection == "Se deconnecter":
             self.se_deconnecter()

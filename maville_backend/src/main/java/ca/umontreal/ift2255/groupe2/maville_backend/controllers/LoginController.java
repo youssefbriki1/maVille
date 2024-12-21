@@ -3,6 +3,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import ca.umontreal.ift2255.groupe2.maville_backend.model.Notification;
 import ca.umontreal.ift2255.groupe2.maville_backend.model.Personne;
 import ca.umontreal.ift2255.groupe2.maville_backend.model.Resident;
 
@@ -30,6 +31,14 @@ public class LoginController {
         }
 
         if (authenticateUser(email, password, role)) {
+            
+            if (role.equals("Resident")) {
+                int notificationsNumber = getNotificationsNumber(email, password);
+                Map<String, Integer> response = new HashMap<>();
+                response.put("notificationsNumber", notificationsNumber);
+                return ResponseEntity.ok(response);
+
+            }
             return ResponseEntity.ok("Login successful.");
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password.");
@@ -87,7 +96,7 @@ public class LoginController {
                 if (user.getEmail().equals(email)) {
                     if (user.getPassword().equals(password)) {
                         if (user.getRole().equals("Resident")) {
-                            return ((Resident) user).getNotifications().size();
+                            return ((Resident) user).getNotificationsNumber();
                         }
                     }
                 }

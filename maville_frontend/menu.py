@@ -114,8 +114,7 @@ class Menu:
 
     
     def se_connecter(self):
-        st.title("Login")
-        # Create a login form
+        st.title("Se connecter")
         with st.form(key='signin_form'):
             st.write('Enter your information below:')
             email = st.text_input('Email')
@@ -134,14 +133,14 @@ class Menu:
                 }
                 self.logger.info(data)
                 try:
-                    # Show a loading spinner while the request is being processed
                     with st.spinner('Se connecte...'):
                         response = requests.post(f"{API_URL}/login", json=data)
-                    # Handle the response
                     if response.status_code == 200:
+                        result = response.json()  
                         st.session_state['loged_in'] = True
                         st.session_state['user_email'] = email
                         st.session_state['user_role'] = role
+                        st.session_state['Notification_number'] = result["notificationsNumber"]
                         st.success('Connexion reussie!')
                         #streamlit_js_eval(js_expressions="parent.window.location.reload()")
                         #self.page_acceuil()
@@ -152,10 +151,7 @@ class Menu:
                         st.error(f"Login failed: {response.text}")
                 except requests.exceptions.RequestException as e:
                     st.error(f"An error occurred: {e}")
-                    
-             
                         
-    
     
     def se_deconnecter(self):
         #print(st.session_state)

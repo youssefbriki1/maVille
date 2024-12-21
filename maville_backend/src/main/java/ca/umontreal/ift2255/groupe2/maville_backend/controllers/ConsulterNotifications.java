@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 
 @RestController
-@RequestMapping("/api/consulter-notifications")
+@RequestMapping("/api/consulter_notifications")
 public class ConsulterNotifications {
     private static final Logger logger = LoggerFactory.getLogger(ConsulterNotifications.class);
 
@@ -37,19 +37,28 @@ public class ConsulterNotifications {
             Personne[] personneArray = objectMapper.readValue(file, Personne[].class);
             List<Personne> personnes = Arrays.asList(personneArray);
             List<Notification> responseList = new ArrayList<>();
-    
+            
+
+
+            /* 
             for (Personne personne : personnes) {
                 if ("Resident".equals(user.get("role")) && user.get("email").equals(personne.getEmail())) {
                     if (personne instanceof Resident) {
                         Resident resident = (Resident) personne;
+                        
                         responseList = resident.getNotifications();
                         return ResponseEntity.ok(responseList);
                     } else {
-                        logger.error("Person with email {} is not a Resident.", user.get("email"));
+                        logger.error("Person with email is not a Resident.");
                         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User is not a Resident.");
                     }
                 }
             }
+
+            */
+
+
+            
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
         } catch (IOException e) {
             logger.error("Error reading users from file: {}", e.getMessage());

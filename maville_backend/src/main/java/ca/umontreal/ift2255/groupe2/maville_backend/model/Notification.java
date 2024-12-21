@@ -4,16 +4,14 @@ public class Notification {
     private String title;
     private String description;
     private String date;
-    private String type;
 
-    public Notification(String title, String description, String date, String type) throws IllegalArgumentException {
-        if (!validator(title, description, date, type)) {
+    public Notification(String title, String description, String date) throws IllegalArgumentException {
+        if (!validator(title, description, date)) {
             throw new IllegalArgumentException("Invalid Notification");
         }
         this.title = title;
         this.description = description;
         this.date = date;
-        this.type = type;
     }
 
     public Notification() {
@@ -32,10 +30,6 @@ public class Notification {
         return date;
     }
 
-    public String getType() {
-        return type;
-    }
-
     public void setTitle(String title) {
         this.title = title;
     }
@@ -48,11 +42,8 @@ public class Notification {
         this.date = date;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
 
-    public static boolean validator(String title, String description, String date, String type) {
+    public static boolean validator(String title, String description, String date) {
         if (title == null || title.isEmpty()) {
             return false;
         }
@@ -60,9 +51,6 @@ public class Notification {
             return false;
         }
         if (date == null || date.isEmpty()) {
-            return false;
-        }
-        if (type == null || type.isEmpty()) {
             return false;
         }
         return true;
