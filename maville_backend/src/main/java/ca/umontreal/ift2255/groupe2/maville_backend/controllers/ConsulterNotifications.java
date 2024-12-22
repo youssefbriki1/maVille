@@ -3,11 +3,7 @@ package ca.umontreal.ift2255.groupe2.maville_backend.controllers;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import ca.umontreal.ift2255.groupe2.maville_backend.model.Notification;
-import ca.umontreal.ift2255.groupe2.maville_backend.model.Personne;
-import ca.umontreal.ift2255.groupe2.maville_backend.model.Resident;
-
+import ca.umontreal.ift2255.groupe2.maville_backend.model.*;
 import java.io.File;
 import java.io.IOException;
 import org.springframework.http.ResponseEntity;
@@ -36,14 +32,17 @@ public class ConsulterNotifications {
     
             Personne[] personneArray = objectMapper.readValue(file, Personne[].class);
             List<Personne> personnes = Arrays.asList(personneArray);
-            Map<String, List<Notification>> responseList = new HashMap<>();
+            Map<String, List<Map<String,String>>> responseList = new HashMap<>();
 
             for (Personne personne : personnes){
                 if (personne.getRole().equals("Resident") && personne.getEmail().equals(user.get("email"))){
                     Resident resident = (Resident) personne;
-                    responseList.put("new", resident.getNewNotifications());
-                    responseList.put("old", resident.getOldNotifications());
+                    
+                    responseList.put("new", NotificationHandler.formatNotificationList(resident.getNewNotifications())); // Add format
+                    responseList.put("old", NotificationHandler.formatNotificationList(resident.getOldNotifications()));
                     resident.setNotificationsAsOld();
+                    System.out.println(responseList);
+                
                     return ResponseEntity.ok(responseList);
                 }
             }

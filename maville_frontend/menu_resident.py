@@ -136,8 +136,9 @@ class Menu_Resident(Menu):
         response = requests.get(f"{API_URL}/consulter_notifications", params=self.user.to_dict())
         if response.status_code == 200:
             notifications = response.json()
-            for notification in notifications:
-                st.write(notification)
+            st.write(notifications)
+            #for notification in notifications:
+             #   st.write(notification)
         else:
             logger.error(f"Failed to retrieve notifications: {response.text}")
 

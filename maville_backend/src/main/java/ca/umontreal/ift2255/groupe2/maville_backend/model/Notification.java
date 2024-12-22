@@ -1,5 +1,8 @@
 package ca.umontreal.ift2255.groupe2.maville_backend.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Notification {
     private String title;
     private String description;
@@ -52,6 +55,15 @@ public class Notification {
     public void setIsNew(boolean isNew) {
         this.isNew = isNew;
     }
+
+    public Map<String, String> toDict(){
+        Map<String, String> formatedMap= new HashMap<>();
+        formatedMap.put("title", this.title);
+        formatedMap.put("description", this.description);
+        formatedMap.put("date", this.date);
+        return formatedMap;
+    }
+    
 
 
     public static boolean validator(String title, String description, String date) {

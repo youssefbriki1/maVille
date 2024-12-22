@@ -6,7 +6,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import java.io.File;
 import java.io.IOException;
 
-public class Resident extends Personne {
+public class Resident extends Personne implements NotificationHandler {
     private static final String role = "Resident";
     private String phoneNumber;
     private String address;
@@ -116,6 +116,7 @@ public class Resident extends Personne {
         return this.notifications;
     }
 
+    @Override
     public List<Notification> getNewNotifications(){
         List<Notification> newNotifications = new ArrayList<>();
         for (Notification notification : this.notifications){
@@ -126,6 +127,9 @@ public class Resident extends Personne {
         return newNotifications;
     }
 
+
+
+    @Override
     public List<Notification> getOldNotifications(){
         List<Notification> oldNotifications = new ArrayList<>();
         for (Notification notification : this.notifications){
