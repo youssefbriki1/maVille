@@ -8,6 +8,8 @@ from formParser import DataParser
 import json
 import ast
 
+logger = logging.getLogger(__name__)
+
 def get_horraires_by_email_and_role(email, role):
     try:
         with open('../maville_backend/data/users.json', 'r') as file:
@@ -45,10 +47,9 @@ def format_horraires(horraires):
 class Menu_Resident(Menu):
     def __init__(self,user:Personne) -> None:
         super().__init__()
-        self.options = ["Acceuil","Consulter Entraves", "Consulter Travaux", "Consulter travaux residentiels", "Soumettre requete travail","Consulter Profile","Définir ses horraires", "Se deconnecter"]    
+        self.notification_title = "Voir Notifications" if st.session_state.get("Notification_number") == 0 else f"Vous avez {st.session_state.get('Notification_number')} nouvelles notifications"
+        self.options = ["Acceuil","Consulter Entraves", "Consulter Travaux", "Consulter travaux residentiels", "Soumettre requete travail","Consulter Profile","Définir ses horraires", self.notification_title, "Se deconnecter"]    
         self.user = user
-        
-        
         
         
     def __fetch_api_data(self, user_choice):
@@ -136,9 +137,9 @@ class Menu_Resident(Menu):
         if response.status_code == 200:
             notifications = response.json()
             for notification in notifications:
-                st.write(f"Notification: {notification['message']}")
+                st.write(notification)
         else:
-            st.error("Failed to retrieve notifications.")
+            logger.error(f"Failed to retrieve notifications: {response.text}")
 
         
             
@@ -160,8 +161,6 @@ class Menu_Resident(Menu):
             if not days_of_week or not start_time or not end_time:
                 st.warning("Veuillez tout remplir.")
             else:
-                print(days_of_week)
-                print(self.user.to_dict())
                 data = {
                     "resident_email": st.session_state.get("user_email"),
                     "days_of_week": days_of_week,
@@ -169,7 +168,6 @@ class Menu_Resident(Menu):
                     "end_time": str(end_time),
                     "resident" : self.user.to_dict()
                 }
-                print(data)
                 try:
                     with st.spinner('Sending horraire... '):
                         response = requests.post(f"{API_URL}/definir-horraires", json=data)
@@ -199,7 +197,7 @@ class Menu_Resident(Menu):
             self.consulter_profile()
         elif self.selection == "Définir ses horraires":
             self.definir_horraires()   
-        elif self.selection == "Voir Notifications" if st.session_state.get("Notification_number") == 0 else f"Vous avez {st.session_state.get('Notification_number')} nouvelles notifications": 
+        elif self.selection == self.notification_title: 
             self.voir_notifications()
         elif self.selection == "Se deconnecter":
             self.se_deconnecter()

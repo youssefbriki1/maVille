@@ -33,7 +33,7 @@ public class LoginController {
         if (authenticateUser(email, password, role)) {
             
             if (role.equals("Resident")) {
-                int notificationsNumber = getNotificationsNumber(email, password);
+                int notificationsNumber = getNewNotificationsNumber(email, password);
                 Map<String, Integer> response = new HashMap<>();
                 response.put("notificationsNumber", notificationsNumber);
                 return ResponseEntity.ok(response);
@@ -79,7 +79,7 @@ public class LoginController {
     }
 
 
-    private int getNotificationsNumber(String email, String password){
+    private int getNewNotificationsNumber(String email, String password){
         try {
             File directory = new File("data");
             File file = new File(directory, "users.json");
@@ -96,7 +96,7 @@ public class LoginController {
                 if (user.getEmail().equals(email)) {
                     if (user.getPassword().equals(password)) {
                         if (user.getRole().equals("Resident")) {
-                            return ((Resident) user).getNotificationsNumber();
+                            return ((Resident) user).getNewNotifications().size();
                         }
                     }
                 }

@@ -116,6 +116,26 @@ public class Resident extends Personne {
         return this.notifications;
     }
 
+    public List<Notification> getNewNotifications(){
+        List<Notification> newNotifications = new ArrayList<>();
+        for (Notification notification : this.notifications){
+            if (notification.getIsNew()){
+                newNotifications.add(notification);
+            }
+        }
+        return newNotifications;
+    }
+
+    public List<Notification> getOldNotifications(){
+        List<Notification> oldNotifications = new ArrayList<>();
+        for (Notification notification : this.notifications){
+            if (!notification.getIsNew()){
+                oldNotifications.add(notification);
+            }
+        }
+        return oldNotifications;
+    }
+
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
@@ -190,12 +210,12 @@ public class Resident extends Personne {
         this.requetes.add(requete);
     }
 
-    /* 
-    public void addNotification(Intervenant intervenant, TravailResident requete) {
-        Notification notification = new Notification(intervenant, requete);
-        this.notifications.add(notification);
+    public void setNotificationsAsOld() {
+        for (Notification notification : this.notifications) {
+            notification.setIsNew(false);
+        }
+        writeNotificationsInJson();
     }
-    */
 
 
 }

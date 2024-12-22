@@ -36,29 +36,18 @@ public class ConsulterNotifications {
     
             Personne[] personneArray = objectMapper.readValue(file, Personne[].class);
             List<Personne> personnes = Arrays.asList(personneArray);
-            List<Notification> responseList = new ArrayList<>();
-            
+            Map<String, List<Notification>> responseList = new HashMap<>();
 
-
-            /* 
-            for (Personne personne : personnes) {
-                if ("Resident".equals(user.get("role")) && user.get("email").equals(personne.getEmail())) {
-                    if (personne instanceof Resident) {
-                        Resident resident = (Resident) personne;
-                        
-                        responseList = resident.getNotifications();
-                        return ResponseEntity.ok(responseList);
-                    } else {
-                        logger.error("Person with email is not a Resident.");
-                        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User is not a Resident.");
-                    }
+            for (Personne personne : personnes){
+                if (personne.getRole().equals("Resident") && personne.getEmail().equals(user.get("email"))){
+                    Resident resident = (Resident) personne;
+                    responseList.put("new", resident.getNewNotifications());
+                    responseList.put("old", resident.getOldNotifications());
+                    resident.setNotificationsAsOld();
+                    return ResponseEntity.ok(responseList);
                 }
             }
 
-            */
-
-
-            
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
         } catch (IOException e) {
             logger.error("Error reading users from file: {}", e.getMessage());

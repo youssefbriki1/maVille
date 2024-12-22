@@ -4,6 +4,7 @@ public class Notification {
     private String title;
     private String description;
     private String date;
+    private boolean isNew;
 
     public Notification(String title, String description, String date) throws IllegalArgumentException {
         if (!validator(title, description, date)) {
@@ -12,12 +13,18 @@ public class Notification {
         this.title = title;
         this.description = description;
         this.date = date;
+        this.isNew = true;
     }
+
 
     public Notification() {
     }
 
     // Getters and Setters
+
+    public boolean getIsNew() {
+        return isNew;
+    }
     public String getTitle() {
         return title;
     }
@@ -40,6 +47,10 @@ public class Notification {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public void setIsNew(boolean isNew) {
+        this.isNew = isNew;
     }
 
 
