@@ -13,6 +13,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 
+/**
+ * Contrôleur REST pour gérer les candidatures associées à un intervenant.
+ * Permet de récupérer et de supprimer les candidatures des utilisateurs à partir d'un fichier JSON.
+ */
 @RestController
 @RequestMapping("/api/get_candidatures")
 public class ConsulterCandidatures {
@@ -21,6 +25,12 @@ public class ConsulterCandidatures {
     private static final String DATA_DIRECTORY = "data";
     private static final String USERS_FILE = "users.json";
 
+    /**
+     * Endpoint GET pour récupérer les candidatures d'un utilisateur donné.
+     *
+     * @param email L'email de l'utilisateur pour lequel récupérer les candidatures.
+     * @return Une réponse HTTP contenant la liste des candidatures ou un message d'erreur approprié.
+     */
     @GetMapping
     public ResponseEntity<?> getCandidatures(@RequestParam String email) {
         if (email == null || email.isEmpty()) {
@@ -57,6 +67,12 @@ public class ConsulterCandidatures {
             }
         }
     }
+    /**
+     * Endpoint POST pour supprimer une candidature spécifique d'un utilisateur donné.
+     *
+     * @param request Une requête JSON contenant l'email de l'utilisateur et l'ID de la candidature à supprimer.
+     * @return Une réponse HTTP confirmant la suppression ou un message d'erreur approprié.
+     */
     @PostMapping("/remove")
     public ResponseEntity<?> removeCandidature(@RequestBody Map<String, String> request) {
         String email = request.get("email");
