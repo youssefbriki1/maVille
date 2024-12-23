@@ -49,7 +49,7 @@ class Menu_Resident(Menu):
     def __init__(self,user:Personne) -> None:
         super().__init__()
         self.notification_title = "Voir Notifications" if st.session_state.get("Notification_number") == 0 else f"Vous avez {st.session_state.get('Notification_number')} nouvelles notifications"
-        self.options = ["Acceuil","Consulter Entraves", "Consulter Travaux", "Consulter travaux residentiels", "Soumettre requete travail","Consulter Profile","Définir ses horraires", self.notification_title, "Se deconnecter"]    
+        self.options = ["Acceuil","Consulter Entraves", "Consulter Travaux", "Consulter travaux par quartier","Consulter Entraves par Rue","Consulter travaux residentiels", "Soumettre requete travail","Consulter Profile","Définir ses horraires", self.notification_title, "Se deconnecter"]    
         self.user = user
         
         
@@ -181,7 +181,96 @@ class Menu_Resident(Menu):
                         st.error(f"Failed to submit horraire: {response.text}")
                 except requests.exceptions.RequestException as e:
                     st.error(f"An error occurred: {e}")
-                    
+
+    def __fetch_and_filter_quartier_api_data(self, user_choice, filter_key, filter_value):
+        """
+        Fetch data from the API, filter it, and write the filtered results.
+
+        Args:
+            user_choice (str): The type of data to fetch (e.g., 'travaux').
+            filter_key (str): The key to filter by (e.g., 'boroughid').
+            filter_value (str): The value to match for the filter (e.g., 'Le Sud-Ouest').
+        """
+        curr_data = {"choix": user_choice}
+        response = requests.get(f"{API_URL}/fetch-data", params=curr_data)
+        if response.status_code != 200:
+            st.error("Failed to retrieve data.")
+            self.logger.error(f"Failed to retrieve data: {response.text}")
+            return
+        else:
+            try:
+                # Récupérer les données brutes
+                raw_data = response.json()
+
+                # Filtrer les données par le critère spécifié
+                filtered_data = [item for item in raw_data if item.get(filter_key, "").lower() == filter_value.lower()]
+            
+                if filtered_data:
+                    # Parser et afficher les données filtrées
+                    data_parser = DataParser()
+                    response_data = data_parser.formParser(filtered_data)
+                    data_parser.write(response_data)
+                else:
+                    st.info(f"Aucun élément trouvé pour le filtre {filter_key} = {filter_value}.")
+            except Exception as e:
+                st.error(f"Erreur lors du traitement des données : {e}")
+
+
+
+    def __fetch_and_filter_rue_api_data(self, user_choice, filter_key, filter_value):
+        """
+        Fetch data from the API, filter it, and write the filtered results.
+
+        Args:
+            user_choice (str): The type of data to fetch (e.g., 'travaux').
+            filter_key (str): The key to filter by (e.g., 'streetid').
+            filter_value (str): The value to match for the filter (e.g., 'rue Ontario Est').
+        """
+        curr_data = {"choix": user_choice}
+        response = requests.get(f"{API_URL}/fetch-data", params=curr_data)
+        if response.status_code != 200:
+            st.error("Failed to retrieve data.")
+            self.logger.error(f"Failed to retrieve data: {response.text}")
+            return
+        else:
+            try:
+                # Récupérer les données brutes
+                raw_data = response.json()
+            
+                # Filtrer les données par le critère spécifié
+                filtered_data = [
+                    item for item in raw_data
+                    if filter_key in item and item[filter_key].strip().lower() == filter_value.strip().lower()
+                ]
+            
+                if filtered_data:
+                    # Parser et afficher les données filtrées
+                    data_parser = DataParser()
+                    response_data = data_parser.formParser(filtered_data)
+                    data_parser.write(response_data)
+                else:
+                    st.info(f"Aucun élément trouvé pour le filtre {filter_key} = {filter_value}.")
+            except Exception as e:
+                st.error(f"Erreur lors du traitement des données : {e}")
+    def consulter_travaux_par_quartier(self):
+        st.title("Travaux par Quartier")
+
+        # Entrée utilisateur pour le quartier
+        quartier = st.text_input("Entrez le nom du quartier :", "")
+
+        if quartier:
+            # Récupérer et filtrer les données par quartier
+            self.__fetch_and_filter_quartier_api_data("travaux", "boroughid", quartier)
+
+    def consulter_entraves_par_rue(self):
+        st.title("Entraves par Rue")
+
+        # Entrée utilisateur pour la rue
+        rue = st.text_input("Entrez le nom de la rue :", "")
+
+        if rue:
+            # Récupérer et filtrer les données par rue
+            self.__fetch_and_filter_rue_api_data("entraves", "streetid", rue)                
                     
     def __call__(self):
         self.sidebar()
@@ -191,6 +280,10 @@ class Menu_Resident(Menu):
             self.consulter_entraves()
         elif self.selection == "Consulter Travaux":
             self.consulter_travaux()
+        elif self.selection == "Consulter travaux par quartier":
+            self.consulter_travaux_par_quartier()
+        elif self.selection == "Consulter Entraves par Rue":
+            self.consulter_entraves_par_rue()
         elif self.selection == "Consulter travaux residentiels":
             self.consulter_travaux_residentiels()
         elif self.selection == "Soumettre requete travail":
