@@ -95,4 +95,76 @@ public class EnvoyerNotification {
         return ResponseEntity.ok("Notification sent successfully to all residents");
 
     }
+    @PostMapping("/specific")
+    public ResponseEntity<?> envoyerNotificationSpecifique(@RequestBody Map<String, String> request) {
+        File file = new File(DATA_DIRECTORY, USERS_FILE);
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<Map<String, Object>> residents = new ArrayList<>();
+        String email = request.get("email");
+        String title = request.get("title");
+        String description = request.get("description");
+        String date = request.get("date");
+
+        if (email == null || email.isEmpty() || title == null || title.isEmpty() || description == null || description.isEmpty() || date == null || date.isEmpty()) {
+            return ResponseEntity.badRequest().body("Email, title, description, and date are required");
+        }
+        
+
+        logger.info("Sending notification: " + request);
+
+        Notification notification;
+        try {
+            notification = new Notification(title, description, date);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("Invalid notification data");
+        }
+        System.out.println(notification);
+
+        if (!file.exists() || file.length() == 0) {
+            logger.error("users.json file does not exist or is empty");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("users.json file does not exist or is empty");
+        } else {
+            try {
+                JsonNode jsonNode = objectMapper.readTree(file);
+                int i = 0;
+                if (jsonNode.isArray()) {
+                    boolean userFound = false;
+                    for (JsonNode node : jsonNode) {
+                        if ("Resident".equals(node.get("role").asText()) && email.equals(node.get("email").asText())) {
+                            Map<String, Object> resident = objectMapper.convertValue(node, Map.class);
+                            List<Map<String, String>> notifications = (List<Map<String, String>>) resident.get("notifications");
+                            request.remove("email");
+                            notifications.add(request);
+                            resident.put("newNotifications", notifications);
+                            Object coco = resident.get("notificationsNumber");
+                            int cocoInt = (int) coco;
+                            resident.put("notificationsNumber", cocoInt + 1);
+                            residents.add(resident);
+                            
+                            userFound = true;
+                            
+                        } else {
+                            residents.add(objectMapper.convertValue(node, Map.class));
+                        }
+                        
+                    }objectMapper.writeValue(file, residents);
+                } else {
+                    logger.error("users.json does not contain a JSON array");
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body("Invalid data format in users.json");
+                }
+            } catch (IOException e) {
+                logger.error("Failed to read existing residents from users.json", e);
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to read existing residents");
+            }
+        }
+
+        ;
+        return ResponseEntity.ok("Notification sent successfully to all residents");
+
+    }
+    
+
 }

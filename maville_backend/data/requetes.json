@@ -2,7 +2,7 @@
   "id" : 777,
   "title" : "Requete 1",
   "description" : "Website",
-  "status" : "En attente de confirmation",
+  "status" : "Candidature soumise par aaaa@aaaa.aaa",
   "dateDebut" : "2024-11-01",
   "senderEmail" : "Resident1@email.com",
   "typeTravaux" : "Construction ou rénovation"
@@ -10,7 +10,7 @@
   "id" : 240,
   "title" : "Requete 2",
   "description" : "Website 2",
-  "status" : "En attente de confirmation",
+  "status" : "Candidature soumise par aaaa@aaaa.aaa",
   "dateDebut" : "2024-11-04",
   "senderEmail" : "Resident1@email.com",
   "typeTravaux" : "Travaux souterrains"
@@ -34,7 +34,7 @@
   "id" : 46,
   "title" : "Fix metro",
   "description" : "le metrooooo",
-  "status" : "En attente de confirmation",
+  "status" : "Candidature soumise par aaaa@aaaa.aaa",
   "dateDebut" : "2024-12-23",
   "senderEmail" : "fatouaki.jalal@gmail.com",
   "typeTravaux" : "Travaux de gaz ou électricité"

@@ -6,12 +6,19 @@ from util_text import API_URL,TYPES_TRAVAIL
 from personne import Personne
 from streamlit_js_eval import streamlit_js_eval
 from datetime import datetime
+import re
 
+def extract_email(string):
+    email_pattern = r'by ([\w\.-]+@[\w\.-]+)'
+    match = re.search(email_pattern, string)
+    if match:
+        return match.group(1)
+    return None
 
 class Menu_Intervenant(Menu):
     def __init__(self,user:Personne) -> None:
         super().__init__()
-        self.options = ["Acceuil","Consulter Travaux", "Consulter Profile", "Soumettre projet","Modifier status projet","Se deconnecter"]    
+        self.options = ["Acceuil","Consulter Travaux","Soumettre candidature", "Consulter Profile", "Soumettre projet","Modifier status projet","Se deconnecter"]    
         self.user = user
         
     def consulter_travaux(self):
@@ -189,7 +196,50 @@ class Menu_Intervenant(Menu):
                 except requests.exceptions.RequestException as e:
                     st.error(f"An error occurred: {e}")
                     
-         
+    def soumettre_candidature(self):
+        st.title("Soumettre une candidature")
+
+        response = requests.get(f"{API_URL}/consulter_infos", params=self.user.to_dict())
+        
+        if response.status_code == 200:
+            travaux = response.json()
+        else:
+            st.error("Failed to fetch travaux")
+            return
+
+        # Display travaux and allow selection
+        travail_options = {f"{travail['title']} by {travail['senderEmail']} (ID: {travail['id']})": travail['id']  for travail in travaux}
+        
+        selected_travail = st.selectbox("Sélectionnez un travail pour soumettre votre candidature", list(travail_options.keys()))
+
+        if selected_travail:
+            travail_sender_email =extract_email(selected_travail)
+            travail_id = travail_options[selected_travail]
+            intervenant_email = st.session_state.get("user_email")
+
+            if st.button("Soumettre candidature"):
+                data = {
+                    "travail_id": travail_id,
+                    "intervenant_email": intervenant_email,
+                }
+                response = requests.post(f"{API_URL}/soumettre_candidature/candidature", json=data)
+                if response.status_code == 200:
+                    st.success("Candidature soumise avec succès")
+                    
+                    notification_message = {
+                            "title":"Nouvelle candidature",
+                            "description":"Une nouvelle candidature a été soumise par : "+ st.session_state.get("user_email"),
+                            "date": datetime.now().strftime("%Y-%m-%d"),
+                            "isNew":True,
+                            "email": travail_sender_email
+                        }
+
+                    # Make the POST request to the envoyer_notification endpoint
+                    response2 = requests.post(f"{API_URL}/envoyer_notification/specific", json=notification_message)
+                
+                else:
+                    st.error("Failed to submit candidature")
+                    st.error(response.text)
     
         
     def __call__(self):
@@ -198,6 +248,8 @@ class Menu_Intervenant(Menu):
             self.page_acceuil()
         elif self.selection == "Consulter Travaux":
             self.consulter_travaux()
+        elif self.selection == "Soumettre candidature":
+            self.soumettre_candidature()
         elif self.selection == "Consulter Profile":
             self.consulter_profile()
         elif self.selection == "Soumettre projet":
