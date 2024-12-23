@@ -7,7 +7,6 @@ public class TravailResident {
     private String dateDebut;
     private String senderEmail;
     private String typeTravaux;
-    private String quartier;
     
         public TravailResident() {
         }
@@ -21,7 +20,6 @@ public class TravailResident {
             this.dateDebut = dateDebut;
             this.typeTravaux = typeTravaux;
             this.senderEmail = senderEmail;
-            this.quartier = quartier;
     }
 
 
@@ -92,13 +90,6 @@ public class TravailResident {
     }
 
 
-    public String getQuartier() {
-        return this.quartier;
-    } 
-
-    public void setQuartier(String quartier) {
-        this.quartier = quartier;
-    }
 
     
 }
