@@ -1,7 +1,20 @@
 package ca.umontreal.ift2255.groupe2.maville_backend.controllers;
 
-import org.springframework.web.bind.annotation.*;
-import java.util.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,13 +22,10 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 import ca.umontreal.ift2255.groupe2.maville_backend.model.ProjetIntervenant;
 
-import java.io.File;
-import java.io.IOException;
-import org.springframework.http.ResponseEntity;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-
+/**
+ * Contrôleur REST pour modifier les projets d'intervenants.
+ * Cette classe permet de mettre à jour le statut d'un projet à partir de son ID.
+ */
 @RestController
 @RequestMapping("/api/modifier_projet")
 public class ModifierProjet {
@@ -24,6 +34,15 @@ public class ModifierProjet {
     private static final String DATA_DIRECTORY = "data";
     private static final String PROJETS_FILE = "projets.json";
 
+    /**
+     * Endpoint POST pour modifier le statut d'un projet.
+     *
+     * @param settings Un `HashMap` contenant les informations nécessaires :
+     *                 - "projet_id" : L'ID du projet à modifier.
+     *                 - "new_status" : Le nouveau statut à appliquer au projet.
+     * @return Une `ResponseEntity` contenant un message de succès ou un message d'erreur.
+     * @throws IOException Si une erreur survient lors de la lecture ou de l'écriture du fichier JSON.
+     */
     @PostMapping
     public ResponseEntity<?> Modifier(@RequestBody HashMap<String, String> settings) throws IOException {
         int projetId = Integer.parseInt(settings.get("projet_id"));

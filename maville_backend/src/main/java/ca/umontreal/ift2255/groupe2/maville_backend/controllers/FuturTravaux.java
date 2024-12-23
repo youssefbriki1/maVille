@@ -22,11 +22,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ca.umontreal.ift2255.groupe2.maville_backend.model.TravailResident;
 
+/**
+ * Cette classe fournit une API pour récupérer les travaux prévus dans les 3 prochains mois.
+ */
 @RestController
 @RequestMapping("/api/futur_travaux")
 public class FuturTravaux {
     private static final Logger logger = LoggerFactory.getLogger(FuturTravaux.class);
 
+    /**
+     * Récupère les travaux à venir dans les 3 prochains mois à partir d'un fichier JSON.
+     *
+     * @param user Un HashMap contenant les informations de l'utilisateur (non utilisé dans cette version).
+     * @return Une `ResponseEntity` contenant la liste des travaux à venir, ou un message d'erreur en cas de problème.
+     */
     @GetMapping
     public ResponseEntity<?> afficherTravauxProchains(@RequestParam HashMap<String, String> user) {
         logger.info("Requête reçue pour afficher les travaux à venir : " + user.toString());
