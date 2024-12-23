@@ -117,9 +117,8 @@ public class Resident extends Personne implements NotificationHandler {
     public int getNotificationsNumber() {
         return this.notifications.size();
     }
-    public void addNewNotifications(Map<String, String> notification) {
-        Notification newNotification = new Notification(notification.get("title"), notification.get("message"), notification.get("date"));
-        this.notifications.add(newNotification);
+    public void addNewNotification(Notification notification) {
+        this.newNotifications.add(notification);
     }
     public void setNotificationsNumber(int notificationsNumber) {
         this.notificationsNumber = notificationsNumber;

@@ -5,7 +5,7 @@ import logging
 from util_text import API_URL,TYPES_TRAVAIL
 from personne import Personne
 from streamlit_js_eval import streamlit_js_eval
-
+from datetime import datetime
 
 
 class Menu_Intervenant(Menu):
@@ -107,7 +107,48 @@ class Menu_Intervenant(Menu):
 
 
     def modifier_status_projets(self):
-        pass
+        st.title("Modifier le statut des projets")
+
+        # Fetch current projects
+        response = requests.get(f"{API_URL}/projets")
+        if response.status_code == 200:
+            projets = response.json()
+        else:
+            st.error("Failed to fetch projects")
+            return
+
+        # Display projects and allow selection
+        projet_options = {f"{projet['title']} (ID: {projet['id']})": projet['id'] for projet in projets}
+        selected_projet = st.selectbox("Sélectionnez un projet à modifier", list(projet_options.keys()))
+
+        if selected_projet:
+            projet_id = projet_options[selected_projet]
+            new_status = st.selectbox("Nouveau statut", ["Prévu", "En cours", "Terminé"])
+
+            if st.button("Modifier le statut"):
+                data = {
+                    "projet_id": projet_id,
+                    "new_status": new_status
+                }
+                response = requests.post(f"{API_URL}/modifier_projet", json=data)
+                if response.status_code == 200:
+                    st.success("Statut du projet mis à jour avec succès")
+                    # Define the notification message
+                    notification_message = {
+                        "title":"Statut du projet mis à jour",
+                        "description":"Le projet "+selected_projet+" a été mis à jour avec succès",
+                        "date": datetime.now().strftime("%Y-%m-%d"),
+                        "isNew":True
+                    }
+
+                    # Make the POST request to the envoyer_notification endpoint
+                    response2 = requests.post(f"{API_URL}/envoyer_notification", json=notification_message)
+                    
+
+                else:
+                    st.error("Failed to update project status")
+                    st.error(response.text)
+
     
     def soumettre_projet(self):
         with st.form(key='request_form'):
@@ -134,6 +175,15 @@ class Menu_Intervenant(Menu):
                         response = requests.post(f"{API_URL}/soumettre_projet", json=data)
                     if response.status_code == 200:
                         st.success('Request submitted successfully!')
+                        notification_message = {
+                            "title":"Nouveau projet soumis",
+                            "description":"Un nouveau projet a été soumis par : "+ st.session_state.get("user_email"),
+                            "date": datetime.now().strftime("%Y-%m-%d"),
+                            "isNew":True
+                        }
+
+                        # Make the POST request to the envoyer_notification endpoint
+                        response2 = requests.post(f"{API_URL}/envoyer_notification", json=notification_message)
                     else:
                         st.error(f"Failed to submit request: {response.text}")
                 except requests.exceptions.RequestException as e:
