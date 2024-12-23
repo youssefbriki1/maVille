@@ -69,9 +69,15 @@ public class EnvoyerNotification {
                             int cocoInt = (int) coco;
                             resident.put("notificationsNumber", cocoInt + 1);
                             residents.add(resident);
-                            objectMapper.writeValue(file, residents);
+                            
                             
                         }
+                        if ("Intervenant".equals(node.get("role").asText())) {
+                            Map<String, Object> resident = objectMapper.convertValue(node, Map.class);
+                            residents.add(resident);
+                            
+                        }
+                        objectMapper.writeValue(file, residents);
                     }
                 } else {
                     logger.error("users.json does not contain a JSON array");
