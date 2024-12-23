@@ -14,6 +14,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 
+/**
+ * Contrôleur REST pour la mise à jour du statut des requêtes.
+ * Ce contrôleur permet de modifier le statut d'une requête dans les fichiers `requetes.json` et `users.json`.
+ */
 @RestController
 @RequestMapping("/api/update_status")
 public class UpdateStatus {
@@ -23,6 +27,13 @@ public class UpdateStatus {
     private static final String REQUETES_FILE = "requetes.json";
     private static final String USERS_FILE = "users.json";
 
+    /**
+     * Endpoint POST pour mettre à jour le statut d'une requête de travail.
+     * Cette méthode met à jour le statut de la requête dans le fichier `requetes.json` et dans le fichier `users.json`.
+     *
+     * @param request La requête contenant l'ID de la requête et le nouveau statut.
+     * @return Une réponse HTTP avec un message de succès ou d'erreur.
+     */
     @PostMapping
     public ResponseEntity<?> updateStatus(@RequestBody Map<String, String> request) {
         String requestId = request.get("request_id");
