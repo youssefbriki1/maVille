@@ -65,7 +65,6 @@ public class ConsulterNotifications {
                     responseList.put("new", NotificationHandler.formatNotificationList(resident.getNewNotifications())); // Add format
                     responseList.put("old", NotificationHandler.formatNotificationList(resident.getOldNotifications()));
                     resident.setNotificationsAsOld();
-                    System.out.println(responseList);
                 
                     return ResponseEntity.ok(responseList);
                 }
