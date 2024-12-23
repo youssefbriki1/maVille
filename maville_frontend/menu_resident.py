@@ -90,18 +90,50 @@ class Menu_Resident(Menu):
         
         if response.status_code == 200:
             requests_data = response.json()
-            # To parse here - add parser class:
             for request in requests_data:
-                st.write(f" - Faite part ({request['senderEmail']})")
+                st.write(f" - Faite par ({request['senderEmail']})")
                 st.write(f"Titre: {request['title']}")
                 st.write(f"Description: {request['description']}")
                 st.write(f"Type de travail: {request['typeTravaux']}")
                 st.write(f"Date de debut: {request['dateDebut']}")
                 st.write(f"Status: {request['status']}")
+                
+                if request['status'].startswith("Candidature soumise par"):
+                    intervenant_email = request['status'].split("par ")[1]
+                    if st.button(f"Accepter {request['title']}"):
+                        self.update_status(request['id'], "Accepté par résident et intervenant")
+                    if st.button(f"Refuser {request['title']}"):
+                        self.update_status(request['id'], "En attente")
+                        self.remove_requete_from_intervenant(intervenant_email, request['id'])
                 st.write('---')
         else:
             st.error("Failed to retrieve requests.")
+
+    def update_status(self, request_id, new_status):
+        data = {
+            "request_id": request_id,
+            "new_status": new_status
+        }
+        response = requests.post(f"{API_URL}/update_status", json=data)
+        if response.status_code == 200:
+            st.success("Status updated successfully")
+        else:
+            st.error("Failed to update status")
+            st.error(response.text)
+
+    def remove_requete_from_intervenant(self, intervenant_email, request_id):
+        data = {
+            "email": intervenant_email,
+            "travail_id": request_id
+        }
+        response = requests.post(f"{API_URL}/get_candidatures/remove", json=data)
+        if response.status_code == 200:
+            st.success("Candidature retirée avec succès")
             
+        else:
+            st.error("Failed to remove candidature")
+            st.error(response.text)
+                
     def soumettre_requete_travail(self):
         with st.form(key='request_form'):
             st.write('Enter your request below:')

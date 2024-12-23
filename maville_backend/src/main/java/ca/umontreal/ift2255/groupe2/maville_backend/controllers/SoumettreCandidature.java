@@ -104,7 +104,7 @@ public class SoumettreCandidature {
                                         user.put("requetes", requetes);
                                     }
                                     Map<String, String> newRequete = new HashMap<>();
-                                    newRequete.put("travail_id", travailId);
+                                    newRequete.put("id", travailId);
                                     newRequete.put("status", "en attente d'acceptation");
                                     requetes.add(newRequete);
                                 }

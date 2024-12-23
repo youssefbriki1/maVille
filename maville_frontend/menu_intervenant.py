@@ -250,10 +250,10 @@ class Menu_Intervenant(Menu):
             candidatures = response.json()
             if candidatures:
                 for candidature in candidatures:
-                    st.write(f"Travail ID: {candidature['travail_id']}")
+                    st.write(f"Travail ID: {candidature['id']}")
                     st.write(f"Statut: {candidature['status']}")
-                    if st.button(f"Retirer candidature {candidature['travail_id']}"):
-                        self.retirer_candidature(candidature['travail_id'])
+                    if st.button(f"Retirer candidature {candidature['id']}"):
+                        self.retirer_candidature(candidature['id'])
                     st.write('---')
             else:
                 st.write("Vous n'avez soumis aucune candidature.")
@@ -270,20 +270,6 @@ class Menu_Intervenant(Menu):
         if response.status_code == 200:
             st.success("Candidature retirée avec succès")
             
-            notification_message = {
-                "title": "Candidature retirée",
-                "description": f"L'intervenant {intervenant_email} a retiré sa candidature pour le travail {travail_id}.",
-                "date": datetime.now().strftime("%Y-%m-%d"),
-                "isNew": True,
-                "email": self.get_sender_email(travail_id)
-            }
-            # Make the POST request to the envoyer_notification endpoint
-            response2 = requests.post(f"{API_URL}/envoyer_notification/specific", json=notification_message)
-            if response2.status_code == 200:
-                st.success("Notification envoyée avec succès")
-            else:
-                st.error("Failed to send notification")
-                st.error(response2.text)
         else:
             st.error("Failed to remove candidature")
             st.error(response.text)

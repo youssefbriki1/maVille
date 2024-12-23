@@ -83,7 +83,7 @@ public class ConsulterCandidatures {
                     if (email.equals(user.get("email").toString())) {
                         List<Map<String, String>> requetes = (List<Map<String, String>>) user.get("requetes");
                         if (requetes != null) {
-                            requetes.removeIf(requete -> travailId.equals(requete.get("travail_id")));
+                            requetes.removeIf(requete -> travailId.equals(requete.get("id")));
                         }
                         user.put("requetes", requetes);
                         userFound = true;
@@ -107,6 +107,7 @@ public class ConsulterCandidatures {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body("Failed to write user data");
         }
+
 
         return ResponseEntity.ok("Candidature removed successfully");
     }
