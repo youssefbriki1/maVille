@@ -16,6 +16,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 
+/**
+ * Contrôleur REST pour l'envoi de notifications aux résidents.
+ * Ce contrôleur permet d'envoyer une notification à tous les résidents ou à un résident spécifique.
+ */
 @RestController
 @RequestMapping("/api/envoyer_notification")
 public class EnvoyerNotification {
@@ -24,6 +28,13 @@ public class EnvoyerNotification {
     private static final String DATA_DIRECTORY = "data";
     private static final String USERS_FILE = "users.json";
 
+    /**
+     * Endpoint POST pour envoyer une notification à tous les résidents.
+     * Cette méthode ajoute une notification à la liste des notifications de chaque résident.
+     *
+     * @param request Un objet contenant les informations de la notification à envoyer : "title", "description", "date".
+     * @return Une réponse HTTP indiquant si la notification a été envoyée avec succès.
+     */
     @PostMapping
     public ResponseEntity<?> getResidents(@RequestBody Map<String, String> request) {
         File file = new File(DATA_DIRECTORY, USERS_FILE);
@@ -91,6 +102,13 @@ public class EnvoyerNotification {
         return ResponseEntity.ok("Notification sent successfully to all residents");
 
     }
+    /**
+     * Endpoint POST pour envoyer une notification à un résident spécifique en fonction de son adresse email.
+     * Cette méthode ajoute une notification à la liste des notifications du résident spécifié.
+     *
+     * @param request Un objet contenant les informations de la notification à envoyer et l'email du résident ciblé.
+     * @return Une réponse HTTP indiquant si la notification a été envoyée avec succès.
+     */
     @PostMapping("/specific")
     public ResponseEntity<?> envoyerNotificationSpecifique(@RequestBody Map<String, String> request) {
         File file = new File(DATA_DIRECTORY, USERS_FILE);
