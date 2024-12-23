@@ -6,7 +6,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import java.io.File;
 import java.io.IOException;
 
-public class Resident extends Personne {
+public class Resident extends Personne implements NotificationHandler {
     private static final String role = "Resident";
     private String phoneNumber;
     private String address;
@@ -65,8 +65,10 @@ public class Resident extends Personne {
     public void setHorraires(Map<String,Object> horraires) {
         System.out.println(horraires);
         this.horraires = (HashMap<String, Object>) horraires;
-        System.out.println(this.horraires);
     }
+
+
+    // Horraires
 
     public void updateResidentInJson() {
         try {
@@ -80,8 +82,24 @@ public class Resident extends Personne {
             // Print only the dictionaries where role is Resident
             for (Map<String, Object> user : users) {
                 if ("Resident".equals(user.get("role")) && this.getEmail().equals(user.get("email"))) {
-                    System.out.println(user);
                     user.put("horraires", this.horraires);
+                    mapper.writeValue(file, users);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void writeNotificationsInJson() {
+        try {
+            File directory = new File("data");
+            File file = new File(directory, "users.json");
+            ObjectMapper mapper = new ObjectMapper();
+            List<Map<String, Object>> users = mapper.readValue(file, new TypeReference<List<Map<String, Object>>>(){});
+            for (Map<String, Object> user : users) {
+                if ("Resident".equals(user.get("role")) && this.getEmail().equals(user.get("email"))) {
+                    user.put("notifications", this.notifications);
                     mapper.writeValue(file, users);
                 }
             }
@@ -96,6 +114,30 @@ public class Resident extends Personne {
 
     public List<Notification> getNotifications(){
         return this.notifications;
+    }
+
+    @Override
+    public List<Notification> getNewNotifications(){
+        List<Notification> newNotifications = new ArrayList<>();
+        for (Notification notification : this.notifications){
+            if (notification.getIsNew()){
+                newNotifications.add(notification);
+            }
+        }
+        return newNotifications;
+    }
+
+
+
+    @Override
+    public List<Notification> getOldNotifications(){
+        List<Notification> oldNotifications = new ArrayList<>();
+        for (Notification notification : this.notifications){
+            if (!notification.getIsNew()){
+                oldNotifications.add(notification);
+            }
+        }
+        return oldNotifications;
     }
 
     public void setPhoneNumber(String phoneNumber) {
@@ -152,6 +194,7 @@ public class Resident extends Personne {
 
     public void addNotification(Notification notification) {
         this.notifications.add(notification);
+        writeNotificationsInJson();
     }
 
     public void updateRequete(TravailResident requete) {
@@ -171,12 +214,12 @@ public class Resident extends Personne {
         this.requetes.add(requete);
     }
 
-    /* 
-    public void addNotification(Intervenant intervenant, TravailResident requete) {
-        Notification notification = new Notification(intervenant, requete);
-        this.notifications.add(notification);
+    public void setNotificationsAsOld() {
+        for (Notification notification : this.notifications) {
+            notification.setIsNew(false);
+        }
+        writeNotificationsInJson();
     }
-    */
 
 
 }
