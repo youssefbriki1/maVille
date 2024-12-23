@@ -3,7 +3,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ca.umontreal.ift2255.groupe2.maville_backend.model.Notification;
 import ca.umontreal.ift2255.groupe2.maville_backend.model.Personne;
 import ca.umontreal.ift2255.groupe2.maville_backend.model.Resident;
 
