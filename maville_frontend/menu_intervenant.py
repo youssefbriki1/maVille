@@ -11,7 +11,7 @@ from streamlit_js_eval import streamlit_js_eval
 class Menu_Intervenant(Menu):
     def __init__(self,user:Personne) -> None:
         super().__init__()
-        self.options = ["Acceuil","Consulter Travaux", "Consulter Profile", "Se deconnecter"]    
+        self.options = ["Acceuil","Consulter Travaux", "Consulter Profile", "Soumettre projet","Modifier status projet","Se deconnecter"]    
         self.user = user
         
     def consulter_travaux(self):
@@ -109,7 +109,37 @@ class Menu_Intervenant(Menu):
     def modifier_status_projets(self):
         pass
     
+    def soumettre_projet(self):
+        with st.form(key='request_form'):
+            st.write('Enter your request below:')
+            title = st.text_input('Titre')
+            description = st.text_area('Description')
+            type_travail = st.selectbox('Type de travail', TYPES_TRAVAIL)
+            date_debut = st.date_input('Date de debut')
+            submit_button = st.form_submit_button(label='Submit Request')
 
+        if submit_button:
+            if not title or not description:
+                st.warning("Please enter both title and description.")
+            else:
+                data = {
+                    "intervenant_email": st.session_state.get("user_email"),
+                    "type_travail": type_travail,
+                    "titre": title,
+                    "description": description,
+                    "date_debut": str(date_debut)
+                }
+                try:
+                    with st.spinner('Sending request...'):
+                        response = requests.post(f"{API_URL}/soumettre_projet", json=data)
+                    if response.status_code == 200:
+                        st.success('Request submitted successfully!')
+                    else:
+                        st.error(f"Failed to submit request: {response.text}")
+                except requests.exceptions.RequestException as e:
+                    st.error(f"An error occurred: {e}")
+                    
+         
     
         
     def __call__(self):
@@ -120,6 +150,10 @@ class Menu_Intervenant(Menu):
             self.consulter_travaux()
         elif self.selection == "Consulter Profile":
             self.consulter_profile()
+        elif self.selection == "Soumettre projet":
+            self.soumettre_projet()
+        elif self.selection == "Modifier status projet":
+            self.modifier_status_projets()
         elif self.selection == "Se deconnecter":
             self.se_deconnecter()
     

@@ -64,6 +64,7 @@ class Menu:
             postal_code = st.text_input("Code postal")
             birth_date = st.date_input("Date de naissance", min_value=datetime(year=1900, month=1, day=1))
             role = st.radio("Rôle", ("Intervenant", "Resident"))
+            
             password = st.text_input("Mot de passe*", type="password")
             retyped_password = st.text_input("Confirmer le mot de passe*", type="password")
 
@@ -132,15 +133,22 @@ class Menu:
                     "role": role
                 }
                 self.logger.info(data)
+                #print(data)
                 try:
                     with st.spinner('Se connecte...'):
                         response = requests.post(f"{API_URL}/login", json=data)
+                        
+                        
+                        
                     if response.status_code == 200:
-                        result = response.json()  
+                        if data.get("role") == "Resident":
+                            result = response.json()  
+                            st.session_state['Notification_number'] = result["notificationsNumber"]
+                        
                         st.session_state['loged_in'] = True
                         st.session_state['user_email'] = email
                         st.session_state['user_role'] = role
-                        st.session_state['Notification_number'] = result["notificationsNumber"]
+                        
                         st.success('Connexion reussie!')
                         #streamlit_js_eval(js_expressions="parent.window.location.reload()")
                         #self.page_acceuil()

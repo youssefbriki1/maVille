@@ -5,7 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
 import java.io.File;
 import java.io.IOException;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Resident extends Personne implements NotificationHandler {
     private static final String role = "Resident";
     private String phoneNumber;
@@ -15,6 +17,10 @@ public class Resident extends Personne implements NotificationHandler {
     private List<TravailResident> requetes;
     private List<Notification> notifications;
     private HashMap<String, Object> horraires;
+    private int notificationsNumber; // Add this field
+    private List<Notification> newNotifications;
+    private List<Notification> oldNotifications;
+    private String password;
 
 
     public Resident() {
@@ -111,7 +117,13 @@ public class Resident extends Personne implements NotificationHandler {
     public int getNotificationsNumber() {
         return this.notifications.size();
     }
-
+    public void addNewNotifications(Map<String, String> notification) {
+        Notification newNotification = new Notification(notification.get("title"), notification.get("message"), notification.get("date"));
+        this.notifications.add(newNotification);
+    }
+    public void setNotificationsNumber(int notificationsNumber) {
+        this.notificationsNumber = notificationsNumber;
+    }
     public List<Notification> getNotifications(){
         return this.notifications;
     }

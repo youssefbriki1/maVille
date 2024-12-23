@@ -41,7 +41,8 @@ def format_horraires(horraires):
         days_str = days[0]
     else:
         days_str = ' et '.join([', '.join(days[:-1]), days[-1]]) if len(days) > 1 else days[0]
-
+    if len(days) == 7:
+        return f"Vous êtes ok tous les jours de la semaine de {start_time_formatted} à {end_time_formatted}."
     return f"Vous êtes ok le {days_str} de {start_time_formatted} à {end_time_formatted}."
 
 class Menu_Resident(Menu):
