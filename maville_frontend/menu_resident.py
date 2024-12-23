@@ -174,25 +174,25 @@ class Menu_Resident(Menu):
             new_notifications = [notif for notif in notifications['new']]
             old_notifications = [notif for notif in notifications['old']]
             
-            st.write("### New Notifications")
+            st.write("### Nouvelles Notifications")
             if new_notifications:
                 for notification in new_notifications:
-                    st.write(f"**Title:** {notification['title']}")
+                    st.write(f"**Titre:** {notification['title']}")
                     st.write(f"**Description:** {notification['description']}")
                     st.write(f"**Date:** {notification['date']}")
                     st.write("---")
             else:
-                st.write("No new notifications.")
+                st.write("Pas de nouvelles notifications.")
             
-            st.write("### Old Notifications")
+            st.write("### Anciennes Notifications")
             if old_notifications:
                 for notification in old_notifications:
-                    st.write(f"**Title:** {notification['title']}")
+                    st.write(f"**Titre:** {notification['title']}")
                     st.write(f"**Description:** {notification['description']}")
                     st.write(f"**Date:** {notification['date']}")
                     st.write("---")
             else:
-                st.write("No old notifications.")
+                st.write("Pas d'anciennes notifications.")
         else:
             st.error(f"Failed to retrieve notifications: {response.text}")
             
