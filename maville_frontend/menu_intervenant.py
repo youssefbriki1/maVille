@@ -267,9 +267,20 @@ class Menu_Intervenant(Menu):
             "email": intervenant_email
         }
         response = requests.post(f"{API_URL}/get_candidatures/remove", json=data)
+        travail_sender_email = self.get_sender_email(travail_id)
         if response.status_code == 200:
             st.success("Candidature retirée avec succès")
-            
+            notification_message = {
+                            "title":"Candidature retirée",
+                            "description":"Une candidature a été retirée par : "+ st.session_state.get("user_email"),
+                            "date": datetime.now().strftime("%Y-%m-%d"),
+                            "isNew":True,
+                            "email": travail_sender_email
+                        }
+
+                    # Make the POST request to the envoyer_notification endpoint
+            response2 = requests.post(f"{API_URL}/envoyer_notification/specific", json=notification_message)
+                
         else:
             st.error("Failed to remove candidature")
             st.error(response.text)

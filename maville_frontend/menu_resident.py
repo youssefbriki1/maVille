@@ -169,13 +169,33 @@ class Menu_Resident(Menu):
         response = requests.get(f"{API_URL}/consulter_notifications", params=self.user.to_dict())
         if response.status_code == 200:
             notifications = response.json()
-            st.write(notifications)
-            #for notification in notifications:
-             #   st.write(notification)
+            
+            
+            new_notifications = [notif for notif in notifications['new']]
+            old_notifications = [notif for notif in notifications['old']]
+            
+            st.write("### New Notifications")
+            if new_notifications:
+                for notification in new_notifications:
+                    st.write(f"**Title:** {notification['title']}")
+                    st.write(f"**Description:** {notification['description']}")
+                    st.write(f"**Date:** {notification['date']}")
+                    st.write("---")
+            else:
+                st.write("No new notifications.")
+            
+            st.write("### Old Notifications")
+            if old_notifications:
+                for notification in old_notifications:
+                    st.write(f"**Title:** {notification['title']}")
+                    st.write(f"**Description:** {notification['description']}")
+                    st.write(f"**Date:** {notification['date']}")
+                    st.write("---")
+            else:
+                st.write("No old notifications.")
         else:
-            logger.error(f"Failed to retrieve notifications: {response.text}")
-
-        
+            st.error(f"Failed to retrieve notifications: {response.text}")
+            
             
     
     def definir_horraires(self):

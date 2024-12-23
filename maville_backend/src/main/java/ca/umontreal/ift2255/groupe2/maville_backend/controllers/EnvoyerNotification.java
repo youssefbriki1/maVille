@@ -49,7 +49,7 @@ public class EnvoyerNotification {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body("Invalid notification data");
         }
-        System.out.println(notification);
+        
 
         if (!file.exists() || file.length() == 0) {
             logger.error("users.json file does not exist or is empty");
@@ -118,7 +118,7 @@ public class EnvoyerNotification {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body("Invalid notification data");
         }
-        System.out.println(notification);
+        
 
         if (!file.exists() || file.length() == 0) {
             logger.error("users.json file does not exist or is empty");
