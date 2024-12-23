@@ -5,7 +5,6 @@ import java.util.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 
 import ca.umontreal.ift2255.groupe2.maville_backend.model.ProjetIntervenant;
 

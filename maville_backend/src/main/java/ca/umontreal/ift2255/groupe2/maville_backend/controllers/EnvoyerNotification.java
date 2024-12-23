@@ -5,15 +5,11 @@ import java.util.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-
-import ca.umontreal.ift2255.groupe2.maville_backend.model.Resident;
 
 import ca.umontreal.ift2255.groupe2.maville_backend.model.Notification;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 
 import org.springframework.http.ResponseEntity;
 import org.slf4j.Logger;

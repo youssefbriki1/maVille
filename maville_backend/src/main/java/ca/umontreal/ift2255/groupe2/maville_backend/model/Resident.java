@@ -19,8 +19,6 @@ public class Resident extends Personne implements NotificationHandler {
     private HashMap<String, Object> horraires;
     private int notificationsNumber; // Add this field
     private List<Notification> newNotifications;
-    private List<Notification> oldNotifications;
-    private String password;
 
 
     public Resident() {

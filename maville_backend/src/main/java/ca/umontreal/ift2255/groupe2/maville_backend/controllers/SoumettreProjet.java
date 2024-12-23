@@ -22,7 +22,6 @@ public class SoumettreProjet {
 
     private static final Logger logger = LoggerFactory.getLogger(SoumettreProjet.class);
     private static final String DATA_DIRECTORY = "data";
-    private static final String USERS_FILE = "users.json";
     private static final String PROJETS_FILE = "projets.json";
 
 

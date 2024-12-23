@@ -2,7 +2,6 @@ package ca.umontreal.ift2255.groupe2.maville_backend.model;
 
 import org.junit.jupiter.api.Test;
 
-import ca.umontreal.ift2255.groupe2.maville_backend.model.Personne;
 
 import static org.junit.jupiter.api.Assertions.*;
 

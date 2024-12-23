@@ -2,7 +2,7 @@
   "id" : 793,
   "title" : "ffff",
   "description" : "dddd",
-  "status" : "Accepté par résident et intervenant",
+  "status" : "En attente",
   "dateDebut" : "2024-12-23",
   "senderEmail" : "fatouaki.jalal@gmail.com",
   "typeTravaux" : "Travaux routiers"
@@ -10,7 +10,7 @@
   "id" : 575,
   "title" : "vrvrvr",
   "description" : "vccvcvc",
-  "status" : "Candidature soumise par aaaa@aaaa.aaa",
+  "status" : "Accepté par résident et intervenant",
   "dateDebut" : "2024-12-23",
   "senderEmail" : "fatouaki.jalal@gmail.com",
   "typeTravaux" : "Travaux routiers"
@@ -26,8 +26,16 @@
   "id" : 831,
   "title" : "roejrij3t4t",
   "description" : "vfeopvjenv",
-  "status" : "Candidature soumise par aaaa@aaaa.aaa",
+  "status" : "Accepté par résident et intervenant",
   "dateDebut" : "2024-12-23",
   "senderEmail" : "fatouaki.jalal@gmail.com",
   "typeTravaux" : "Travaux souterrains"
+}, {
+  "id" : 905,
+  "title" : "fevv",
+  "description" : "vvevee",
+  "status" : "Accepté par résident et intervenant",
+  "dateDebut" : "2024-12-23",
+  "senderEmail" : "fatouaki.jalal@gmail.com",
+  "typeTravaux" : "Travaux routiers"
 } ]

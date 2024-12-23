@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import ca.umontreal.ift2255.groupe2.maville_backend.model.Notification;
 
 import java.io.File;
 import java.io.IOException;
