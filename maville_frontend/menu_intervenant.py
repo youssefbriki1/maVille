@@ -18,7 +18,7 @@ def extract_email(string):
 class Menu_Intervenant(Menu):
     def __init__(self,user:Personne) -> None:
         super().__init__()
-        self.options = ["Acceuil","Consulter Travaux","Soumettre candidature", "Consulter Profile", "Soumettre projet","Modifier status projet","Se deconnecter"]    
+        self.options = ["Acceuil","Consulter Travaux","Soumettre candidature","Consulter Candidatures", "Consulter Profile", "Soumettre projet","Modifier status projet","Se deconnecter"]    
         self.user = user
         
     def consulter_travaux(self):
@@ -241,7 +241,62 @@ class Menu_Intervenant(Menu):
                     st.error("Failed to submit candidature")
                     st.error(response.text)
     
+    def consulter_candidatures(self):
+        st.title("Consulter les candidatures")
+
+        response = requests.get(f"{API_URL}/get_candidatures", params={"email": self.user.email})
         
+        if response.status_code == 200:
+            candidatures = response.json()
+            if candidatures:
+                for candidature in candidatures:
+                    st.write(f"Travail ID: {candidature['travail_id']}")
+                    st.write(f"Statut: {candidature['status']}")
+                    if st.button(f"Retirer candidature {candidature['travail_id']}"):
+                        self.retirer_candidature(candidature['travail_id'])
+                    st.write('---')
+            else:
+                st.write("Vous n'avez soumis aucune candidature.")
+        else:
+            st.error("Failed to fetch candidatures")
+
+    def retirer_candidature(self, travail_id):
+        intervenant_email = self.user.email
+        data = {
+            "travail_id": travail_id,
+            "email": intervenant_email
+        }
+        response = requests.post(f"{API_URL}/get_candidatures/remove", json=data)
+        if response.status_code == 200:
+            st.success("Candidature retirée avec succès")
+            
+            notification_message = {
+                "title": "Candidature retirée",
+                "description": f"L'intervenant {intervenant_email} a retiré sa candidature pour le travail {travail_id}.",
+                "date": datetime.now().strftime("%Y-%m-%d"),
+                "isNew": True,
+                "email": self.get_sender_email(travail_id)
+            }
+            # Make the POST request to the envoyer_notification endpoint
+            response2 = requests.post(f"{API_URL}/envoyer_notification/specific", json=notification_message)
+            if response2.status_code == 200:
+                st.success("Notification envoyée avec succès")
+            else:
+                st.error("Failed to send notification")
+                st.error(response2.text)
+        else:
+            st.error("Failed to remove candidature")
+            st.error(response.text)
+
+    def get_sender_email(self, travail_id):
+        response = requests.get(f"{API_URL}/consulter_infos", params=self.user.to_dict())
+        if response.status_code == 200:
+            travaux = response.json()
+            
+            for travail in travaux:
+                if int(travail.get('id')) == int(travail_id):
+                    return travail.get('senderEmail')
+        return None
     def __call__(self):
         self.sidebar()
         if self.selection == "Acceuil":
@@ -250,6 +305,8 @@ class Menu_Intervenant(Menu):
             self.consulter_travaux()
         elif self.selection == "Soumettre candidature":
             self.soumettre_candidature()
+        elif self.selection == "Consulter Candidatures":
+            self.consulter_candidatures()
         elif self.selection == "Consulter Profile":
             self.consulter_profile()
         elif self.selection == "Soumettre projet":

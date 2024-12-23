@@ -83,6 +83,47 @@ public class SoumettreCandidature {
 
                 // Write updated travaux back to the file
                 objectMapper.writeValue(requetesFile, travaux);
+                // Update the intervenant's requete list
+                File usersFile = new File(directory, USERS_FILE);
+                List<Map<String, Object>> users = new ArrayList<>();
+
+                if (!usersFile.exists() || usersFile.length() == 0) {
+                    logger.error("users.json file does not exist or is empty");
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body("users.json file does not exist or is empty");
+                } else {
+                    try {
+                        JsonNode jsonNode = objectMapper.readTree(usersFile);
+                        if (jsonNode.isArray()) {
+                            for (JsonNode node : jsonNode) {
+                                Map<String, Object> user = objectMapper.convertValue(node, Map.class);
+                                if ("Intervenant".equals(node.get("role").asText()) && intervenantEmail.equals(user.get("email").toString())) {
+                                    List<Map<String, String>> requetes = (List<Map<String, String>>) user.get("requetes");
+                                    if (requetes == null) {
+                                        requetes = new ArrayList<>();
+                                        user.put("requetes", requetes);
+                                    }
+                                    Map<String, String> newRequete = new HashMap<>();
+                                    newRequete.put("travail_id", travailId);
+                                    newRequete.put("status", "en attente d'acceptation");
+                                    requetes.add(newRequete);
+                                }
+                                users.add(user);
+                            }
+                        } else {
+                            logger.error("users.json does not contain a JSON array");
+                            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                .body("Invalid data format in users.json");
+                        }
+                    } catch (IOException e) {
+                        logger.error("Failed to read existing users from users.json", e);
+                        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                            .body("Failed to read existing users");
+                    }
+                }
+
+                // Write updated users back to the file
+                objectMapper.writeValue(usersFile, users);
 
         
             } catch (IOException e) {

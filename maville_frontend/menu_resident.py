@@ -49,7 +49,7 @@ class Menu_Resident(Menu):
     def __init__(self,user:Personne) -> None:
         super().__init__()
         self.notification_title = "Voir Notifications" if st.session_state.get("Notification_number") == 0 else f"Vous avez {st.session_state.get('Notification_number')} nouvelles notifications"
-        self.options = ["Acceuil","Consulter Entraves", "Consulter Travaux", "Consulter travaux par quartier","Consulter Entraves par Rue","Consulter travaux residentiels", "Soumettre requete travail","Consulter Profile","Définir ses horraires", self.notification_title, "Se deconnecter"]    
+        self.options = ["Acceuil","Consulter Entraves", "Consulter Travaux", "Consulter Travaux à venir","Consulter travaux par quartier","Consulter Entraves par Rue","Consulter travaux residentiels", "Soumettre requete travail","Consulter Profile","Définir ses horraires", self.notification_title, "Se deconnecter"]    
         self.user = user
         
         
@@ -271,7 +271,29 @@ class Menu_Resident(Menu):
         if rue:
             # Récupérer et filtrer les données par rue
             self.__fetch_and_filter_rue_api_data("entraves", "streetid", rue)                
-                    
+
+
+    def consulter_futur_travaux(self):
+        st.title("Travaux à venir")
+        try:
+            response = requests.get(f"{API_URL}/futur_travaux", params=self.user.to_dict())
+            if response.status_code == 200:
+                travaux_a_venir = response.json()
+                if travaux_a_venir:
+                    for travail in travaux_a_venir:
+                        st.write(f"Titre: {travail['title']}")
+                        st.write(f"Description: {travail['description']}")
+                        st.write(f"Type de travail: {travail['typeTravaux']}")
+                        st.write(f"Date de début: {travail['dateDebut']}")
+                        st.write(f"Status: {travail['status']}")
+                        st.write('---')
+                else:
+                    st.info("Aucun travail prévu dans les 3 prochains mois.")
+            else:
+                st.error(f"Erreur : {response.status_code} - {response.text}")
+        except Exception as e:
+            st.error(f"Une erreur est survenue : {str(e)}")
+
     def __call__(self):
         self.sidebar()
         if self.selection == "Acceuil":
@@ -280,6 +302,8 @@ class Menu_Resident(Menu):
             self.consulter_entraves()
         elif self.selection == "Consulter Travaux":
             self.consulter_travaux()
+        elif self.selection == "Consulter Travaux à venir":
+            self.consulter_futur_travaux()
         elif self.selection == "Consulter travaux par quartier":
             self.consulter_travaux_par_quartier()
         elif self.selection == "Consulter Entraves par Rue":
