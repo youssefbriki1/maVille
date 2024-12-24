@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConsulterCandidatures.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">maville_backend</a> &gt; <a href="index.source.html" class="el_package">ca.umontreal.ift2255.groupe2.maville_backend.controllers</a> &gt; <span class="el_source">ConsulterCandidatures.java</span></div><h1>ConsulterCandidatures.java</h1><pre class="source lang-java linenums">package ca.umontreal.ift2255.groupe2.maville_backend.controllers;
+
+import org.springframework.web.bind.annotation.*;
+import java.util.*;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.File;
+import java.io.IOException;
+import org.springframework.http.ResponseEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+
+/**
+ * Contrôleur REST pour gérer les candidatures associées à un intervenant.
+ * Permet de récupérer et de supprimer les candidatures des utilisateurs à partir d'un fichier JSON.
+ */
+@RestController
+@RequestMapping(&quot;/api/get_candidatures&quot;)
+<span class="fc" id="L22">public class ConsulterCandidatures {</span>
+
+<span class="fc" id="L24">    private static final Logger logger = LoggerFactory.getLogger(ConsulterCandidatures.class);</span>
+    private static final String DATA_DIRECTORY = &quot;data&quot;;
+    private static final String USERS_FILE = &quot;users.json&quot;;
+
+    /**
+     * Endpoint GET pour récupérer les candidatures d'un utilisateur donné.
+     *
+     * @param email L'email de l'utilisateur pour lequel récupérer les candidatures.
+     * @return Une réponse HTTP contenant la liste des candidatures ou un message d'erreur approprié.
+     */
+    @GetMapping
+    public ResponseEntity&lt;?&gt; getCandidatures(@RequestParam String email) {
+<span class="pc bpc" id="L36" title="2 of 4 branches missed.">        if (email == null || email.isEmpty()) {</span>
+<span class="fc" id="L37">            return ResponseEntity.badRequest().body(&quot;Email is required&quot;);</span>
+        }
+
+<span class="nc" id="L40">        File file = new File(DATA_DIRECTORY, USERS_FILE);</span>
+<span class="nc" id="L41">        ObjectMapper objectMapper = new ObjectMapper();</span>
+
+<span class="nc bnc" id="L43" title="All 4 branches missed.">        if (!file.exists() || file.length() == 0) {</span>
+<span class="nc" id="L44">            logger.error(&quot;users.json file does not exist or is empty&quot;);</span>
+<span class="nc" id="L45">            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L46">                .body(&quot;users.json file does not exist or is empty&quot;);</span>
+        } else {
+            try {
+<span class="nc" id="L49">                JsonNode jsonNode = objectMapper.readTree(file);</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">                if (jsonNode.isArray()) {</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">                    for (JsonNode node : jsonNode) {</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">                        if (email.equals(node.get(&quot;email&quot;).asText())) {</span>
+<span class="nc" id="L53">                            List&lt;Map&lt;String, String&gt;&gt; requetes = (List&lt;Map&lt;String, String&gt;&gt;) objectMapper.convertValue(node.get(&quot;requetes&quot;), List.class);</span>
+<span class="nc" id="L54">                            return ResponseEntity.ok(requetes);</span>
+                        }
+<span class="nc" id="L56">                    }</span>
+<span class="nc" id="L57">                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(&quot;Intervenant not found&quot;);</span>
+                } else {
+<span class="nc" id="L59">                    logger.error(&quot;users.json does not contain a JSON array&quot;);</span>
+<span class="nc" id="L60">                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L61">                        .body(&quot;Invalid data format in users.json&quot;);</span>
+                }
+<span class="nc" id="L63">            } catch (IOException e) {</span>
+<span class="nc" id="L64">                logger.error(&quot;Failed to read existing users from users.json&quot;, e);</span>
+<span class="nc" id="L65">                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L66">                    .body(&quot;Failed to read existing users&quot;);</span>
+            }
+        }
+    }
+    /**
+     * Endpoint POST pour supprimer une candidature spécifique d'un utilisateur donné.
+     *
+     * @param request Une requête JSON contenant l'email de l'utilisateur et l'ID de la candidature à supprimer.
+     * @return Une réponse HTTP confirmant la suppression ou un message d'erreur approprié.
+     */
+    @PostMapping(&quot;/remove&quot;)
+    public ResponseEntity&lt;?&gt; removeCandidature(@RequestBody Map&lt;String, String&gt; request) {
+<span class="fc" id="L78">        String email = request.get(&quot;email&quot;);</span>
+<span class="fc" id="L79">        String travailId = request.get(&quot;travail_id&quot;);</span>
+
+<span class="pc bpc" id="L81" title="3 of 8 branches missed.">        if (email == null || email.isEmpty() || travailId == null || travailId.isEmpty()) {</span>
+<span class="fc" id="L82">            return ResponseEntity.badRequest().body(&quot;Email and travail ID are required&quot;);</span>
+        }
+
+<span class="fc" id="L85">        File file = new File(DATA_DIRECTORY, USERS_FILE);</span>
+<span class="fc" id="L86">        ObjectMapper objectMapper = new ObjectMapper();</span>
+<span class="fc" id="L87">        List&lt;Map&lt;String, Object&gt;&gt; users = new ArrayList&lt;&gt;();</span>
+
+<span class="pc bpc" id="L89" title="2 of 4 branches missed.">        if (!file.exists() || file.length() == 0) {</span>
+<span class="nc" id="L90">            logger.error(&quot;users.json file does not exist or is empty&quot;);</span>
+<span class="nc" id="L91">            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L92">                .body(&quot;users.json file does not exist or is empty&quot;);</span>
+        } else {
+            try {
+<span class="fc" id="L95">                JsonNode jsonNode = objectMapper.readTree(file);</span>
+<span class="fc" id="L96">                boolean userFound = false;</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">                for (JsonNode node : jsonNode) {</span>
+<span class="fc" id="L98">                    Map&lt;String, Object&gt; user = objectMapper.convertValue(node, Map.class);</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">                    if (email.equals(user.get(&quot;email&quot;).toString())) {</span>
+<span class="nc" id="L100">                        List&lt;Map&lt;String, String&gt;&gt; requetes = (List&lt;Map&lt;String, String&gt;&gt;) user.get(&quot;requetes&quot;);</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">                        if (requetes != null) {</span>
+<span class="nc" id="L102">                            requetes.removeIf(requete -&gt; travailId.equals(requete.get(&quot;id&quot;)));</span>
+                        }
+<span class="nc" id="L104">                        user.put(&quot;requetes&quot;, requetes);</span>
+<span class="nc" id="L105">                        userFound = true;</span>
+                    }
+<span class="fc" id="L107">                    users.add(user);</span>
+<span class="fc" id="L108">                }</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">                if (!userFound) {</span>
+<span class="fc" id="L110">                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(&quot;Intervenant not found&quot;);</span>
+                }
+<span class="nc" id="L112">            } catch (IOException e) {</span>
+<span class="nc" id="L113">                logger.error(&quot;Failed to read existing users from users.json&quot;, e);</span>
+<span class="nc" id="L114">                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L115">                    .body(&quot;Failed to read existing users&quot;);</span>
+<span class="nc" id="L116">            }</span>
+        }
+
+        try {
+<span class="nc" id="L120">            objectMapper.writeValue(file, users);</span>
+<span class="nc" id="L121">        } catch (IOException e) {</span>
+<span class="nc" id="L122">            logger.error(&quot;Failed to write user data&quot;, e);</span>
+<span class="nc" id="L123">            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L124">                .body(&quot;Failed to write user data&quot;);</span>
+<span class="nc" id="L125">        }</span>
+
+
+<span class="nc" id="L128">        return ResponseEntity.ok(&quot;Candidature removed successfully&quot;);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

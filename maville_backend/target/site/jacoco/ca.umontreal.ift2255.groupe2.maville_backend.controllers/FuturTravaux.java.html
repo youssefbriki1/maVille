@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FuturTravaux.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">maville_backend</a> &gt; <a href="index.source.html" class="el_package">ca.umontreal.ift2255.groupe2.maville_backend.controllers</a> &gt; <span class="el_source">FuturTravaux.java</span></div><h1>FuturTravaux.java</h1><pre class="source lang-java linenums">package ca.umontreal.ift2255.groupe2.maville_backend.controllers;
+
+import java.io.File;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import ca.umontreal.ift2255.groupe2.maville_backend.model.TravailResident;
+
+/**
+ * Cette classe fournit une API pour récupérer les travaux prévus dans les 3 prochains mois.
+ */
+@RestController
+@RequestMapping(&quot;/api/futur_travaux&quot;)
+<span class="fc" id="L30">public class FuturTravaux {</span>
+<span class="fc" id="L31">    private static final Logger logger = LoggerFactory.getLogger(FuturTravaux.class);</span>
+
+    /**
+     * Récupère les travaux à venir dans les 3 prochains mois à partir d'un fichier JSON.
+     *
+     * @param user Un HashMap contenant les informations de l'utilisateur (non utilisé dans cette version).
+     * @return Une `ResponseEntity` contenant la liste des travaux à venir, ou un message d'erreur en cas de problème.
+     */
+    @GetMapping
+    public ResponseEntity&lt;?&gt; afficherTravauxProchains(@RequestParam HashMap&lt;String, String&gt; user) {
+<span class="nc" id="L41">        logger.info(&quot;Requête reçue pour afficher les travaux à venir : &quot; + user.toString());</span>
+        try {
+            // Charger le fichier JSON contenant les travaux
+<span class="nc" id="L44">            File directory = new File(&quot;data&quot;);</span>
+<span class="nc" id="L45">            File file = new File(directory, &quot;projets.json&quot;);</span>
+<span class="nc" id="L46">            ObjectMapper objectMapper = new ObjectMapper();</span>
+
+<span class="nc bnc" id="L48" title="All 4 branches missed.">            if (!file.exists() || file.length() == 0) {</span>
+<span class="nc" id="L49">                throw new IOException(&quot;Le fichier requetes.json est vide ou introuvable.&quot;);</span>
+            }
+
+<span class="nc" id="L52">            TravailResident[] travauxArray = objectMapper.readValue(file, TravailResident[].class);</span>
+<span class="nc" id="L53">            List&lt;TravailResident&gt; travaux = Arrays.asList(travauxArray);</span>
+
+            // Calculer la plage de dates pour les 3 prochains mois
+<span class="nc" id="L56">            LocalDate currentDate = LocalDate.now();</span>
+<span class="nc" id="L57">            LocalDate threeMonthsLater = currentDate.plusMonths(3);</span>
+
+<span class="nc" id="L59">            List&lt;TravailResident&gt; travauxProchains = new ArrayList&lt;&gt;();</span>
+
+<span class="nc bnc" id="L61" title="All 2 branches missed.">            for (TravailResident travail : travaux) {</span>
+                try {
+<span class="nc" id="L63">                    LocalDate dateDebut = LocalDate.parse(travail.getdateDebut(), DateTimeFormatter.ISO_DATE);</span>
+            
+<span class="nc bnc" id="L65" title="All 4 branches missed.">                    if (!dateDebut.isBefore(currentDate) &amp;&amp; dateDebut.isBefore(threeMonthsLater)) {</span>
+                        // Ajout direct des travaux sans filtrage
+<span class="nc" id="L67">                        travauxProchains.add(travail);</span>
+                    }
+<span class="nc" id="L69">                } catch (Exception e) {</span>
+<span class="nc" id="L70">                    logger.warn(&quot;Skipping invalid travail entry: &quot; + e.getMessage());</span>
+<span class="nc" id="L71">                }</span>
+<span class="nc" id="L72">            }</span>
+
+<span class="nc" id="L74">            return ResponseEntity.ok(travauxProchains);</span>
+
+<span class="nc" id="L76">        } catch (IOException e) {</span>
+<span class="nc" id="L77">            logger.error(&quot;Erreur lors de la lecture des données des travaux : {}&quot;, e.getMessage());</span>
+<span class="nc" id="L78">            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L79">                    .body(&quot;Impossible de récupérer les données des travaux.&quot;);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

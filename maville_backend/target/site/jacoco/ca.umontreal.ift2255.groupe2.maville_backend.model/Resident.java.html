@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Resident.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">maville_backend</a> &gt; <a href="index.source.html" class="el_package">ca.umontreal.ift2255.groupe2.maville_backend.model</a> &gt; <span class="el_source">Resident.java</span></div><h1>Resident.java</h1><pre class="source lang-java linenums">package ca.umontreal.ift2255.groupe2.maville_backend.model;
+
+import java.util.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.type.TypeReference;
+import java.io.File;
+import java.io.IOException;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+
+/**
+ * Classe représentant un résident.
+ * Hérite de {@link Personne} et implémente l'interface {@link NotificationHandler}.
+ * Permet de gérer les informations personnelles, les requêtes de travaux,
+ * les notifications et les horaires d'un résident.
+ */
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class Resident extends Personne implements NotificationHandler {
+    private static final String role = &quot;Resident&quot;;
+    private String phoneNumber;
+    private String address;
+    private String postalCode;
+    private String birthDate;
+    private List&lt;TravailResident&gt; requetes;
+    private List&lt;Notification&gt; notifications;
+    private HashMap&lt;String, Object&gt; horraires;
+    private int notificationsNumber; // Add this field
+    private List&lt;Notification&gt; newNotifications;
+
+    /**
+     * Constructeur par défaut.
+     */
+    public Resident() {
+<span class="nc" id="L34">        super();</span>
+<span class="nc" id="L35">    }</span>
+    /**
+     * Constructeur avec paramètres pour initialiser un résident.
+     *
+     * @param name       Le nom du résident.
+     * @param email      L'adresse e-mail du résident.
+     * @param password   Le mot de passe du résident.
+     * @param phoneNumber Le numéro de téléphone du résident.
+     * @param address    L'adresse du résident.
+     * @param postalCode Le code postal du résident.
+     * @param birthDate  La date de naissance du résident.
+     */
+    public Resident(String name, String email, String password,
+                    String phoneNumber, String address, String postalCode, String birthDate) { // Modifier constructeur
+<span class="fc" id="L49">        super(name, email, password);</span>
+<span class="fc" id="L50">        this.phoneNumber = phoneNumber;</span>
+<span class="fc" id="L51">        this.address = address;</span>
+<span class="fc" id="L52">        this.postalCode = postalCode;</span>
+<span class="fc" id="L53">        this.birthDate = birthDate;</span>
+<span class="fc" id="L54">        this.requetes = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L55">        this.notifications = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L56">        this.horraires = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L57">    }</span>
+    
+
+
+    /**
+     * Retourne le numéro de téléphone du résident.
+     * @return Le numéro de téléphone.
+     */
+    public String getPhoneNumber() {
+<span class="nc" id="L66">        return phoneNumber;</span>
+    }
+    /**
+     * Retourne l'adresse du résident.
+     * @return L'adresse.
+     */
+    public String getAddress() {
+<span class="nc" id="L73">        return address;</span>
+    }
+    /**
+     * Retourne le code postal du résident.
+     * @return Le code postal.
+     */
+    public String getPostalCode() {
+<span class="nc" id="L80">        return postalCode;</span>
+    }
+    /**
+     * Retourne la date de naissance du résident.
+     * @return La date de naissance.
+     */
+    public String getBirthDate() {
+<span class="nc" id="L87">        return birthDate;</span>
+    }
+    /**
+     * Retourne le nom d'un résident à partir de son email.
+     * @param residents La liste des résidents.
+     * @param email     L'email du résident.
+     * @return Le nom du résident ou {@code null} si non trouvé.
+     */
+    public static String getNameByEmail(List&lt;Resident&gt; residents, String email) {
+<span class="nc bnc" id="L96" title="All 2 branches missed.">        for (Resident resident : residents) {</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">            if (resident.getEmail().equals(email)) {</span>
+<span class="nc" id="L98">                return resident.getName(); </span>
+            }
+<span class="nc" id="L100">        }</span>
+<span class="nc" id="L101">        return null;</span>
+    }
+    /**
+     * Retourne les horaires du résident.
+     * @return Les horaires sous forme de {@link HashMap}.
+     */
+    public HashMap&lt;String, Object&gt; getHorraires() {
+<span class="nc" id="L108">        return horraires;</span>
+    }
+    /**
+     * Définit les horaires du résident.
+     * @param horraires Les horaires sous forme de {@link Map}.
+     */
+    public void setHorraires(Map&lt;String,Object&gt; horraires) {
+<span class="nc" id="L115">        System.out.println(horraires);</span>
+<span class="nc" id="L116">        this.horraires = (HashMap&lt;String, Object&gt;) horraires;</span>
+<span class="nc" id="L117">    }</span>
+
+
+    // Horraires
+    /**
+     * Met à jour les informations du résident dans le fichier JSON.
+     */
+    public void updateResidentInJson() {
+        try {
+<span class="nc" id="L126">            File directory = new File(&quot;data&quot;);</span>
+<span class="nc" id="L127">            File file = new File(directory, &quot;users.json&quot;);</span>
+
+            // Read the content of the file
+<span class="nc" id="L130">            ObjectMapper mapper = new ObjectMapper();</span>
+<span class="nc" id="L131">            List&lt;Map&lt;String, Object&gt;&gt; users = mapper.readValue(file, new TypeReference&lt;List&lt;Map&lt;String, Object&gt;&gt;&gt;(){});</span>
+
+            // Print only the dictionaries where role is Resident
+<span class="nc bnc" id="L134" title="All 2 branches missed.">            for (Map&lt;String, Object&gt; user : users) {</span>
+<span class="nc bnc" id="L135" title="All 4 branches missed.">                if (&quot;Resident&quot;.equals(user.get(&quot;role&quot;)) &amp;&amp; this.getEmail().equals(user.get(&quot;email&quot;))) {</span>
+<span class="nc" id="L136">                    user.put(&quot;horraires&quot;, this.horraires);</span>
+<span class="nc" id="L137">                    mapper.writeValue(file, users);</span>
+                }
+<span class="nc" id="L139">            }</span>
+<span class="nc" id="L140">        } catch (IOException e) {</span>
+<span class="nc" id="L141">            e.printStackTrace();</span>
+<span class="nc" id="L142">        }</span>
+<span class="nc" id="L143">    }</span>
+    /**
+     * Écrit les notifications du résident dans le fichier JSON.
+     */
+    private void writeNotificationsInJson() {
+        try {
+<span class="nc" id="L149">            File directory = new File(&quot;data&quot;);</span>
+<span class="nc" id="L150">            File file = new File(directory, &quot;users.json&quot;);</span>
+<span class="nc" id="L151">            ObjectMapper mapper = new ObjectMapper();</span>
+<span class="nc" id="L152">            List&lt;Map&lt;String, Object&gt;&gt; users = mapper.readValue(file, new TypeReference&lt;List&lt;Map&lt;String, Object&gt;&gt;&gt;(){});</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">            for (Map&lt;String, Object&gt; user : users) {</span>
+<span class="nc bnc" id="L154" title="All 4 branches missed.">                if (&quot;Resident&quot;.equals(user.get(&quot;role&quot;)) &amp;&amp; this.getEmail().equals(user.get(&quot;email&quot;))) {</span>
+<span class="nc" id="L155">                    user.put(&quot;notifications&quot;, this.notifications);</span>
+<span class="nc" id="L156">                    mapper.writeValue(file, users);</span>
+                }
+<span class="nc" id="L158">            }</span>
+<span class="nc" id="L159">        } catch (IOException e) {</span>
+<span class="nc" id="L160">            e.printStackTrace();</span>
+<span class="nc" id="L161">        }</span>
+<span class="nc" id="L162">    }</span>
+    /**
+     * Retourne le nombre de notifications.
+     * @return Le nombre de notifications.
+     */
+    public int getNotificationsNumber() {
+<span class="nc" id="L168">        return this.notifications.size();</span>
+    }
+    /**
+     * Ajoute une nouvelle notification.
+     * @param notification La notification à ajouter.
+     */
+    public void addNewNotification(Notification notification) {
+<span class="nc" id="L175">        this.newNotifications.add(notification);</span>
+<span class="nc" id="L176">    }</span>
+    /**
+     * Récupère le nombre de notifications du résident.
+     *
+     * @param Le nombre de notifications.
+     */
+    public void setNotificationsNumber(int notificationsNumber) {
+<span class="nc" id="L183">        this.notificationsNumber = notificationsNumber;</span>
+<span class="nc" id="L184">    }</span>
+    /**
+     * Récupère la liste des notifications du résident.
+     *
+     * @return La liste des notifications.
+     */
+    public List&lt;Notification&gt; getNotifications(){
+<span class="nc" id="L191">        return this.notifications;</span>
+    }
+    /**
+     * Récupère les nouvelles notifications non lues.
+     *
+     * @return La liste des nouvelles notifications.
+     */
+    @Override
+    public List&lt;Notification&gt; getNewNotifications(){
+<span class="nc" id="L200">        List&lt;Notification&gt; newNotifications = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">        for (Notification notification : this.notifications){</span>
+<span class="nc bnc" id="L202" title="All 2 branches missed.">            if (notification.getIsNew()){</span>
+<span class="nc" id="L203">                newNotifications.add(notification);</span>
+            }
+<span class="nc" id="L205">        }</span>
+<span class="nc" id="L206">        return newNotifications;</span>
+    }
+
+
+    /**
+     * Récupère les anciennes notifications déjà lues.
+     *
+     * @return La liste des anciennes notifications.
+     */
+    @Override
+    public List&lt;Notification&gt; getOldNotifications(){
+<span class="nc" id="L217">        List&lt;Notification&gt; oldNotifications = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L218" title="All 2 branches missed.">        for (Notification notification : this.notifications){</span>
+<span class="nc bnc" id="L219" title="All 2 branches missed.">            if (!notification.getIsNew()){</span>
+<span class="nc" id="L220">                oldNotifications.add(notification);</span>
+            }
+<span class="nc" id="L222">        }</span>
+<span class="nc" id="L223">        return oldNotifications;</span>
+    }
+    /**
+     * Définit le numéro de téléphone du résident.
+     * @param phoneNumber Le numéro de téléphone.
+     */
+    public void setPhoneNumber(String phoneNumber) {
+<span class="nc" id="L230">        this.phoneNumber = phoneNumber;</span>
+<span class="nc" id="L231">    }</span>
+    /**
+     * Définit l'adresse du résident.
+     * @param address L'adresse.
+     */
+    public void setAddress(String address) {
+<span class="nc" id="L237">        this.address = address;</span>
+<span class="nc" id="L238">    }</span>
+    /**
+     * Définit le code postal du résident.
+     * @param postalCode Le code postal.
+     */
+    public void setPostalCode(String postalCode) {
+<span class="nc" id="L244">        this.postalCode = postalCode;</span>
+<span class="nc" id="L245">    }</span>
+
+    /**
+     * Définit la date de naissance du résident.
+     * @param birthDate La date de naissance.
+     */
+    public void setBirthDate(String birthDate) {
+<span class="nc" id="L252">        this.birthDate = birthDate;</span>
+<span class="nc" id="L253">    }</span>
+    /**
+     * Récupère la liste des requêtes du résident.
+     *
+     * @return La liste des requêtes de travail.
+     */
+    public  List&lt;TravailResident&gt; getRequetes() {
+<span class="fc" id="L260">        return requetes;</span>
+    }
+    /**
+     * Définit la liste des requêtes de travail.
+     *
+     * @param requetes La liste des requêtes à définir.
+     */
+    public void setRequetes(List&lt;TravailResident&gt; requetes) {
+<span class="nc" id="L268">        this.requetes = requetes;</span>
+<span class="nc" id="L269">    }</span>
+    /**
+     * Définit la liste des notifications du résident.
+     *
+     * @param notifications La liste des notifications.
+     */
+    public void setNotifications(List&lt;Notification&gt; notifications) {
+<span class="nc" id="L276">        this.notifications = notifications;</span>
+<span class="nc" id="L277">    }</span>
+    /**
+     * Supprime une requête de travail par instance.
+     *
+     * @param requete La requête de travail à supprimer.
+     */
+    public void deleteRequete(TravailResident requete) {
+<span class="fc" id="L284">        this.requetes.remove(requete);</span>
+<span class="fc" id="L285">    }</span>
+    /**
+     * Retourne le rôle du résident.
+     * @return Le rôle (Resident).
+     */
+    @Override
+    public String getRole() {
+<span class="nc" id="L292">        return role;</span>
+    }
+    /**
+     * Supprime une requête de travail par son identifiant.
+     *
+     * @param id L'identifiant de la requête à supprimer.
+     */
+    public void deleteRequete(int id) {
+<span class="pc bpc" id="L300" title="1 of 2 branches missed.">        for (TravailResident requete : requetes) {</span>
+<span class="pc bpc" id="L301" title="1 of 2 branches missed.">            if (requete.getId() == id) {</span>
+<span class="fc" id="L302">                this.requetes.remove(requete);</span>
+<span class="fc" id="L303">                break;</span>
+            }
+<span class="nc" id="L305">        }</span>
+<span class="fc" id="L306">    }</span>
+
+    /**
+     * Supprime toutes les requêtes de travail.
+     */
+    public void deleteAllRequetes() {
+<span class="fc" id="L312">        this.requetes.clear();</span>
+<span class="fc" id="L313">    }</span>
+    /**
+     * Ajoute une nouvelle notification à la liste des notifications.
+     *
+     * @param notification La notification à ajouter.
+     */
+    public void addNotification(Notification notification) {
+<span class="nc" id="L320">        this.notifications.add(notification);</span>
+<span class="nc" id="L321">        writeNotificationsInJson();</span>
+<span class="nc" id="L322">    }</span>
+    /**
+     * Met à jour une requête de travail existante.
+     *
+     * @param requete La requête de travail mise à jour.
+     */
+    public void updateRequete(TravailResident requete) {
+<span class="pc bpc" id="L329" title="1 of 2 branches missed.">        for (TravailResident r : requetes) {</span>
+<span class="pc bpc" id="L330" title="1 of 2 branches missed.">            if (r.getId() == requete.getId()) {</span>
+<span class="fc" id="L331">                r.setTitle(requete.getTitle());</span>
+<span class="fc" id="L332">                r.setDescription(requete.getDescription());</span>
+<span class="fc" id="L333">                r.setStatus(requete.getStatus());</span>
+<span class="fc" id="L334">                r.setdateDebut(requete.getdateDebut());</span>
+<span class="fc" id="L335">                r.setsenderEmail(requete.getsenderEmail());</span>
+<span class="fc" id="L336">                break;</span>
+            }
+<span class="nc" id="L338">        }</span>
+<span class="fc" id="L339">    }</span>
+    /**
+     * Ajoute une nouvelle requête de travail.
+     *
+     * @param requete La requête de travail à ajouter.
+     */
+    public void addRequete(TravailResident requete) {
+<span class="fc" id="L346">        this.requetes.add(requete);</span>
+<span class="fc" id="L347">    }</span>
+    /**
+     * Définit toutes les notifications comme anciennes.
+     */
+    public void setNotificationsAsOld() {
+<span class="nc bnc" id="L352" title="All 2 branches missed.">        for (Notification notification : this.notifications) {</span>
+<span class="nc" id="L353">            notification.setIsNew(false);</span>
+<span class="nc" id="L354">        }</span>
+<span class="nc" id="L355">        writeNotificationsInJson();</span>
+<span class="nc" id="L356">    }</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SignUpController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">maville_backend</a> &gt; <a href="index.source.html" class="el_package">ca.umontreal.ift2255.groupe2.maville_backend.controllers</a> &gt; <span class="el_source">SignUpController.java</span></div><h1>SignUpController.java</h1><pre class="source lang-java linenums">package ca.umontreal.ift2255.groupe2.maville_backend.controllers;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
+import ca.umontreal.ift2255.groupe2.maville_backend.model.Intervenant;
+import ca.umontreal.ift2255.groupe2.maville_backend.model.Personne;
+import ca.umontreal.ift2255.groupe2.maville_backend.model.Resident;
+
+/**
+ * Contrôleur pour la gestion des inscriptions d'utilisateurs via l'API REST.
+ * Cette classe permet aux utilisateurs de s'inscrire en fournissant leurs informations
+ * personnelles. Les données sont stockées dans un fichier JSON.
+ */
+@RestController
+@RequestMapping(&quot;/api/signup&quot;)
+<span class="fc" id="L34">public class SignUpController {</span>
+
+<span class="fc" id="L36">    private static final Logger logger = LoggerFactory.getLogger(SignUpController.class);</span>
+    private static final String DATA_DIRECTORY = &quot;data&quot;;
+    private static final String USERS_FILE = &quot;users.json&quot;;
+
+    /**
+     * Vérifie si un utilisateur est unique dans la liste des utilisateurs.
+     *
+     * @param personne L'objet {@link Personne} représentant l'utilisateur à vérifier.
+     * @param users La liste existante des utilisateurs.
+     * @return {@code true} si l'utilisateur est unique, sinon {@code false}.
+     */
+    private static boolean uniqueUser(Personne personne, List&lt;Personne&gt; users){
+<span class="nc bnc" id="L48" title="All 2 branches missed.">        for (Personne user : users) {</span>
+<span class="nc bnc" id="L49" title="All 4 branches missed.">            if (user.getEmail().equals(personne.getEmail()) &amp;&amp; personne.getRole().equals(user.getRole())) {</span>
+<span class="nc" id="L50">                return false;</span>
+            }
+<span class="nc" id="L52">        }</span>
+<span class="nc" id="L53">        return true;</span>
+    }
+
+    /**
+     * Point de terminaison pour inscrire un nouvel utilisateur.
+     * 
+     * @param personne Les données de l'utilisateur, passées dans le corps de la requête.
+     * Les données incluent le nom, l'email, le mot de passe, et d'autres informations personnelles.
+     * 
+     * @return {@link ResponseEntity} contenant un message de succès ou une erreur
+     * en fonction du résultat de l'opération.
+     */
+    @PostMapping
+    public ResponseEntity&lt;?&gt; signup(@RequestBody HashMap&lt;String, Object&gt; personne) {
+<span class="nc" id="L67">        String name = (String) personne.get(&quot;name&quot;);</span>
+<span class="nc" id="L68">        String email = (String) personne.get(&quot;email&quot;);</span>
+<span class="nc" id="L69">        String password = (String) personne.get(&quot;password&quot;);</span>
+<span class="nc" id="L70">        String phoneNumber = (String) personne.get(&quot;phone&quot;);</span>
+<span class="nc" id="L71">        String address = (String) personne.get(&quot;address&quot;);</span>
+<span class="nc" id="L72">        String postalCode = (String) personne.get(&quot;postal_code&quot;);</span>
+<span class="nc" id="L73">        String birthDate = (String) personne.get(&quot;birth_date&quot;);</span>
+<span class="nc" id="L74">        String role = (String) personne.get(&quot;role&quot;);</span>
+        Personne user;
+
+<span class="nc" id="L77">        logger.info(&quot;Received signup request for email: {}&quot;, email);</span>
+<span class="nc" id="L78">        logger.info(&quot;Received signup request for role: {}&quot;, role);</span>
+<span class="nc" id="L79">        logger.info(phoneNumber, address, postalCode, birthDate);</span>
+<span class="nc" id="L80">        logger.info(&quot;Received signup request for name: {}&quot;, postalCode);</span>
+        
+
+<span class="nc bnc" id="L83" title="All 2 branches missed.">        if (!Personne.isValid(email, password)) {</span>
+<span class="nc" id="L84">            logger.warn(&quot;Invalid data for Resident with email: {}&quot;, email);</span>
+<span class="nc" id="L85">            return ResponseEntity.badRequest().body(&quot;Invalid data for Resident&quot;);</span>
+        }
+
+<span class="nc bnc" id="L88" title="All 2 branches missed.">        if (role.equals(&quot;Resident&quot;)) {</span>
+<span class="nc" id="L89">            user = (Resident) new Resident(name, email, password, phoneNumber, address, postalCode, birthDate);</span>
+        } else {
+<span class="nc" id="L91">            user =(Intervenant) new Intervenant(name, email, password, 0);</span>
+        }
+
+<span class="nc" id="L94">        synchronized (this) {</span>
+            try {
+                // Ensure data directory exists
+<span class="nc" id="L97">                File directory = new File(DATA_DIRECTORY);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">                if (!directory.exists()) {</span>
+<span class="nc" id="L99">                    boolean dirCreated = directory.mkdir();</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">                    if (!dirCreated) {</span>
+<span class="nc" id="L101">                        logger.error(&quot;Failed to create data directory: {}&quot;, directory.getAbsolutePath());</span>
+<span class="nc" id="L102">                        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L103">                            .body(&quot;Failed to create data directory&quot;);</span>
+                    }
+                }
+
+<span class="nc" id="L107">                File file = new File(directory, USERS_FILE);</span>
+<span class="nc" id="L108">                ObjectMapper objectMapper = new ObjectMapper();</span>
+
+                // Verifier que Unique
+<span class="nc" id="L111">                Personne[] usersArray = objectMapper.readValue(file, Personne[].class);</span>
+<span class="nc" id="L112">                List&lt;Personne&gt; usersRead = Arrays.asList(usersArray);</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">                if (!uniqueUser(user, usersRead)) {</span>
+<span class="nc" id="L114">                    logger.error(&quot;User with email {} already exists&quot;, email);</span>
+<span class="nc" id="L115">                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(&quot;User already exists&quot;);</span>
+                }
+
+
+<span class="nc" id="L119">                objectMapper.enable(SerializationFeature.INDENT_OUTPUT);</span>
+
+<span class="nc" id="L121">                List&lt;Personne&gt; users = new ArrayList&lt;&gt;();</span>
+
+<span class="nc bnc" id="L123" title="All 4 branches missed.">                if (!file.exists() || file.length() == 0) {</span>
+<span class="nc" id="L124">                    logger.info(&quot;Initializing users.json file&quot;);</span>
+<span class="nc" id="L125">                    objectMapper.writeValue(file, users);</span>
+                } else {
+                    try {
+<span class="nc" id="L128">                        JsonNode jsonNode = objectMapper.readTree(file);</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">                        if (jsonNode.isArray()) {</span>
+<span class="nc" id="L130">                            Personne[] existingUsers = objectMapper.treeToValue(jsonNode, Personne[].class);</span>
+<span class="nc" id="L131">                            users = new ArrayList&lt;&gt;(Arrays.asList(existingUsers));</span>
+<span class="nc" id="L132">                        } else {</span>
+<span class="nc" id="L133">                            logger.error(&quot;users.json does not contain a JSON array&quot;);</span>
+<span class="nc" id="L134">                            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L135">                                .body(&quot;Invalid data format in users.json&quot;);</span>
+                        }
+<span class="nc" id="L137">                    } catch (IOException e) {</span>
+<span class="nc" id="L138">                        logger.error(&quot;Failed to read existing residents from users.json&quot;, e);</span>
+<span class="nc" id="L139">                        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L140">                            .body(&quot;Failed to read existing residents&quot;);</span>
+<span class="nc" id="L141">                    }</span>
+                }
+
+<span class="nc" id="L144">                users.add(user);</span>
+
+
+<span class="nc" id="L147">                objectMapper.writeValue(file, users);</span>
+<span class="nc" id="L148">                logger.info(&quot;Resident with email {} added to users.json&quot;, email);</span>
+<span class="nc" id="L149">                return ResponseEntity.ok(&quot;Resident registered successfully&quot;);</span>
+
+<span class="nc" id="L151">            } catch (IOException e) {</span>
+<span class="nc" id="L152">                logger.error(&quot;Failed to write resident data to users.json&quot;, e);</span>
+<span class="nc" id="L153">                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L154">                    .body(&quot;Failed to write resident data&quot;);</span>
+            }
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

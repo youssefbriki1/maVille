@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LoginController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">maville_backend</a> &gt; <a href="index.source.html" class="el_package">ca.umontreal.ift2255.groupe2.maville_backend.controllers</a> &gt; <span class="el_source">LoginController.java</span></div><h1>LoginController.java</h1><pre class="source lang-java linenums">package ca.umontreal.ift2255.groupe2.maville_backend.controllers;
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import ca.umontreal.ift2255.groupe2.maville_backend.model.Personne;
+import ca.umontreal.ift2255.groupe2.maville_backend.model.Resident;
+
+/**
+ * Cette classe permet de vérifier les informations d'identification des utilisateurs
+ * (email, mot de passe, rôle) et retourne une réponse indiquant si la connexion est réussie.
+ * Elle gère également le calcul des notifications non lues pour les résidents.
+ */
+@RestController
+@RequestMapping(&quot;/api/login&quot;)
+<span class="fc" id="L30">public class LoginController {</span>
+
+<span class="fc" id="L32">    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);</span>
+
+    /**
+     * Endpoint POST pour authentifier un utilisateur.
+     *
+     * @param credentials Un HashMap contenant les informations d'identification :
+     *                    - &quot;email&quot; : L'adresse email de l'utilisateur.
+     *                    - &quot;password&quot; : Le mot de passe de l'utilisateur.
+     *                    - &quot;role&quot; : Le rôle de l'utilisateur (par exemple, &quot;Resident&quot;).
+     * @return Une `ResponseEntity` indiquant si l'authentification est réussie :
+     *         - Succès : Retourne un message ou le nombre de nouvelles notifications (si résident).
+     *         - Échec : Retourne un message d'erreur.
+     * @throws IOException Si une erreur survient lors de la lecture des données des utilisateurs.
+     */
+    @PostMapping
+    public ResponseEntity&lt;?&gt; login(@RequestBody HashMap&lt;String, String&gt; credentials) throws IOException {
+<span class="nc" id="L48">        String email = credentials.get(&quot;email&quot;);</span>
+<span class="nc" id="L49">        String password = credentials.get(&quot;password&quot;);</span>
+<span class="nc" id="L50">        String role = credentials.get(&quot;role&quot;);</span>
+
+<span class="nc bnc" id="L52" title="All 4 branches missed.">        if (email == null || password == null) {</span>
+<span class="nc" id="L53">            return ResponseEntity.badRequest().body(&quot;Email and password are required.&quot;);</span>
+        }
+
+<span class="nc bnc" id="L56" title="All 2 branches missed.">        if (authenticateUser(email, password, role)) {</span>
+            
+<span class="nc bnc" id="L58" title="All 2 branches missed.">            if (role.equals(&quot;Resident&quot;)) {</span>
+<span class="nc" id="L59">                int notificationsNumber = getNewNotificationsNumber(email, password);</span>
+<span class="nc" id="L60">                Map&lt;String, Integer&gt; response = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L61">                response.put(&quot;notificationsNumber&quot;, notificationsNumber);</span>
+<span class="nc" id="L62">                return ResponseEntity.ok(response);</span>
+
+            }
+<span class="nc" id="L65">            return ResponseEntity.ok(&quot;Login successful.&quot;);</span>
+        } else {
+<span class="nc" id="L67">            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(&quot;Invalid email or password.&quot;);</span>
+        }
+    }
+
+    /**
+     * Méthode privée pour authentifier un utilisateur.
+     *
+     * @param email    L'adresse email de l'utilisateur.
+     * @param password Le mot de passe de l'utilisateur.
+     * @param role     Le rôle de l'utilisateur (par exemple, &quot;Resident&quot;).
+     * @return `true` si l'utilisateur est authentifié avec succès, `false` sinon.
+     */
+    private boolean authenticateUser(String email, String password, String role) {
+        try {
+<span class="nc" id="L81">            File directory = new File(&quot;data&quot;);</span>
+<span class="nc" id="L82">            File file = new File(directory, &quot;users.json&quot;);</span>
+<span class="nc" id="L83">            ObjectMapper objectMapper = new ObjectMapper();</span>
+    
+<span class="nc bnc" id="L85" title="All 4 branches missed.">            if (!file.exists() || file.length() == 0) {</span>
+<span class="nc" id="L86">                throw new IOException(&quot;No users registered.&quot;);</span>
+            }
+    
+<span class="nc" id="L89">            Personne[] usersArray = objectMapper.readValue(file, Personne[].class);</span>
+<span class="nc" id="L90">            List&lt;Personne&gt; users = Arrays.asList(usersArray);</span>
+    
+<span class="nc bnc" id="L92" title="All 2 branches missed.">            for (Personne user : users) {</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">                if (user.getEmail().equals(email)) {</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">                    if (user.getPassword().equals(password)) {</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">                        if (role.equals(user.getRole())) {</span>
+<span class="nc" id="L96">                            logger.info(&quot;Role parameter: &quot; + role);</span>
+<span class="nc" id="L97">                            logger.info(&quot;User's role: &quot; + user.getRole());</span>
+<span class="nc" id="L98">                            return true;</span>
+                        } else {
+<span class="nc" id="L100">                            logger.error(&quot;Role mismatch. Expected: &quot; + role + &quot;, Found: &quot; + user.getRole());</span>
+                        }
+                    }
+                }
+<span class="nc" id="L104">            }</span>
+<span class="nc" id="L105">        } catch (IOException e) {</span>
+<span class="nc" id="L106">            e.printStackTrace();</span>
+<span class="nc" id="L107">        }</span>
+    
+<span class="nc" id="L109">        return false;</span>
+    }
+
+    /**
+     * Méthode privée pour récupérer le nombre de nouvelles notifications pour un résident.
+     *
+     * @param email    L'adresse email du résident.
+     * @param password Le mot de passe du résident.
+     * @return Le nombre de nouvelles notifications non lues, ou `-1` en cas d'erreur.
+     */
+    private int getNewNotificationsNumber(String email, String password){
+        try {
+<span class="nc" id="L121">            File directory = new File(&quot;data&quot;);</span>
+<span class="nc" id="L122">            File file = new File(directory, &quot;users.json&quot;);</span>
+<span class="nc" id="L123">            ObjectMapper objectMapper = new ObjectMapper();</span>
+    
+<span class="nc bnc" id="L125" title="All 4 branches missed.">            if (!file.exists() || file.length() == 0) {</span>
+<span class="nc" id="L126">                throw new IOException(&quot;No users registered.&quot;);</span>
+            }
+    
+<span class="nc" id="L129">            Personne[] usersArray = objectMapper.readValue(file, Personne[].class);</span>
+<span class="nc" id="L130">            List&lt;Personne&gt; users = Arrays.asList(usersArray);</span>
+    
+<span class="nc bnc" id="L132" title="All 2 branches missed.">            for (Personne user : users) {</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">                if (user.getEmail().equals(email)) {</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">                    if (user.getPassword().equals(password)) {</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">                        if (user.getRole().equals(&quot;Resident&quot;)) {</span>
+<span class="nc" id="L136">                            return ((Resident) user).getNewNotifications().size();</span>
+                        }
+                    }
+                }
+<span class="nc" id="L140">            }</span>
+<span class="nc" id="L141">        } catch (IOException e) {</span>
+<span class="nc" id="L142">            e.printStackTrace();</span>
+<span class="nc" id="L143">    }</span>
+<span class="nc" id="L144">    return -1;</span>
+    }
+    
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

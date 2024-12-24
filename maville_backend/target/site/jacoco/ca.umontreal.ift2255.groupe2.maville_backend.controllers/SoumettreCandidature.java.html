@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SoumettreCandidature.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">maville_backend</a> &gt; <a href="index.source.html" class="el_package">ca.umontreal.ift2255.groupe2.maville_backend.controllers</a> &gt; <span class="el_source">SoumettreCandidature.java</span></div><h1>SoumettreCandidature.java</h1><pre class="source lang-java linenums">package ca.umontreal.ift2255.groupe2.maville_backend.controllers;
+
+import org.springframework.web.bind.annotation.*;
+import java.util.*;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
+
+import java.io.File;
+import java.io.IOException;
+import org.springframework.http.ResponseEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+
+/**
+ * Contrôleur REST pour la soumission des candidatures.
+ * Ce contrôleur permet à un intervenant de soumettre une candidature pour un travail spécifique.
+ */
+@RestController
+@RequestMapping(&quot;/api/soumettre_candidature&quot;)
+<span class="fc" id="L24">public class SoumettreCandidature {</span>
+
+<span class="fc" id="L26">    private static final Logger logger = LoggerFactory.getLogger(SoumettreCandidature.class);</span>
+    private static final String DATA_DIRECTORY = &quot;data&quot;;
+    private static final String REQUETES_FILE = &quot;requetes.json&quot;;
+    private static final String USERS_FILE = &quot;users.json&quot;;
+
+    /**
+     * Endpoint POST pour soumettre une candidature pour un travail.
+     * Cette méthode permet à un intervenant de soumettre une candidature pour un travail spécifié par son ID.
+     * La candidature est enregistrée dans le fichier `requetes.json` et l'intervenant est mis à jour dans `users.json`.
+     *
+     * @param request La requête contenant les informations nécessaires pour soumettre la candidature.
+     *               Elle doit inclure l'ID du travail et l'email de l'intervenant.
+     * @return Une réponse HTTP avec un message de succès ou d'erreur.
+     * @throws IOException Si un problème d'I/O se produit lors de la lecture ou de l'écriture des fichiers.
+     */
+    @PostMapping(&quot;/candidature&quot;)
+    public ResponseEntity&lt;?&gt; soumettreCandidature(@RequestBody Map&lt;String, String&gt; request) throws IOException {
+<span class="fc" id="L43">        String travailId = request.get(&quot;travail_id&quot;);</span>
+<span class="fc" id="L44">        String intervenantEmail = request.get(&quot;intervenant_email&quot;);</span>
+
+<span class="pc bpc" id="L46" title="3 of 8 branches missed.">        if (travailId == null || travailId.isEmpty() || intervenantEmail == null || intervenantEmail.isEmpty()) {</span>
+<span class="fc" id="L47">            return ResponseEntity.badRequest().body(&quot;Travail ID and intervenant email are required&quot;);</span>
+        }
+
+<span class="fc" id="L50">        logger.info(&quot;Submitting candidature: &quot; + request);</span>
+
+<span class="fc" id="L52">        synchronized (this) {</span>
+            try {
+<span class="fc" id="L54">                File directory = new File(DATA_DIRECTORY);</span>
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">                if (!directory.exists()) {</span>
+<span class="nc" id="L56">                    boolean dirCreated = directory.mkdir();</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">                    if (!dirCreated) {</span>
+<span class="nc" id="L58">                        logger.error(&quot;Failed to create data directory: {}&quot;, directory.getAbsolutePath());</span>
+<span class="nc" id="L59">                        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L60">                            .body(&quot;Failed to create data directory&quot;);</span>
+                    }
+                }
+
+<span class="fc" id="L64">                File requetesFile = new File(directory, REQUETES_FILE);</span>
+<span class="fc" id="L65">                ObjectMapper objectMapper = new ObjectMapper();</span>
+<span class="fc" id="L66">                objectMapper.enable(SerializationFeature.INDENT_OUTPUT); </span>
+<span class="fc" id="L67">                List&lt;Map&lt;String, Object&gt;&gt; travaux = new ArrayList&lt;&gt;();</span>
+
+<span class="pc bpc" id="L69" title="2 of 4 branches missed.">                if (!requetesFile.exists() || requetesFile.length() == 0) {</span>
+<span class="nc" id="L70">                    logger.error(&quot;requetes.json file does not exist or is empty&quot;);</span>
+<span class="nc" id="L71">                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L72">                        .body(&quot;requetes.json file does not exist or is empty&quot;);</span>
+                } else {
+                    try {
+<span class="fc" id="L75">                        JsonNode jsonNode = objectMapper.readTree(requetesFile);</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">                        if (jsonNode.isArray()) {</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">                            for (JsonNode node : jsonNode) {</span>
+<span class="fc" id="L78">                                Map&lt;String, Object&gt; travail = objectMapper.convertValue(node, Map.class);</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">                                if (travailId.equals(travail.get(&quot;id&quot;).toString())) {</span>
+<span class="nc" id="L80">                                    travail.put(&quot;status&quot;, &quot;Candidature soumise par &quot; + intervenantEmail);</span>
+                                }
+<span class="fc" id="L82">                                travaux.add(travail);</span>
+<span class="fc" id="L83">                            }</span>
+                        } else {
+<span class="nc" id="L85">                            logger.error(&quot;requetes.json does not contain a JSON array&quot;);</span>
+<span class="nc" id="L86">                            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L87">                                .body(&quot;Invalid data format in requetes.json&quot;);</span>
+                        }
+<span class="nc" id="L89">                    } catch (IOException e) {</span>
+<span class="nc" id="L90">                        logger.error(&quot;Failed to read existing travaux from requetes.json&quot;, e);</span>
+<span class="nc" id="L91">                        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L92">                            .body(&quot;Failed to read existing travaux&quot;);</span>
+<span class="fc" id="L93">                    }</span>
+                }
+
+                // Write updated travaux back to the file
+<span class="fc" id="L97">                objectMapper.writeValue(requetesFile, travaux);</span>
+                // Update the intervenant's requete list
+<span class="fc" id="L99">                File usersFile = new File(directory, USERS_FILE);</span>
+<span class="fc" id="L100">                List&lt;Map&lt;String, Object&gt;&gt; users = new ArrayList&lt;&gt;();</span>
+
+<span class="pc bpc" id="L102" title="2 of 4 branches missed.">                if (!usersFile.exists() || usersFile.length() == 0) {</span>
+<span class="nc" id="L103">                    logger.error(&quot;users.json file does not exist or is empty&quot;);</span>
+<span class="nc" id="L104">                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L105">                        .body(&quot;users.json file does not exist or is empty&quot;);</span>
+                } else {
+                    try {
+<span class="fc" id="L108">                        JsonNode jsonNode = objectMapper.readTree(usersFile);</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">                        if (jsonNode.isArray()) {</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">                            for (JsonNode node : jsonNode) {</span>
+<span class="fc" id="L111">                                Map&lt;String, Object&gt; user = objectMapper.convertValue(node, Map.class);</span>
+<span class="pc bpc" id="L112" title="1 of 4 branches missed.">                                if (&quot;Intervenant&quot;.equals(node.get(&quot;role&quot;).asText()) &amp;&amp; intervenantEmail.equals(user.get(&quot;email&quot;).toString())) {</span>
+<span class="nc" id="L113">                                    List&lt;Map&lt;String, String&gt;&gt; requetes = (List&lt;Map&lt;String, String&gt;&gt;) user.get(&quot;requetes&quot;);</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">                                    if (requetes == null) {</span>
+<span class="nc" id="L115">                                        requetes = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L116">                                        user.put(&quot;requetes&quot;, requetes);</span>
+                                    }
+<span class="nc" id="L118">                                    Map&lt;String, String&gt; newRequete = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L119">                                    newRequete.put(&quot;id&quot;, travailId);</span>
+<span class="nc" id="L120">                                    newRequete.put(&quot;status&quot;, &quot;en attente d'acceptation&quot;);</span>
+<span class="nc" id="L121">                                    requetes.add(newRequete);</span>
+                                }
+<span class="fc" id="L123">                                users.add(user);</span>
+<span class="fc" id="L124">                            }</span>
+                        } else {
+<span class="nc" id="L126">                            logger.error(&quot;users.json does not contain a JSON array&quot;);</span>
+<span class="nc" id="L127">                            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L128">                                .body(&quot;Invalid data format in users.json&quot;);</span>
+                        }
+<span class="nc" id="L130">                    } catch (IOException e) {</span>
+<span class="nc" id="L131">                        logger.error(&quot;Failed to read existing users from users.json&quot;, e);</span>
+<span class="nc" id="L132">                        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L133">                            .body(&quot;Failed to read existing users&quot;);</span>
+<span class="fc" id="L134">                    }</span>
+                }
+
+                // Write updated users back to the file
+<span class="fc" id="L138">                objectMapper.writeValue(usersFile, users);</span>
+
+        
+<span class="nc" id="L141">            } catch (IOException e) {</span>
+<span class="nc" id="L142">                logger.error(&quot;Failed to write travaux to requetes.json&quot;, e);</span>
+<span class="nc" id="L143">                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L144">                    .body(&quot;Failed to write travaux to requetes.json&quot;);</span>
+<span class="fc" id="L145">            }</span>
+<span class="fc" id="L146">        }</span>
+<span class="fc" id="L147">        return ResponseEntity.ok(&quot;Candidature submitted successfully&quot;);</span>
+    }
+    
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
