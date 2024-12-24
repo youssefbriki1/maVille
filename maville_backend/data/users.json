@@ -1,1 +1,284 @@
-[{"name":"Jalal Fatouaki","email":"fatouaki.jalal@gmail.com","password":"a","phoneNumber":"123456789","address":"L'ile perrot","postalCode":"j7v 0a4","birthDate":"2005-10-31","requetes":[],"notifications":[{"title":"Nouvelle candidature","description":"Une nouvelle candidature a été soumise par : larache05@gmail.com","date":"2024-12-23","isNew":false},{"title":"Nouveau projet soumis","description":"Un nouveau projet a été soumis par : larache05@gmail.com","date":"2024-12-23","isNew":false},{"title":"Statut du projet mis à jour","description":"Le projet Entretien du parc (ID: 848) a été mis à jour avec succès","date":"2024-12-23","isNew":"true"},{"title":"Nouvelle candidature","description":"Une nouvelle candidature a été soumise par : larache05@gmail.com","date":"2024-12-23","isNew":"true"}],"horraires":{"times":{"start_time":"00:00:00","end_time":"23:45:00"},"days":["Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche"]},"notificationsNumber":4,"newNotifications":[{"title":"Nouvelle candidature","description":"Une nouvelle candidature a été soumise par : larache05@gmail.com","date":"2024-12-23","isNew":false},{"title":"Nouveau projet soumis","description":"Un nouveau projet a été soumis par : larache05@gmail.com","date":"2024-12-23","isNew":false},{"title":"Statut du projet mis à jour","description":"Le projet Entretien du parc (ID: 848) a été mis à jour avec succès","date":"2024-12-23","isNew":"true"},{"title":"Nouvelle candidature","description":"Une nouvelle candidature a été soumise par : larache05@gmail.com","date":"2024-12-23","isNew":"true"}],"role":"Resident","oldNotifications":[]},{"name":"Youssef Briki","email":"youssef.briki05@gmail.com","password":"a","phoneNumber":"123456789","address":"L'ile perrot","postalCode":"j7v 0a4","birthDate":"2005-10-01","requetes":[],"notifications":[{"title":"Nouveau projet soumis","description":"Un nouveau projet a été soumis par : larache05@gmail.com","date":"2024-12-23","isNew":"true"},{"title":"Statut du projet mis à jour","description":"Le projet Entretien du parc (ID: 848) a été mis à jour avec succès","date":"2024-12-23","isNew":"true"}],"horraires":{},"notificationsNumber":2,"newNotifications":[{"title":"Nouveau projet soumis","description":"Un nouveau projet a été soumis par : larache05@gmail.com","date":"2024-12-23","isNew":"true"},{"title":"Statut du projet mis à jour","description":"Le projet Entretien du parc (ID: 848) a été mis à jour avec succès","date":"2024-12-23","isNew":"true"}],"role":"Resident","oldNotifications":[]},{"name":"Royann Lee","email":"royann.lee@gmail.com","password":"a","phoneNumber":"123456789","address":"Montreal","postalCode":"h3a 0d3","birthDate":"2005-10-01","requetes":[],"notifications":[{"title":"Nouvelle candidature","description":"Une nouvelle candidature a été soumise par : larache05@gmail.com","date":"2024-12-23","isNew":"true"},{"title":"Nouveau projet soumis","description":"Un nouveau projet a été soumis par : larache05@gmail.com","date":"2024-12-23","isNew":"true"},{"title":"Statut du projet mis à jour","description":"Le projet Entretien du parc (ID: 848) a été mis à jour avec succès","date":"2024-12-23","isNew":"true"}],"horraires":{},"notificationsNumber":3,"newNotifications":[{"title":"Nouvelle candidature","description":"Une nouvelle candidature a été soumise par : larache05@gmail.com","date":"2024-12-23","isNew":"true"},{"title":"Nouveau projet soumis","description":"Un nouveau projet a été soumis par : larache05@gmail.com","date":"2024-12-23","isNew":"true"},{"title":"Statut du projet mis à jour","description":"Le projet Entretien du parc (ID: 848) a été mis à jour avec succès","date":"2024-12-23","isNew":"true"}],"role":"Resident","oldNotifications":[]},{"name":"Louis-Edouard Lafontant","email":"louis.edouard.lafontant@gmail.com","password":"a","phoneNumber":"123456789","address":"Montreal","postalCode":"h3a 0d3","birthDate":"2005-10-01","requetes":[],"notifications":[{"title":"Nouveau projet soumis","description":"Un nouveau projet a été soumis par : larache05@gmail.com","date":"2024-12-23","isNew":"true"},{"title":"Statut du projet mis à jour","description":"Le projet Entretien du parc (ID: 848) a été mis à jour avec succès","date":"2024-12-23","isNew":"true"}],"horraires":{},"notificationsNumber":2,"newNotifications":[{"title":"Nouveau projet soumis","description":"Un nouveau projet a été soumis par : larache05@gmail.com","date":"2024-12-23","isNew":"true"},{"title":"Statut du projet mis à jour","description":"Le projet Entretien du parc (ID: 848) a été mis à jour avec succès","date":"2024-12-23","isNew":"true"}],"role":"Resident","oldNotifications":[]},{"name":"Larry Guiffo","email":"larry.guiffo@gmail.com","password":"a","phoneNumber":"123456789","address":"Montreal","postalCode":"h3a 0d3","birthDate":"2005-10-01","requetes":[],"notifications":[{"title":"Nouvelle candidature","description":"Une nouvelle candidature a été soumise par : larache05@gmail.com","date":"2024-12-23","isNew":"true"},{"title":"Nouveau projet soumis","description":"Un nouveau projet a été soumis par : larache05@gmail.com","date":"2024-12-23","isNew":"true"},{"title":"Statut du projet mis à jour","description":"Le projet Entretien du parc (ID: 848) a été mis à jour avec succès","date":"2024-12-23","isNew":"true"}],"horraires":{},"notificationsNumber":3,"newNotifications":[{"title":"Nouvelle candidature","description":"Une nouvelle candidature a été soumise par : larache05@gmail.com","date":"2024-12-23","isNew":"true"},{"title":"Nouveau projet soumis","description":"Un nouveau projet a été soumis par : larache05@gmail.com","date":"2024-12-23","isNew":"true"},{"title":"Statut du projet mis à jour","description":"Le projet Entretien du parc (ID: 848) a été mis à jour avec succès","date":"2024-12-23","isNew":"true"}],"role":"Resident","oldNotifications":[]},{"name":"Jean Belanger","email":"jean.belanger@gmail.com","password":"a","phoneNumber":null,"address":null,"postalCode":null,"idCity":0,"requetes":[],"role":"Intervenant"},{"name":"Mathilde Belanger","email":"mathilde.belanger@gmail.com","password":"a","phoneNumber":null,"address":null,"postalCode":null,"idCity":0,"requetes":[],"role":"Intervenant"},{"name":"Yves Constant","email":"yvesconstant@gmail.com","password":"a","phoneNumber":null,"address":null,"postalCode":null,"idCity":0,"requetes":[],"role":"Intervenant"},{"name":"Jean Michel","email":"jean.michel@gmail.com","password":"a","phoneNumber":null,"address":null,"postalCode":null,"idCity":0,"requetes":[],"role":"Intervenant"},{"name":"Nassim Larache","email":"larache05@gmail.com","password":"a","phoneNumber":null,"address":null,"postalCode":null,"idCity":0,"requetes":[{"id":"425","status":"Accepté par résident et intervenant"},{"id":"429","status":"en attente d'acceptation"},{"id":"427","status":"en attente d'acceptation"},{"id":"500","status":"en attente d'acceptation"}],"role":"Intervenant"}]
+[ {
+  "name" : "Jalal Fatouaki",
+  "email" : "fatouaki.jalal@gmail.com",
+  "password" : "a",
+  "phoneNumber" : "123456789",
+  "address" : "L'ile perrot",
+  "postalCode" : "j7v 0a4",
+  "birthDate" : "2005-10-31",
+  "requetes" : [ ],
+  "notifications" : [ {
+    "title" : "Nouvelle candidature",
+    "description" : "Une nouvelle candidature a été soumise par : larache05@gmail.com",
+    "date" : "2024-12-23",
+    "isNew" : false
+  }, {
+    "title" : "Nouveau projet soumis",
+    "description" : "Un nouveau projet a été soumis par : larache05@gmail.com",
+    "date" : "2024-12-23",
+    "isNew" : false
+  }, {
+    "title" : "Statut du projet mis à jour",
+    "description" : "Le projet Entretien du parc (ID: 848) a été mis à jour avec succès",
+    "date" : "2024-12-23",
+    "isNew" : "true"
+  }, {
+    "title" : "Nouvelle candidature",
+    "description" : "Une nouvelle candidature a été soumise par : larache05@gmail.com",
+    "date" : "2024-12-23",
+    "isNew" : "true"
+  } ],
+  "horraires" : {
+    "times" : {
+      "start_time" : "00:00:00",
+      "end_time" : "23:45:00"
+    },
+    "days" : [ "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche" ]
+  },
+  "notificationsNumber" : 4,
+  "newNotifications" : [ {
+    "title" : "Nouvelle candidature",
+    "description" : "Une nouvelle candidature a été soumise par : larache05@gmail.com",
+    "date" : "2024-12-23",
+    "isNew" : false
+  }, {
+    "title" : "Nouveau projet soumis",
+    "description" : "Un nouveau projet a été soumis par : larache05@gmail.com",
+    "date" : "2024-12-23",
+    "isNew" : false
+  }, {
+    "title" : "Statut du projet mis à jour",
+    "description" : "Le projet Entretien du parc (ID: 848) a été mis à jour avec succès",
+    "date" : "2024-12-23",
+    "isNew" : "true"
+  }, {
+    "title" : "Nouvelle candidature",
+    "description" : "Une nouvelle candidature a été soumise par : larache05@gmail.com",
+    "date" : "2024-12-23",
+    "isNew" : "true"
+  } ],
+  "role" : "Resident",
+  "oldNotifications" : [ ]
+}, {
+  "name" : "Youssef Briki",
+  "email" : "youssef.briki05@gmail.com",
+  "password" : "a",
+  "phoneNumber" : "123456789",
+  "address" : "L'ile perrot",
+  "postalCode" : "j7v 0a4",
+  "birthDate" : "2005-10-01",
+  "requetes" : [ ],
+  "notifications" : [ {
+    "title" : "Nouveau projet soumis",
+    "description" : "Un nouveau projet a été soumis par : larache05@gmail.com",
+    "date" : "2024-12-23",
+    "isNew" : "true"
+  }, {
+    "title" : "Statut du projet mis à jour",
+    "description" : "Le projet Entretien du parc (ID: 848) a été mis à jour avec succès",
+    "date" : "2024-12-23",
+    "isNew" : "true"
+  } ],
+  "horraires" : { },
+  "notificationsNumber" : 2,
+  "newNotifications" : [ {
+    "title" : "Nouveau projet soumis",
+    "description" : "Un nouveau projet a été soumis par : larache05@gmail.com",
+    "date" : "2024-12-23",
+    "isNew" : "true"
+  }, {
+    "title" : "Statut du projet mis à jour",
+    "description" : "Le projet Entretien du parc (ID: 848) a été mis à jour avec succès",
+    "date" : "2024-12-23",
+    "isNew" : "true"
+  } ],
+  "role" : "Resident",
+  "oldNotifications" : [ ]
+}, {
+  "name" : "Royann Lee",
+  "email" : "royann.lee@gmail.com",
+  "password" : "a",
+  "phoneNumber" : "123456789",
+  "address" : "Montreal",
+  "postalCode" : "h3a 0d3",
+  "birthDate" : "2005-10-01",
+  "requetes" : [ ],
+  "notifications" : [ {
+    "title" : "Nouvelle candidature",
+    "description" : "Une nouvelle candidature a été soumise par : larache05@gmail.com",
+    "date" : "2024-12-23",
+    "isNew" : "true"
+  }, {
+    "title" : "Nouveau projet soumis",
+    "description" : "Un nouveau projet a été soumis par : larache05@gmail.com",
+    "date" : "2024-12-23",
+    "isNew" : "true"
+  }, {
+    "title" : "Statut du projet mis à jour",
+    "description" : "Le projet Entretien du parc (ID: 848) a été mis à jour avec succès",
+    "date" : "2024-12-23",
+    "isNew" : "true"
+  } ],
+  "horraires" : { },
+  "notificationsNumber" : 3,
+  "newNotifications" : [ {
+    "title" : "Nouvelle candidature",
+    "description" : "Une nouvelle candidature a été soumise par : larache05@gmail.com",
+    "date" : "2024-12-23",
+    "isNew" : "true"
+  }, {
+    "title" : "Nouveau projet soumis",
+    "description" : "Un nouveau projet a été soumis par : larache05@gmail.com",
+    "date" : "2024-12-23",
+    "isNew" : "true"
+  }, {
+    "title" : "Statut du projet mis à jour",
+    "description" : "Le projet Entretien du parc (ID: 848) a été mis à jour avec succès",
+    "date" : "2024-12-23",
+    "isNew" : "true"
+  } ],
+  "role" : "Resident",
+  "oldNotifications" : [ ]
+}, {
+  "name" : "Louis-Edouard Lafontant",
+  "email" : "louis.edouard.lafontant@gmail.com",
+  "password" : "a",
+  "phoneNumber" : "123456789",
+  "address" : "Montreal",
+  "postalCode" : "h3a 0d3",
+  "birthDate" : "2005-10-01",
+  "requetes" : [ ],
+  "notifications" : [ {
+    "title" : "Nouveau projet soumis",
+    "description" : "Un nouveau projet a été soumis par : larache05@gmail.com",
+    "date" : "2024-12-23",
+    "isNew" : "true"
+  }, {
+    "title" : "Statut du projet mis à jour",
+    "description" : "Le projet Entretien du parc (ID: 848) a été mis à jour avec succès",
+    "date" : "2024-12-23",
+    "isNew" : "true"
+  } ],
+  "horraires" : { },
+  "notificationsNumber" : 2,
+  "newNotifications" : [ {
+    "title" : "Nouveau projet soumis",
+    "description" : "Un nouveau projet a été soumis par : larache05@gmail.com",
+    "date" : "2024-12-23",
+    "isNew" : "true"
+  }, {
+    "title" : "Statut du projet mis à jour",
+    "description" : "Le projet Entretien du parc (ID: 848) a été mis à jour avec succès",
+    "date" : "2024-12-23",
+    "isNew" : "true"
+  } ],
+  "role" : "Resident",
+  "oldNotifications" : [ ]
+}, {
+  "name" : "Larry Guiffo",
+  "email" : "larry.guiffo@gmail.com",
+  "password" : "a",
+  "phoneNumber" : "123456789",
+  "address" : "Montreal",
+  "postalCode" : "h3a 0d3",
+  "birthDate" : "2005-10-01",
+  "requetes" : [ ],
+  "notifications" : [ {
+    "title" : "Nouvelle candidature",
+    "description" : "Une nouvelle candidature a été soumise par : larache05@gmail.com",
+    "date" : "2024-12-23",
+    "isNew" : "true"
+  }, {
+    "title" : "Nouveau projet soumis",
+    "description" : "Un nouveau projet a été soumis par : larache05@gmail.com",
+    "date" : "2024-12-23",
+    "isNew" : "true"
+  }, {
+    "title" : "Statut du projet mis à jour",
+    "description" : "Le projet Entretien du parc (ID: 848) a été mis à jour avec succès",
+    "date" : "2024-12-23",
+    "isNew" : "true"
+  } ],
+  "horraires" : { },
+  "notificationsNumber" : 3,
+  "newNotifications" : [ {
+    "title" : "Nouvelle candidature",
+    "description" : "Une nouvelle candidature a été soumise par : larache05@gmail.com",
+    "date" : "2024-12-23",
+    "isNew" : "true"
+  }, {
+    "title" : "Nouveau projet soumis",
+    "description" : "Un nouveau projet a été soumis par : larache05@gmail.com",
+    "date" : "2024-12-23",
+    "isNew" : "true"
+  }, {
+    "title" : "Statut du projet mis à jour",
+    "description" : "Le projet Entretien du parc (ID: 848) a été mis à jour avec succès",
+    "date" : "2024-12-23",
+    "isNew" : "true"
+  } ],
+  "role" : "Resident",
+  "oldNotifications" : [ ]
+}, {
+  "name" : "Jean Belanger",
+  "email" : "jean.belanger@gmail.com",
+  "password" : "a",
+  "phoneNumber" : null,
+  "address" : null,
+  "postalCode" : null,
+  "idCity" : 0,
+  "requetes" : [ ],
+  "role" : "Intervenant"
+}, {
+  "name" : "Mathilde Belanger",
+  "email" : "mathilde.belanger@gmail.com",
+  "password" : "a",
+  "phoneNumber" : null,
+  "address" : null,
+  "postalCode" : null,
+  "idCity" : 0,
+  "requetes" : [ ],
+  "role" : "Intervenant"
+}, {
+  "name" : "Yves Constant",
+  "email" : "yvesconstant@gmail.com",
+  "password" : "a",
+  "phoneNumber" : null,
+  "address" : null,
+  "postalCode" : null,
+  "idCity" : 0,
+  "requetes" : [ ],
+  "role" : "Intervenant"
+}, {
+  "name" : "Jean Michel",
+  "email" : "jean.michel@gmail.com",
+  "password" : "a",
+  "phoneNumber" : null,
+  "address" : null,
+  "postalCode" : null,
+  "idCity" : 0,
+  "requetes" : [ ],
+  "role" : "Intervenant"
+}, {
+  "name" : "Nassim Larache",
+  "email" : "larache05@gmail.com",
+  "password" : "a",
+  "phoneNumber" : null,
+  "address" : null,
+  "postalCode" : null,
+  "idCity" : 0,
+  "requetes" : [ {
+    "id" : "425",
+    "status" : "Accepté par résident et intervenant"
+  }, {
+    "id" : "429",
+    "status" : "en attente d'acceptation"
+  }, {
+    "id" : "427",
+    "status" : "en attente d'acceptation"
+  }, {
+    "id" : "500",
+    "status" : "en attente d'acceptation"
+  } ],
+  "role" : "Intervenant"
+} ]

@@ -141,9 +141,8 @@ public class EnvoyerNotification {
         } else {
             try {
                 JsonNode jsonNode = objectMapper.readTree(file);
-                int i = 0;
+                
                 if (jsonNode.isArray()) {
-                    boolean userFound = false;
                     for (JsonNode node : jsonNode) {
                         if ("Resident".equals(node.get("role").asText()) && email.equals(node.get("email").asText())) {
                             Map<String, Object> resident = objectMapper.convertValue(node, Map.class);
@@ -155,8 +154,6 @@ public class EnvoyerNotification {
                             int cocoInt = (int) coco;
                             resident.put("notificationsNumber", cocoInt + 1);
                             residents.add(resident);
-                            
-                            userFound = true;
                             
                         } else {
                             residents.add(objectMapper.convertValue(node, Map.class));
