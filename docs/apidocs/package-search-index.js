@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"ca.umontreal.ift2255.groupe2.maville_backend"},{"l":"ca.umontreal.ift2255.groupe2.maville_backend.config"},{"l":"ca.umontreal.ift2255.groupe2.maville_backend.controllers"},{"l":"ca.umontreal.ift2255.groupe2.maville_backend.model"}];updateSearchResults();
