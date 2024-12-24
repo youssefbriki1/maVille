@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EnvoyerNotification.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">maville_backend</a> &gt; <a href="index.source.html" class="el_package">ca.umontreal.ift2255.groupe2.maville_backend.controllers</a> &gt; <span class="el_source">EnvoyerNotification.java</span></div><h1>EnvoyerNotification.java</h1><pre class="source lang-java linenums">package ca.umontreal.ift2255.groupe2.maville_backend.controllers;
+
+import org.springframework.web.bind.annotation.*;
+import java.util.*;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import ca.umontreal.ift2255.groupe2.maville_backend.model.Notification;
+
+import java.io.File;
+import java.io.IOException;
+
+import org.springframework.http.ResponseEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+
+/**
+ * Contrôleur REST pour l'envoi de notifications aux résidents.
+ * Ce contrôleur permet d'envoyer une notification à tous les résidents ou à un résident spécifique.
+ */
+@RestController
+@RequestMapping(&quot;/api/envoyer_notification&quot;)
+<span class="fc" id="L25">public class EnvoyerNotification {</span>
+
+<span class="fc" id="L27">    private static final Logger logger = LoggerFactory.getLogger(EnvoyerNotification.class);</span>
+    private static final String DATA_DIRECTORY = &quot;data&quot;;
+    private static final String USERS_FILE = &quot;users.json&quot;;
+
+    /**
+     * Endpoint POST pour envoyer une notification à tous les résidents.
+     * Cette méthode ajoute une notification à la liste des notifications de chaque résident.
+     *
+     * @param request Un objet contenant les informations de la notification à envoyer : &quot;title&quot;, &quot;description&quot;, &quot;date&quot;.
+     * @return Une réponse HTTP indiquant si la notification a été envoyée avec succès.
+     */
+    @PostMapping
+    public ResponseEntity&lt;?&gt; getResidents(@RequestBody Map&lt;String, String&gt; request) {
+<span class="nc" id="L40">        File file = new File(DATA_DIRECTORY, USERS_FILE);</span>
+<span class="nc" id="L41">        ObjectMapper objectMapper = new ObjectMapper();</span>
+<span class="nc" id="L42">        List&lt;Map&lt;String, Object&gt;&gt; residents = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L43">        String title = request.get(&quot;title&quot;);</span>
+<span class="nc" id="L44">        String description = request.get(&quot;description&quot;);</span>
+<span class="nc" id="L45">        String date = request.get(&quot;date&quot;);</span>
+
+<span class="nc bnc" id="L47" title="All 12 branches missed.">        if (title == null || title.isEmpty() || description == null || description.isEmpty() || date == null || date.isEmpty()) {</span>
+<span class="nc" id="L48">            return ResponseEntity.badRequest().body(&quot;Title, description, and date are required&quot;);</span>
+        }
+
+<span class="nc" id="L51">        logger.info(&quot;Sending notification: &quot; + request);</span>
+
+        Notification notification;
+        try {
+<span class="nc" id="L55">            notification = new Notification(title, description, date);</span>
+<span class="nc" id="L56">        } catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L57">            return ResponseEntity.badRequest().body(&quot;Invalid notification data&quot;);</span>
+<span class="nc" id="L58">        }</span>
+        
+
+<span class="nc bnc" id="L61" title="All 4 branches missed.">        if (!file.exists() || file.length() == 0) {</span>
+<span class="nc" id="L62">            logger.error(&quot;users.json file does not exist or is empty&quot;);</span>
+<span class="nc" id="L63">            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L64">                .body(&quot;users.json file does not exist or is empty&quot;);</span>
+        } else {
+            try {
+<span class="nc" id="L67">                JsonNode jsonNode = objectMapper.readTree(file);</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">                if (jsonNode.isArray()) {</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">                    for (JsonNode node : jsonNode) {</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">                        if (&quot;Resident&quot;.equals(node.get(&quot;role&quot;).asText())) {</span>
+<span class="nc" id="L71">                            Map&lt;String, Object&gt; resident = objectMapper.convertValue(node, Map.class);</span>
+<span class="nc" id="L72">                            List&lt;Map&lt;String, String&gt;&gt; notifications = (List&lt;Map&lt;String, String&gt;&gt;) resident.get(&quot;notifications&quot;);</span>
+<span class="nc" id="L73">                            notifications.add(request);</span>
+<span class="nc" id="L74">                            resident.put(&quot;newNotifications&quot;, notifications);</span>
+<span class="nc" id="L75">                            Object coco = resident.get(&quot;notificationsNumber&quot;);</span>
+<span class="nc" id="L76">                            int cocoInt = (int) coco;</span>
+<span class="nc" id="L77">                            resident.put(&quot;notificationsNumber&quot;, cocoInt + 1);</span>
+<span class="nc" id="L78">                            residents.add(resident);</span>
+                            
+                            
+                        }
+<span class="nc bnc" id="L82" title="All 2 branches missed.">                        if (&quot;Intervenant&quot;.equals(node.get(&quot;role&quot;).asText())) {</span>
+<span class="nc" id="L83">                            Map&lt;String, Object&gt; resident = objectMapper.convertValue(node, Map.class);</span>
+<span class="nc" id="L84">                            residents.add(resident);</span>
+                            
+                        }
+<span class="nc" id="L87">                        objectMapper.writeValue(file, residents);</span>
+<span class="nc" id="L88">                    }</span>
+                } else {
+<span class="nc" id="L90">                    logger.error(&quot;users.json does not contain a JSON array&quot;);</span>
+<span class="nc" id="L91">                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L92">                        .body(&quot;Invalid data format in users.json&quot;);</span>
+                }
+<span class="nc" id="L94">            } catch (IOException e) {</span>
+<span class="nc" id="L95">                logger.error(&quot;Failed to read existing residents from users.json&quot;, e);</span>
+<span class="nc" id="L96">                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L97">                    .body(&quot;Failed to read existing residents&quot;);</span>
+<span class="nc" id="L98">            }</span>
+        }
+
+        ;
+<span class="nc" id="L102">        return ResponseEntity.ok(&quot;Notification sent successfully to all residents&quot;);</span>
+
+    }
+    /**
+     * Endpoint POST pour envoyer une notification à un résident spécifique en fonction de son adresse email.
+     * Cette méthode ajoute une notification à la liste des notifications du résident spécifié.
+     *
+     * @param request Un objet contenant les informations de la notification à envoyer et l'email du résident ciblé.
+     * @return Une réponse HTTP indiquant si la notification a été envoyée avec succès.
+     */
+    @PostMapping(&quot;/specific&quot;)
+    public ResponseEntity&lt;?&gt; envoyerNotificationSpecifique(@RequestBody Map&lt;String, String&gt; request) {
+<span class="nc" id="L114">        File file = new File(DATA_DIRECTORY, USERS_FILE);</span>
+<span class="nc" id="L115">        ObjectMapper objectMapper = new ObjectMapper();</span>
+<span class="nc" id="L116">        List&lt;Map&lt;String, Object&gt;&gt; residents = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L117">        String email = request.get(&quot;email&quot;);</span>
+<span class="nc" id="L118">        String title = request.get(&quot;title&quot;);</span>
+<span class="nc" id="L119">        String description = request.get(&quot;description&quot;);</span>
+<span class="nc" id="L120">        String date = request.get(&quot;date&quot;);</span>
+
+<span class="nc bnc" id="L122" title="All 16 branches missed.">        if (email == null || email.isEmpty() || title == null || title.isEmpty() || description == null || description.isEmpty() || date == null || date.isEmpty()) {</span>
+<span class="nc" id="L123">            return ResponseEntity.badRequest().body(&quot;Email, title, description, and date are required&quot;);</span>
+        }
+        
+
+<span class="nc" id="L127">        logger.info(&quot;Sending notification: &quot; + request);</span>
+
+        Notification notification;
+        try {
+<span class="nc" id="L131">            notification = new Notification(title, description, date);</span>
+<span class="nc" id="L132">        } catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L133">            return ResponseEntity.badRequest().body(&quot;Invalid notification data&quot;);</span>
+<span class="nc" id="L134">        }</span>
+        
+
+<span class="nc bnc" id="L137" title="All 4 branches missed.">        if (!file.exists() || file.length() == 0) {</span>
+<span class="nc" id="L138">            logger.error(&quot;users.json file does not exist or is empty&quot;);</span>
+<span class="nc" id="L139">            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L140">                .body(&quot;users.json file does not exist or is empty&quot;);</span>
+        } else {
+            try {
+<span class="nc" id="L143">                JsonNode jsonNode = objectMapper.readTree(file);</span>
+                
+<span class="nc bnc" id="L145" title="All 2 branches missed.">                if (jsonNode.isArray()) {</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">                    for (JsonNode node : jsonNode) {</span>
+<span class="nc bnc" id="L147" title="All 4 branches missed.">                        if (&quot;Resident&quot;.equals(node.get(&quot;role&quot;).asText()) &amp;&amp; email.equals(node.get(&quot;email&quot;).asText())) {</span>
+<span class="nc" id="L148">                            Map&lt;String, Object&gt; resident = objectMapper.convertValue(node, Map.class);</span>
+<span class="nc" id="L149">                            List&lt;Map&lt;String, String&gt;&gt; notifications = (List&lt;Map&lt;String, String&gt;&gt;) resident.get(&quot;notifications&quot;);</span>
+<span class="nc" id="L150">                            request.remove(&quot;email&quot;);</span>
+<span class="nc" id="L151">                            notifications.add(request);</span>
+<span class="nc" id="L152">                            resident.put(&quot;newNotifications&quot;, notifications);</span>
+<span class="nc" id="L153">                            Object coco = resident.get(&quot;notificationsNumber&quot;);</span>
+<span class="nc" id="L154">                            int cocoInt = (int) coco;</span>
+<span class="nc" id="L155">                            resident.put(&quot;notificationsNumber&quot;, cocoInt + 1);</span>
+<span class="nc" id="L156">                            residents.add(resident);</span>
+                            
+<span class="nc" id="L158">                        } else {</span>
+<span class="nc" id="L159">                            residents.add(objectMapper.convertValue(node, Map.class));</span>
+                        }
+                        
+<span class="nc" id="L162">                    }objectMapper.writeValue(file, residents);</span>
+                } else {
+<span class="nc" id="L164">                    logger.error(&quot;users.json does not contain a JSON array&quot;);</span>
+<span class="nc" id="L165">                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L166">                        .body(&quot;Invalid data format in users.json&quot;);</span>
+                }
+<span class="nc" id="L168">            } catch (IOException e) {</span>
+<span class="nc" id="L169">                logger.error(&quot;Failed to read existing residents from users.json&quot;, e);</span>
+<span class="nc" id="L170">                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L171">                    .body(&quot;Failed to read existing residents&quot;);</span>
+<span class="nc" id="L172">            }</span>
+        }
+
+        ;
+<span class="nc" id="L176">        return ResponseEntity.ok(&quot;Notification sent successfully to all residents&quot;);</span>
+
+    }
+    
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

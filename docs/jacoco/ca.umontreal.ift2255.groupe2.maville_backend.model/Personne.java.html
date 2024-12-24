@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Personne.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">maville_backend</a> &gt; <a href="index.source.html" class="el_package">ca.umontreal.ift2255.groupe2.maville_backend.model</a> &gt; <span class="el_source">Personne.java</span></div><h1>Personne.java</h1><pre class="source lang-java linenums">package ca.umontreal.ift2255.groupe2.maville_backend.model;
+import java.util.regex.Pattern;
+
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+
+/**
+ * Classe abstraite représentant une personne.
+ * Sert de classe parent pour les rôles spécifiques tels que {@link Resident} et {@link Intervenant}.
+ * Gère les informations de base comme le nom, l'email et le mot de passe.
+ */
+@JsonTypeInfo(
+    use = JsonTypeInfo.Id.NAME,
+    include = JsonTypeInfo.As.PROPERTY,
+    property = &quot;role&quot;
+)
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = Resident.class, name = &quot;Resident&quot;),
+    @JsonSubTypes.Type(value = Intervenant.class, name = &quot;Intervenant&quot;)
+})
+public abstract class Personne {
+    private String name;
+    private String email;
+    private String password;
+
+
+    
+    /**
+     * Constructeur avec paramètres.
+     *
+     * @param name      Le nom de la personne.
+     * @param email     L'adresse email de la personne.
+     * @param password  Le mot de passe de la personne.
+     */
+<span class="fc" id="L36">    public Personne(String name, String email, String password) {</span>
+<span class="fc" id="L37">        this.name = name;</span>
+<span class="fc" id="L38">        this.email = email;</span>
+<span class="fc" id="L39">        this.password = password;</span>
+<span class="fc" id="L40">    }</span>
+
+    /**
+     * Constructeur par défaut.
+     */
+<span class="nc" id="L45">    public Personne() {</span>
+<span class="nc" id="L46">    }</span>
+
+
+    // Getters and Setters
+
+    /**
+     * Obtient le nom de la personne.
+     *
+     * @return Le nom de la personne.
+     */
+    public String getName() {
+<span class="nc" id="L57">        return name;</span>
+    }
+    /**
+     * Obtient l'adresse email de la personne.
+     *
+     * @return L'adresse email de la personne.
+     */
+    public String getEmail() {
+<span class="nc" id="L65">        return email;</span>
+    }
+
+    /**
+     * Obtient le mot de passe de la personne.
+     *
+     * @return Le mot de passe de la personne.
+     */
+    public String getPassword() {
+<span class="nc" id="L74">        return password;</span>
+    }
+    /**
+     * Définit le nom de la personne.
+     *
+     * @param name Le nom de la personne.
+     */
+    public void setName(String name) {
+<span class="nc" id="L82">        this.name = name;</span>
+<span class="nc" id="L83">    }</span>
+    /**
+     * Définit l'adresse email de la personne.
+     *
+     * @param email L'adresse email de la personne.
+     */
+    public void setEmail(String email) {
+<span class="nc" id="L90">        this.email = email;</span>
+<span class="nc" id="L91">    }</span>
+    /**
+     * Définit le mot de passe de la personne.
+     *
+     * @param password Le mot de passe de la personne.
+     */
+    public void setPassword(String password) {
+<span class="nc" id="L98">        this.password = password;</span>
+<span class="nc" id="L99">    }</span>
+    /**
+     * Retourne le rôle de la personne.
+     * 
+     * @return Le rôle de la personne (à définir dans les classes dérivées).
+     */
+    public abstract String getRole();
+
+    /**
+     * Valide les informations d'email et de mot de passe.
+     *
+     * @param email    L'adresse email à valider.
+     * @param password Le mot de passe à valider.
+     * @return {@code true} si l'email et le mot de passe sont valides, sinon {@code false}.
+     */
+    public static boolean isValid(String email, String password) {
+<span class="fc" id="L115">        String emailRegex = &quot;^[\\w!#$%&amp;'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&amp;'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$&quot;;</span>
+<span class="fc" id="L116">        Pattern pattern = Pattern.compile(emailRegex);</span>
+        
+<span class="fc bfc" id="L118" title="All 4 branches covered.">        return email != null &amp;&amp; password != null </span>
+<span class="fc bfc" id="L119" title="All 4 branches covered.">                &amp;&amp; email.length() &gt; 0 &amp;&amp; password.trim().length() &gt; 0 </span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">                &amp;&amp; pattern.matcher(email).matches();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
