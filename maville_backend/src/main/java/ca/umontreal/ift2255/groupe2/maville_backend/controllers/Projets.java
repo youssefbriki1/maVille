@@ -15,6 +15,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 
+/**
+ * Contrôleur REST pour la gestion des projets.
+ * Ce contrôleur permet de récupérer les projets existants depuis un fichier JSON.
+ */
 @RestController
 @RequestMapping("/api/projets")
 public class Projets {
@@ -23,6 +27,12 @@ public class Projets {
     private static final String DATA_DIRECTORY = "data";
     private static final String PROJETS_FILE = "projets.json";
 
+    /**
+     * Endpoint GET pour récupérer la liste des projets existants.
+     * Cette méthode lit le fichier `projets.json` et renvoie les projets sous forme de réponse.
+     *
+     * @return Une réponse HTTP contenant la liste des projets existants ou un message d'erreur.
+     */
     @GetMapping
     public ResponseEntity<?> getProjets() {
         File file = new File(DATA_DIRECTORY, PROJETS_FILE);

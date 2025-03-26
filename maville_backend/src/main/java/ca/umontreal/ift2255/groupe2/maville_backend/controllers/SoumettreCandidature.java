@@ -15,6 +15,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 
+/**
+ * Contrôleur REST pour la soumission des candidatures.
+ * Ce contrôleur permet à un intervenant de soumettre une candidature pour un travail spécifique.
+ */
 @RestController
 @RequestMapping("/api/soumettre_candidature")
 public class SoumettreCandidature {
@@ -24,7 +28,16 @@ public class SoumettreCandidature {
     private static final String REQUETES_FILE = "requetes.json";
     private static final String USERS_FILE = "users.json";
 
-
+    /**
+     * Endpoint POST pour soumettre une candidature pour un travail.
+     * Cette méthode permet à un intervenant de soumettre une candidature pour un travail spécifié par son ID.
+     * La candidature est enregistrée dans le fichier `requetes.json` et l'intervenant est mis à jour dans `users.json`.
+     *
+     * @param request La requête contenant les informations nécessaires pour soumettre la candidature.
+     *               Elle doit inclure l'ID du travail et l'email de l'intervenant.
+     * @return Une réponse HTTP avec un message de succès ou d'erreur.
+     * @throws IOException Si un problème d'I/O se produit lors de la lecture ou de l'écriture des fichiers.
+     */
     @PostMapping("/candidature")
     public ResponseEntity<?> soumettreCandidature(@RequestBody Map<String, String> request) throws IOException {
         String travailId = request.get("travail_id");

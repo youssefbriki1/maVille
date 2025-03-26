@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * Contrôleur REST pour récupérer les données des travaux et des entraves à partir d'une API externe de Montréal.
+ * Ce contrôleur permet de récupérer des informations sur les travaux ou les entraves en fonction du paramètre "choix".
+ */
 @RestController
 @RequestMapping("/api")
 public class DonneesTravaux {
@@ -20,6 +24,14 @@ public class DonneesTravaux {
     private static String API_URL;
     private static final Logger logger = LoggerFactory.getLogger(DonneesTravaux.class);
 
+    /**
+     * Endpoint GET pour récupérer les données de travaux ou d'entraves à partir d'une API externe de Montréal.
+     * L'API retourne un tableau JSON des enregistrements des travaux ou des entraves en fonction du paramètre "choix".
+     *
+     * @param choix Un paramètre de requête qui détermine le type de données à récupérer : "travaux" ou "entraves".
+     * @return Une réponse HTTP contenant les données des travaux ou des entraves au format JSON.
+     * @throws IllegalArgumentException Si le paramètre "choix" n'est ni "travaux" ni "entraves".
+     */
     @GetMapping("/fetch-data")
     public ResponseEntity<String> fetchData(@RequestParam String choix) { 
         logger.info("Data recieved"+choix);

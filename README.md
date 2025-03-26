@@ -11,7 +11,28 @@ Les principales fonctionnalités de l'application incluent :
 - Gestion des réponses par les intervenants (entreprises, services municipaux)
 - Suivi en temps réel de l'évolution des travaux
 
-# Devoir 2
+## Liste des fonctionnalités de l'application par rôle
+
+### Résidents
+- Soumettre des requêtes de travaux
+- Recevoir des notifications sur les projets de construction
+- Suivre l'évolution des travaux
+
+### Intervenants
+- Gérer les requêtes de travaux soumises par les résidents
+- Répondre aux requêtes et mettre à jour leur statut
+- Soumettre des projets de construction
+
+## Organisation des fichiers du répertoire
+
+- `src/main/java/ca/umontreal/ift2255/groupe2/maville_backend/controllers` : Contient les contrôleurs REST pour gérer les requêtes HTTP.
+- `src/main/java/ca/umontreal/ift2255/groupe2/maville_backend/model` : Contient les classes de modèle représentant les entités de l'application.
+- `src/main/resources` : Contient les fichiers de configuration et les ressources statiques.
+- `src/main/java/ca/umontreal/ift2255/groupe2/maville_backend/data` : Contient les données.
+- `src/test/java/ca/umontreal/ift2255/groupe2/maville_backend/test` : Contient les tests unitaires pour les différentes classes de l'application.
+
+
+# Devoir 3
 
 ## Prerequis
 - Assurez-vous d'avoir installé Java 17 ou une version ultérieure sur votre machine. 
@@ -52,44 +73,43 @@ python3 --version
 git clone
 ```
 
-2. Creez un python virtual environment
-   
+
+2. Démarrez le backend 
+
 ```bash
-python3 -m venv venv
+cd maville_backend
+mvn spring-boot:run 
 ```
-3. Autoriser le script à s'executer
+3. Démarrez le frontend 
 
 ```bash
-chmod +x quickrun.sh
-```
-
-4. Executez le script de lancement
-
-```bash
-./quickrun.sh
+cd maville_frontend
+mvn streamlit run app.py
 ```
 
 ## Initialisation de la base de données
 
 - Voici un aperçu des données de test que vous pouvez utiliser pour initialiser la base de données.
 ### Résidents
-
-| Nom            | Email                 | Mot de Passe | Numéro de Téléphone | Adresse             | Code Postal | Date de Naissance | Rôle      |
-|----------------|-----------------------|--------------|----------------------|---------------------|-------------|-------------------|-----------|
-| Resident1 Res  | Resident1@email.com   | a            | 1234567890          | Adresse, Montréal   | H3T         | 2024-11-22        | Résident  |
-| Resident2 Res  | Resident2@email.com   | az           | 123456789022        | Adresse2, Montréal  | H3T         | 2024-11-22        | Résident  |
-| Resident3 Res  | Resident3@email.com   | az           | 123456789022        | Adresse2, Montréal  | H3T         | 2024-11-22        | Résident  |
+| Nom                     | Email                        | Mot de Passe | Numéro de Téléphone | Adresse             | Code Postal | Date de Naissance | Rôle      |
+|-------------------------|------------------------------|--------------|----------------------|---------------------|-------------|-------------------|-----------|
+| Jalal Fatouaki          | fatouaki.jalal@gmail.com     | a            | 123456789            | L'ile perrot        | j7v 0a4     | 2005-10-31        | Résident  |
+| Youssef Briki           | youssef.briki05@gmail.com    | a            | 123456789            | L'ile perrot        | j7v 0a4     | 2005-10-01        | Résident  |
+| Royann Lee              | royann.lee@gmail.com         | a            | 123456789            | Montreal            | h3a 0d3     | 2005-10-01        | Résident  |
+| Louis-Edouard Lafontant | louis.edouard.lafontant@gmail.com | a        | 123456789            | Montreal            | h3a 0d3     | 2005-10-01        | Résident  |
+| Larry Guiffo            | larry.guiffo@gmail.com       | a            | 123456789            | Montreal            | h3a 0d3     | 2005-10-01        | Résident  |
 
 ### Intervenants
 
-
 | Nom               | Email                    | Mot de Passe | Numéro de Téléphone | Adresse | Code Postal | ID Ville | Rôle          |
 |-------------------|--------------------------|--------------|----------------------|---------|-------------|----------|---------------|
-| Intervenant1 Int  | Intervenant1@email.com   | az           | null                 | null    | null        | 0        | Intervenant   |
-| Intervenant2 Int  | Intervenant2@email.com   | az           | null                 | null    | null        | 0        | Intervenant   |
-| Intervenant3 Int  | Intervenant3@email.com   | az           | null                 | null    | null        | 0        | Intervenant   |
-
+| Jean Belanger     | jean.belanger@gmail.com  | a            | null                 | null    | null        | 0        | Intervenant   |
+| Mathilde Belanger | mathilde.belanger@gmail.com | a         | null                 | null    | null        | 0        | Intervenant   |
+| Yves Constant     | yvesconstant@gmail.com   | a            | null                 | null    | null        | 0        | Intervenant   |
+| Jean Michel       | jean.michel@gmail.com    | a            | null                 | null    | null        | 0        | Intervenant   |
+| Nassim Larache    | larache05@gmail.com      | a            | null                 | null    | null        | 0        | Intervenant   |
 ## Troubleshooting
 
-- Verifiez le path de votre environnement virtuel python dans le fichier quickstart.sh
+
 - Verifiez que vous avez bien installé les prérequis
+- Contactez nous via discord

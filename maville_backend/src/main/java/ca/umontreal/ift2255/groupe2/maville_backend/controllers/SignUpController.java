@@ -1,22 +1,34 @@
 package ca.umontreal.ift2255.groupe2.maville_backend.controllers;
 
-import org.springframework.web.bind.annotation.*;
-import java.util.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 import ca.umontreal.ift2255.groupe2.maville_backend.model.Intervenant;
 import ca.umontreal.ift2255.groupe2.maville_backend.model.Personne;
 import ca.umontreal.ift2255.groupe2.maville_backend.model.Resident;
 
-import java.io.File;
-import java.io.IOException;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.HttpStatus;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+/**
+ * Contrôleur pour la gestion des inscriptions d'utilisateurs via l'API REST.
+ * Cette classe permet aux utilisateurs de s'inscrire en fournissant leurs informations
+ * personnelles. Les données sont stockées dans un fichier JSON.
+ */
 @RestController
 @RequestMapping("/api/signup")
 public class SignUpController {
@@ -25,7 +37,13 @@ public class SignUpController {
     private static final String DATA_DIRECTORY = "data";
     private static final String USERS_FILE = "users.json";
 
-
+    /**
+     * Vérifie si un utilisateur est unique dans la liste des utilisateurs.
+     *
+     * @param personne L'objet {@link Personne} représentant l'utilisateur à vérifier.
+     * @param users La liste existante des utilisateurs.
+     * @return {@code true} si l'utilisateur est unique, sinon {@code false}.
+     */
     private static boolean uniqueUser(Personne personne, List<Personne> users){
         for (Personne user : users) {
             if (user.getEmail().equals(personne.getEmail()) && personne.getRole().equals(user.getRole())) {
@@ -35,6 +53,15 @@ public class SignUpController {
         return true;
     }
 
+    /**
+     * Point de terminaison pour inscrire un nouvel utilisateur.
+     * 
+     * @param personne Les données de l'utilisateur, passées dans le corps de la requête.
+     * Les données incluent le nom, l'email, le mot de passe, et d'autres informations personnelles.
+     * 
+     * @return {@link ResponseEntity} contenant un message de succès ou une erreur
+     * en fonction du résultat de l'opération.
+     */
     @PostMapping
     public ResponseEntity<?> signup(@RequestBody HashMap<String, Object> personne) {
         String name = (String) personne.get("name");

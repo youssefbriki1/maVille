@@ -1,41 +1,49 @@
 [ {
-  "id" : 793,
-  "title" : "ffff",
-  "description" : "dddd",
-  "status" : "En attente",
-  "dateDebut" : "2024-12-23",
-  "senderEmail" : "fatouaki.jalal@gmail.com",
-  "typeTravaux" : "Travaux routiers"
-}, {
-  "id" : 575,
-  "title" : "vrvrvr",
-  "description" : "vccvcvc",
+  "id" : 425,
+  "title" : "Rénover mur",
+  "description" : "Mur à renover",
   "status" : "Accepté par résident et intervenant",
   "dateDebut" : "2024-12-23",
   "senderEmail" : "fatouaki.jalal@gmail.com",
-  "typeTravaux" : "Travaux routiers"
+  "typeTravaux" : "Construction ou rénovation"
 }, {
-  "id" : 471,
-  "title" : "geokgokrokgg",
-  "description" : "vfkvkmkdmv",
-  "status" : "Accepté par résident et intervenant",
+  "id" : 500,
+  "title" : "Rénover mur encore",
+  "description" : "Mur à renover",
+  "status" : "Candidature soumise par larache05@gmail.com",
   "dateDebut" : "2024-12-23",
   "senderEmail" : "fatouaki.jalal@gmail.com",
+  "typeTravaux" : "Construction ou rénovation"
+}, {
+  "id" : 426,
+  "title" : "Réparation de route",
+  "description" : "Réparer les nids-de-poule sur la route principale",
+  "status" : "En attente de confirmation",
+  "dateDebut" : "2024-12-24",
+  "senderEmail" : "youssef.briki05@gmail.com",
   "typeTravaux" : "Travaux routiers"
 }, {
-  "id" : 831,
-  "title" : "roejrij3t4t",
-  "description" : "vfeopvjenv",
-  "status" : "Accepté par résident et intervenant",
-  "dateDebut" : "2024-12-23",
-  "senderEmail" : "fatouaki.jalal@gmail.com",
-  "typeTravaux" : "Travaux souterrains"
+  "id" : 427,
+  "title" : "Installation de câbles électriques",
+  "description" : "Installer de nouveaux câbles électriques dans le quartier",
+  "status" : "Candidature soumise par larache05@gmail.com",
+  "dateDebut" : "2024-12-25",
+  "senderEmail" : "royann.lee@gmail.com",
+  "typeTravaux" : "Travaux de gaz ou électricité"
 }, {
-  "id" : 905,
-  "title" : "fevv",
-  "description" : "vvevee",
-  "status" : "Accepté par résident et intervenant",
-  "dateDebut" : "2024-12-23",
-  "senderEmail" : "fatouaki.jalal@gmail.com",
-  "typeTravaux" : "Travaux routiers"
+  "id" : 428,
+  "title" : "Entretien du parc",
+  "description" : "Tondre la pelouse et tailler les arbres dans le parc",
+  "status" : "En attente de confirmation",
+  "dateDebut" : "2024-12-26",
+  "senderEmail" : "louis.edouard.lafontant@gmail.com",
+  "typeTravaux" : "Entretien paysager"
+}, {
+  "id" : 429,
+  "title" : "Maintenance des transports en commun",
+  "description" : "Vérifier et réparer les arrêts de bus",
+  "status" : "Candidature soumise par larache05@gmail.com",
+  "dateDebut" : "2024-12-27",
+  "senderEmail" : "larry.guiffo@gmail.com",
+  "typeTravaux" : "Travaux liés aux transports en commun"
 } ]

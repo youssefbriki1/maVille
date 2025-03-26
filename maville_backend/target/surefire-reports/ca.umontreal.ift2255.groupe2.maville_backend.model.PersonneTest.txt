@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: ca.umontreal.ift2255.groupe2.maville_backend.model.PersonneTest
+-------------------------------------------------------------------------------
+Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.076 s -- in ca.umontreal.ift2255.groupe2.maville_backend.model.PersonneTest

@@ -16,6 +16,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 
+/**
+ * Contrôleur REST pour la soumission de nouveaux projets.
+ * Ce contrôleur permet à un intervenant de soumettre un projet de travail.
+ */
 @RestController
 @RequestMapping("/api/soumettre_projet")
 public class SoumettreProjet {
@@ -25,7 +29,15 @@ public class SoumettreProjet {
     private static final String PROJETS_FILE = "projets.json";
 
 
-
+    /**
+     * Endpoint POST pour soumettre un projet de travail.
+     * Cette méthode permet à un intervenant de soumettre un projet, qui est ensuite ajouté au fichier `projets.json`.
+     *
+     * @param settings La requête contenant les informations du projet, y compris l'email de l'intervenant,
+     *                le titre, la description, le type de travail, et la date de début.
+     * @return Une réponse HTTP avec un message de succès ou d'erreur.
+     * @throws IOException Si un problème d'I/O se produit lors de la lecture ou de l'écriture du fichier.
+     */
     @PostMapping
     public ResponseEntity<?> Envoyer(@RequestBody HashMap<String, String> settings) throws IOException {
         String IntervenantEmail = (String)settings.get("intervenant_email");

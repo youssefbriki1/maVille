@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UpdateStatus.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">maville_backend</a> &gt; <a href="index.source.html" class="el_package">ca.umontreal.ift2255.groupe2.maville_backend.controllers</a> &gt; <span class="el_source">UpdateStatus.java</span></div><h1>UpdateStatus.java</h1><pre class="source lang-java linenums">package ca.umontreal.ift2255.groupe2.maville_backend.controllers;
+
+import org.springframework.web.bind.annotation.*;
+import java.util.*;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
+import java.io.File;
+import java.io.IOException;
+import org.springframework.http.ResponseEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+
+/**
+ * Contrôleur REST pour la mise à jour du statut des requêtes.
+ * Ce contrôleur permet de modifier le statut d'une requête dans les fichiers `requetes.json` et `users.json`.
+ */
+@RestController
+@RequestMapping(&quot;/api/update_status&quot;)
+<span class="fc" id="L23">public class UpdateStatus {</span>
+
+<span class="fc" id="L25">    private static final Logger logger = LoggerFactory.getLogger(UpdateStatus.class);</span>
+    private static final String DATA_DIRECTORY = &quot;data&quot;;
+    private static final String REQUETES_FILE = &quot;requetes.json&quot;;
+    private static final String USERS_FILE = &quot;users.json&quot;;
+
+    /**
+     * Endpoint POST pour mettre à jour le statut d'une requête de travail.
+     * Cette méthode met à jour le statut de la requête dans le fichier `requetes.json` et dans le fichier `users.json`.
+     *
+     * @param request La requête contenant l'ID de la requête et le nouveau statut.
+     * @return Une réponse HTTP avec un message de succès ou d'erreur.
+     */
+    @PostMapping
+    public ResponseEntity&lt;?&gt; updateStatus(@RequestBody Map&lt;String, String&gt; request) {
+<span class="fc" id="L39">        String requestId = request.get(&quot;request_id&quot;);</span>
+<span class="fc" id="L40">        String newStatus = request.get(&quot;new_status&quot;);</span>
+
+<span class="pc bpc" id="L42" title="2 of 8 branches missed.">        if (requestId == null || requestId.isEmpty() || newStatus == null || newStatus.isEmpty()) {</span>
+<span class="fc" id="L43">            return ResponseEntity.badRequest().body(&quot;Request ID and new status are required&quot;);</span>
+        }
+
+<span class="fc" id="L46">        File requetesFile = new File(DATA_DIRECTORY, REQUETES_FILE);</span>
+<span class="fc" id="L47">        File usersFile = new File(DATA_DIRECTORY, USERS_FILE);</span>
+<span class="fc" id="L48">        ObjectMapper objectMapper = new ObjectMapper();</span>
+<span class="fc" id="L49">        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);</span>
+<span class="fc" id="L50">        List&lt;Map&lt;String, Object&gt;&gt; travaux = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L51">        List&lt;Map&lt;String, Object&gt;&gt; users = new ArrayList&lt;&gt;();</span>
+
+        // Update status in requetes.json
+<span class="pc bpc" id="L54" title="2 of 4 branches missed.">        if (!requetesFile.exists() || requetesFile.length() == 0) {</span>
+<span class="nc" id="L55">            logger.error(&quot;requetes.json file does not exist or is empty&quot;);</span>
+<span class="nc" id="L56">            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L57">                .body(&quot;requetes.json file does not exist or is empty&quot;);</span>
+        } else {
+            try {
+<span class="fc" id="L60">                JsonNode jsonNode = objectMapper.readTree(requetesFile);</span>
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">                if (jsonNode.isArray()) {</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">                    for (JsonNode node : jsonNode) {</span>
+<span class="fc" id="L63">                        Map&lt;String, Object&gt; travail = objectMapper.convertValue(node, Map.class);</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">                        if (requestId.equals(travail.get(&quot;id&quot;).toString())) {</span>
+<span class="nc" id="L65">                            travail.put(&quot;status&quot;, newStatus);</span>
+                        }
+<span class="fc" id="L67">                        travaux.add(travail);</span>
+<span class="fc" id="L68">                    }</span>
+                } else {
+<span class="nc" id="L70">                    logger.error(&quot;requetes.json does not contain a JSON array&quot;);</span>
+<span class="nc" id="L71">                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L72">                        .body(&quot;Invalid data format in requetes.json&quot;);</span>
+                }
+<span class="nc" id="L74">            } catch (IOException e) {</span>
+<span class="nc" id="L75">                logger.error(&quot;Failed to read existing travaux from requetes.json&quot;, e);</span>
+<span class="nc" id="L76">                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L77">                    .body(&quot;Failed to read existing travaux&quot;);</span>
+<span class="fc" id="L78">            }</span>
+        }
+
+        // Update status in users.json
+<span class="pc bpc" id="L82" title="2 of 4 branches missed.">        if (!usersFile.exists() || usersFile.length() == 0) {</span>
+<span class="nc" id="L83">            logger.error(&quot;users.json file does not exist or is empty&quot;);</span>
+<span class="nc" id="L84">            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L85">                .body(&quot;users.json file does not exist or is empty&quot;);</span>
+        } else {
+            try {
+<span class="fc" id="L88">                JsonNode jsonNode = objectMapper.readTree(usersFile);</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">                if (jsonNode.isArray()) {</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">                    for (JsonNode node : jsonNode) {</span>
+<span class="fc" id="L91">                        Map&lt;String, Object&gt; user = objectMapper.convertValue(node, Map.class);</span>
+<span class="fc" id="L92">                        List&lt;Map&lt;String, Object&gt;&gt; requetes = (List&lt;Map&lt;String, Object&gt;&gt;) user.get(&quot;requetes&quot;);</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">                        if (requetes != null) {</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">                            for (Map&lt;String, Object&gt; requete : requetes) {</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">                                if (requestId.equals(requete.get(&quot;id&quot;))) {</span>
+<span class="nc" id="L96">                                    requete.put(&quot;status&quot;, newStatus);</span>
+                                }
+<span class="fc" id="L98">                            }</span>
+                        }
+<span class="fc" id="L100">                        users.add(user);</span>
+<span class="fc" id="L101">                    }</span>
+                } else {
+<span class="nc" id="L103">                    logger.error(&quot;users.json does not contain a JSON array&quot;);</span>
+<span class="nc" id="L104">                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L105">                        .body(&quot;Invalid data format in users.json&quot;);</span>
+                }
+<span class="nc" id="L107">            } catch (IOException e) {</span>
+<span class="nc" id="L108">                logger.error(&quot;Failed to read existing users from users.json&quot;, e);</span>
+<span class="nc" id="L109">                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L110">                    .body(&quot;Failed to read existing users&quot;);</span>
+<span class="fc" id="L111">            }</span>
+        }
+
+        // Write updated data back to files
+        try {
+<span class="fc" id="L116">            objectMapper.writeValue(requetesFile, travaux);</span>
+<span class="fc" id="L117">            objectMapper.writeValue(usersFile, users);</span>
+<span class="nc" id="L118">        } catch (IOException e) {</span>
+<span class="nc" id="L119">            logger.error(&quot;Failed to write data&quot;, e);</span>
+<span class="nc" id="L120">            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L121">                .body(&quot;Failed to write data&quot;);</span>
+<span class="fc" id="L122">        }</span>
+
+<span class="fc" id="L124">        return ResponseEntity.ok(&quot;Status updated successfully&quot;);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Notification.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">maville_backend</a> &gt; <a href="index.source.html" class="el_package">ca.umontreal.ift2255.groupe2.maville_backend.model</a> &gt; <span class="el_source">Notification.java</span></div><h1>Notification.java</h1><pre class="source lang-java linenums">package ca.umontreal.ift2255.groupe2.maville_backend.model;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Classe représentant une notification dans le système. 
+ * Une notification contient un titre, une description, une date, et un statut indiquant si elle est nouvelle.
+ */
+public class Notification {
+    private String title;
+    private String description;
+    private String date;
+    private boolean isNew;
+
+    /**
+     * Constructeur avec paramètres. Crée une notification avec les détails spécifiés.
+     * 
+     * @param title       Le titre de la notification.
+     * @param description La description de la notification.
+     * @param date        La date de la notification.
+     * @throws IllegalArgumentException Si l'une des valeurs est invalide (vide ou null).
+     */
+<span class="nc" id="L24">    public Notification(String title, String description, String date) throws IllegalArgumentException {</span>
+<span class="nc bnc" id="L25" title="All 2 branches missed.">        if (!validator(title, description, date)) {</span>
+<span class="nc" id="L26">            throw new IllegalArgumentException(&quot;Invalid Notification&quot;);</span>
+        }
+<span class="nc" id="L28">        this.title = title;</span>
+<span class="nc" id="L29">        this.description = description;</span>
+<span class="nc" id="L30">        this.date = date;</span>
+<span class="nc" id="L31">        this.isNew = true;</span>
+<span class="nc" id="L32">    }</span>
+
+    /**
+     * Constructeur par défaut.
+     * Permet de créer une notification vide (les champs devront être définis ultérieurement).
+     */
+<span class="nc" id="L38">    public Notification() {</span>
+<span class="nc" id="L39">    }</span>
+
+    // Getters and Setters
+
+    /**
+     * Obtient le statut indiquant si la notification est nouvelle.
+     * 
+     * @return True si la notification est nouvelle, False sinon.
+     */
+    public boolean getIsNew() {
+<span class="nc" id="L49">        return isNew;</span>
+    }
+    /**
+     * Obtient le titre de la notification.
+     * 
+     * @return Le titre de la notification.
+     */
+    public String getTitle() {
+<span class="nc" id="L57">        return title;</span>
+    }
+    /**
+     * Obtient la description de la notification.
+     * 
+     * @return La description de la notification.
+     */
+    public String getDescription() {
+<span class="nc" id="L65">        return description;</span>
+    }
+    /**
+     * Obtient la date de la notification.
+     * 
+     * @return La date de la notification.
+     */
+    public String getDate() {
+<span class="nc" id="L73">        return date;</span>
+    }
+
+    /**
+     * Définit le titre de la notification.
+     * 
+     * @param title Le titre à définir.
+     */
+    public void setTitle(String title) {
+<span class="nc" id="L82">        this.title = title;</span>
+<span class="nc" id="L83">    }</span>
+    /**
+     * Définit la description de la notification.
+     * 
+     * @param description La description à définir.
+     */
+    public void setDescription(String description) {
+<span class="nc" id="L90">        this.description = description;</span>
+<span class="nc" id="L91">    }</span>
+    /**
+     * Définit la date de la notification.
+     * 
+     * @param date La date à définir.
+     */
+    public void setDate(String date) {
+<span class="nc" id="L98">        this.date = date;</span>
+<span class="nc" id="L99">    }</span>
+    /**
+     * Définit le statut de la notification.
+     * 
+     * @param isNew True si la notification est nouvelle, False sinon.
+     */
+    public void setIsNew(boolean isNew) {
+<span class="nc" id="L106">        this.isNew = isNew;</span>
+<span class="nc" id="L107">    }</span>
+    /**
+     * Convertit la notification en une représentation sous forme de Map.
+     * 
+     * @return Une Map contenant les informations formatées de la notification.
+     */
+    public Map&lt;String, String&gt; toDict(){
+<span class="nc" id="L114">        Map&lt;String, String&gt; formatedMap= new HashMap&lt;&gt;();</span>
+<span class="nc" id="L115">        formatedMap.put(&quot;title&quot;, this.title);</span>
+<span class="nc" id="L116">        formatedMap.put(&quot;description&quot;, this.description);</span>
+<span class="nc" id="L117">        formatedMap.put(&quot;date&quot;, this.date);</span>
+<span class="nc" id="L118">        return formatedMap;</span>
+    }
+    
+
+    /**
+     * Valide les paramètres de la notification.
+     * 
+     * @param title       Le titre de la notification.
+     * @param description La description de la notification.
+     * @param date        La date de la notification.
+     * @return True si tous les paramètres sont valides, False sinon.
+     */
+    public static boolean validator(String title, String description, String date) {
+<span class="nc bnc" id="L131" title="All 4 branches missed.">        if (title == null || title.isEmpty()) {</span>
+<span class="nc" id="L132">            return false;</span>
+        }
+<span class="nc bnc" id="L134" title="All 4 branches missed.">        if (description == null || description.isEmpty()) {</span>
+<span class="nc" id="L135">            return false;</span>
+        }
+<span class="nc bnc" id="L137" title="All 4 branches missed.">        if (date == null || date.isEmpty()) {</span>
+<span class="nc" id="L138">            return false;</span>
+        }
+<span class="nc" id="L140">        return true;</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,7 +1,20 @@
 package ca.umontreal.ift2255.groupe2.maville_backend.controllers;
 
-import org.springframework.web.bind.annotation.*;
-import java.util.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,13 +22,10 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 import ca.umontreal.ift2255.groupe2.maville_backend.model.TravailResident;
 
-import java.io.File;
-import java.io.IOException;
-import org.springframework.http.ResponseEntity;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-
+/**
+ * Cette classe permet aux résidents de soumettre une requête de travail
+ * qui sera stockée dans le fichier JSON `requetes.json`.
+ */
 @RestController
 @RequestMapping("/api/envoyer_requete_resident")
 public class EnvoyerRequete {
@@ -25,7 +35,18 @@ public class EnvoyerRequete {
     private static final String USERS_FILE = "requetes.json";
 
 
-
+    /**
+     * Endpoint POST pour soumettre une requête de travaux par un résident.
+     *
+     * @param settings Une HashMap contenant les détails de la requête de travail :
+     *                 - "resident_email" : L'email du résident soumettant la requête.
+     *                 - "titre" : Le titre du travail demandé.
+     *                 - "type_travail" : Le type de travail (par exemple, réparation, rénovation).
+     *                 - "description" : La description du travail demandé.
+     *                 - "date_debut" : La date de début du travail.
+     * @return Une `ResponseEntity` contenant un message de succès ou un message d'erreur.
+     * @throws IOException Si une erreur survient lors de la lecture ou l'écriture du fichier JSON.
+     */
     @PostMapping
     public ResponseEntity<?> Envoyer(@RequestBody HashMap<String, String> settings) throws IOException {
         String ResidentEmail = (String)settings.get("resident_email");

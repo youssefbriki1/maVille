@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EnvoyerRequete.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">maville_backend</a> &gt; <a href="index.source.html" class="el_package">ca.umontreal.ift2255.groupe2.maville_backend.controllers</a> &gt; <span class="el_source">EnvoyerRequete.java</span></div><h1>EnvoyerRequete.java</h1><pre class="source lang-java linenums">package ca.umontreal.ift2255.groupe2.maville_backend.controllers;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
+import ca.umontreal.ift2255.groupe2.maville_backend.model.TravailResident;
+
+/**
+ * Cette classe permet aux résidents de soumettre une requête de travail
+ * qui sera stockée dans le fichier JSON `requetes.json`.
+ */
+@RestController
+@RequestMapping(&quot;/api/envoyer_requete_resident&quot;)
+<span class="fc" id="L31">public class EnvoyerRequete {</span>
+
+<span class="fc" id="L33">    private static final Logger logger = LoggerFactory.getLogger(EnvoyerRequete.class);</span>
+    private static final String DATA_DIRECTORY = &quot;data&quot;;
+    private static final String USERS_FILE = &quot;requetes.json&quot;;
+
+
+    /**
+     * Endpoint POST pour soumettre une requête de travaux par un résident.
+     *
+     * @param settings Une HashMap contenant les détails de la requête de travail :
+     *                 - &quot;resident_email&quot; : L'email du résident soumettant la requête.
+     *                 - &quot;titre&quot; : Le titre du travail demandé.
+     *                 - &quot;type_travail&quot; : Le type de travail (par exemple, réparation, rénovation).
+     *                 - &quot;description&quot; : La description du travail demandé.
+     *                 - &quot;date_debut&quot; : La date de début du travail.
+     * @return Une `ResponseEntity` contenant un message de succès ou un message d'erreur.
+     * @throws IOException Si une erreur survient lors de la lecture ou l'écriture du fichier JSON.
+     */
+    @PostMapping
+    public ResponseEntity&lt;?&gt; Envoyer(@RequestBody HashMap&lt;String, String&gt; settings) throws IOException {
+<span class="nc" id="L52">        String ResidentEmail = (String)settings.get(&quot;resident_email&quot;);</span>
+<span class="nc" id="L53">        String titre = (String) settings.get(&quot;titre&quot;);</span>
+<span class="nc" id="L54">        String typeTravail =(String) settings.get(&quot;type_travail&quot;); </span>
+<span class="nc" id="L55">        String description =  (String) settings.get(&quot;description&quot;);</span>
+<span class="nc" id="L56">        String date = (String) settings.get(&quot;date_debut&quot;);</span>
+<span class="nc" id="L57">        String status = &quot;En attente de confirmation&quot;;</span>
+
+
+
+
+<span class="nc" id="L62">        logger.info(settings.toString());</span>
+        // Validate input
+
+<span class="nc bnc" id="L65" title="All 2 branches missed.">        if (!TravailResident.isValid(titre, description)){</span>
+<span class="nc" id="L66">            return ResponseEntity.badRequest().body(&quot;Donnees invalides pour creer une requete de travaux&quot;);</span>
+        }
+<span class="nc" id="L68">        TravailResident travail = new TravailResident((int)(Math.random()*1000), titre, description, status, date, typeTravail, ResidentEmail);</span>
+
+
+<span class="nc" id="L71">        synchronized (this) {</span>
+            try {
+<span class="nc" id="L73">                File directory = new File(DATA_DIRECTORY);</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">                if (!directory.exists()) {</span>
+<span class="nc" id="L75">                    boolean dirCreated = directory.mkdir();</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">                    if (!dirCreated) {</span>
+<span class="nc" id="L77">                        logger.error(&quot;Failed to create data directory: {}&quot;, directory.getAbsolutePath());</span>
+<span class="nc" id="L78">                        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L79">                            .body(&quot;Failed to create data directory&quot;);</span>
+                    }
+                }
+
+<span class="nc" id="L83">                File file = new File(directory, USERS_FILE);</span>
+<span class="nc" id="L84">                ObjectMapper objectMapper = new ObjectMapper();</span>
+<span class="nc" id="L85">                objectMapper.enable(SerializationFeature.INDENT_OUTPUT); </span>
+<span class="nc" id="L86">                List&lt;TravailResident&gt; travaux = new ArrayList&lt;&gt;();</span>
+
+<span class="nc bnc" id="L88" title="All 4 branches missed.">                if (!file.exists() || file.length() == 0) {</span>
+<span class="nc" id="L89">                    logger.info(&quot;Initializing users.json file&quot;);</span>
+<span class="nc" id="L90">                    objectMapper.writeValue(file, travaux);</span>
+                } else {
+                    try {
+<span class="nc" id="L93">                        JsonNode jsonNode = objectMapper.readTree(file);</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">                        if (jsonNode.isArray()) {</span>
+<span class="nc" id="L95">                            TravailResident[] travauxExistants = objectMapper.treeToValue(jsonNode, TravailResident[].class);</span>
+<span class="nc" id="L96">                            travaux = new ArrayList&lt;&gt;(Arrays.asList(travauxExistants));</span>
+<span class="nc" id="L97">                        } else {</span>
+<span class="nc" id="L98">                            logger.error(&quot;users.json does not contain a JSON array&quot;);</span>
+<span class="nc" id="L99">                            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L100">                                .body(&quot;Invalid data format in users.json&quot;);</span>
+                        }
+<span class="nc" id="L102">                    } catch (IOException e) {</span>
+<span class="nc" id="L103">                        logger.error(&quot;Failed to read existing residents from users.json&quot;, e);</span>
+<span class="nc" id="L104">                        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L105">                            .body(&quot;Failed to read existing residents&quot;);</span>
+<span class="nc" id="L106">                    }</span>
+                }
+
+<span class="nc" id="L109">                travaux.add(travail);</span>
+
+
+<span class="nc" id="L112">                objectMapper.writeValue(file, travaux);</span>
+<span class="nc" id="L113">                return ResponseEntity.ok(&quot;Travail ajoute avec succes&quot;);</span>
+
+<span class="nc" id="L115">            } catch (IOException e) {</span>
+<span class="nc" id="L116">                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L117">                    .body(&quot;Failed to write resident data&quot;);</span>
+            }
+        }
+
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
