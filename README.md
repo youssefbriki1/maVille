@@ -84,7 +84,7 @@ mvn spring-boot:run
 
 ```bash
 cd maville_frontend
-mvn streamlit run app.py
+streamlit run app.py
 ```
 
 ## Initialisation de la base de données
