@@ -32,7 +32,7 @@ Les principales fonctionnalités de l'application incluent :
 - `src/test/java/ca/umontreal/ift2255/groupe2/maville_backend/test` : Contient les tests unitaires pour les différentes classes de l'application.
 
 
-# Devoir 3
+# Prérequis
 
 ## Prerequis
 - Assurez-vous d'avoir installé Java 17 ou une version ultérieure sur votre machine. 
